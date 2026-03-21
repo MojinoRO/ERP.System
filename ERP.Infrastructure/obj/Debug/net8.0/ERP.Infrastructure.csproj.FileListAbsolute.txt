@@ -1,0 +1,11 @@
+C:\WorkSpace\ERP\ERP.Infrastructure\bin\Debug\net8.0\ERP.Infrastructure.deps.json
+C:\WorkSpace\ERP\ERP.Infrastructure\bin\Debug\net8.0\ERP.Infrastructure.dll
+C:\WorkSpace\ERP\ERP.Infrastructure\bin\Debug\net8.0\ERP.Infrastructure.pdb
+C:\WorkSpace\ERP\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\WorkSpace\ERP\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.AssemblyInfoInputs.cache
+C:\WorkSpace\ERP\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.AssemblyInfo.cs
+C:\WorkSpace\ERP\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.csproj.CoreCompileInputs.cache
+C:\WorkSpace\ERP\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.dll
+C:\WorkSpace\ERP\ERP.Infrastructure\obj\Debug\net8.0\refint\ERP.Infrastructure.dll
+C:\WorkSpace\ERP\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.pdb
+C:\WorkSpace\ERP\ERP.Infrastructure\obj\Debug\net8.0\ref\ERP.Infrastructure.dll
