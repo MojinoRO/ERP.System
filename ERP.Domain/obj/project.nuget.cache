@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pCd90PqOIJk=",
+  "dgSpecHash": "8tA9NBAMWzY=",
   "success": true,
-  "projectFilePath": "C:\\WorkSpace\\ERP\\ERP.Domain\\ERP.Domain.csproj",
+  "projectFilePath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\ERP.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
