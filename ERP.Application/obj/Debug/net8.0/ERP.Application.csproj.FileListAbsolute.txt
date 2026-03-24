@@ -25,3 +25,8 @@ C:\WorkSpace\ERP\ERP.System\ERP.Application\obj\Debug\net8.0\ERP.Application.dll
 C:\WorkSpace\ERP\ERP.System\ERP.Application\obj\Debug\net8.0\refint\ERP.Application.dll
 C:\WorkSpace\ERP\ERP.System\ERP.Application\obj\Debug\net8.0\ERP.Application.pdb
 C:\WorkSpace\ERP\ERP.System\ERP.Application\obj\Debug\net8.0\ref\ERP.Application.dll
+C:\WorkSpace\ERP\ERP.Application\bin\Debug\net8.0\ERP.Domain.dll
+C:\WorkSpace\ERP\ERP.Application\bin\Debug\net8.0\ERP.Domain.pdb
+C:\WorkSpace\ERP\ERP.Application\obj\Debug\net8.0\ERP.Application.csproj.AssemblyReference.cache
+C:\WorkSpace\ERP\ERP.Application\obj\Debug\net8.0\ERP.Application.sourcelink.json
+C:\WorkSpace\ERP\ERP.Application\obj\Debug\net8.0\ERP.Application.csproj.CopyComplete

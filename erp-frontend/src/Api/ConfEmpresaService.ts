@@ -1,9 +1,9 @@
-import api from "../Api/AxiosConfig";
+import api from "../api/AxiosConfig";
 import type {
   ConfEmpresa,
   CreateConfEmpresa,
   UpdateConfEmpresa,
-} from "../Types/ConfEmpresa";
+} from "../types/ConfEmpresa";
 
 //get obtener todas las empresas
 export const getEmpresas = async (): Promise<ConfEmpresa[]> => {
