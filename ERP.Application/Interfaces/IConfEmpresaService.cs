@@ -1,13 +1,14 @@
+using ERP.Application.DTOs;
 using ERP.Domain.Entities;
 
 namespace ERP.Application.interfaces;
 
 public interface IConfEmpresaService
 {
-    Task<IEnumerable<ConfEmpresa>>GetAllAsync();
-    Task<ConfEmpresa?>GetByIdAsync(int id);
-    Task<ConfEmpresa>CreateAsync(ConfEmpresa empresa);
-    Task<ConfEmpresa?>UpdateAsync(ConfEmpresa empresa);
+    Task<IEnumerable<ConfEmpresaResponseDTO>>GetAllAsync();
+    Task<ConfEmpresaResponseDTO?>GetByIdAsync(int id);
+    Task<ConfEmpresaResponseDTO>CreateAsync(CreateConfEmpresaDTO empresa);
+    Task<ConfEmpresaResponseDTO?>UpdateAsync(UpdateConfEmpresaDTO empresa);
     Task<bool>DeleteAsync(int id);
 }
 

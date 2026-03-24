@@ -1,13 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Formats.Asn1;
-using System.Reflection.Metadata.Ecma335;
 using ERP.Domain.Entities;
 using ERP.Domain.interfaces;
 using ERP.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.Identity.Client.Extensibility;
-
 namespace ERP.Infrastructure.Repositories;
 
 public class ConfEmpresaRepository : IConfEmpresaRepository
@@ -53,5 +47,10 @@ public class ConfEmpresaRepository : IConfEmpresaRepository
         _Context.ConfEmpresa.Remove(existe);
         await _Context.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<ConfEmpresa?>GetByNitAsync(string nit)
+    {
+        return await _Context.ConfEmpresa.FirstOrDefaultAsync(e=> e.EmpresaNit == nit);
     }
 }

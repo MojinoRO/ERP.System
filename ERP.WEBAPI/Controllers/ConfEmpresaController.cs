@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using ERP.Application.DTOs;
 using ERP.Application.interfaces;
 using ERP.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -32,18 +33,26 @@ public class ConfEmpresaController : ControllerBase
     //post api/empresa
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] ConfEmpresa empresa)
+    public async Task<IActionResult> Create([FromBody] CreateConfEmpresaDTO dto)
     {
-        var Newempresa = await _service.CreateAsync(empresa);
-        return CreatedAtAction(nameof(GetById), new {id = Newempresa.EmpresaID},Newempresa);
+        try
+        {
+            var creada = await _service.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById),new {id= creada.EmpresaID },creada);
+
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
     
 
     [HttpPut("{id}")]
-    public async Task<IActionResult>Update(int id, [FromBody] ConfEmpresa empresa)
+    public async Task<IActionResult>Update(int id, [FromBody] UpdateConfEmpresaDTO dto)
     {
-        if(id != empresa.EmpresaID) return BadRequest("El ID no Coincide");
-        var UpdateEmpresa = await _service.UpdateAsync(empresa);
+        if(id != dto.EmpresaID) return BadRequest("El ID no Coincide");
+        var UpdateEmpresa = await _service.UpdateAsync(dto);
         if(UpdateEmpresa == null) return NotFound();
         return Ok(UpdateEmpresa);
     }

@@ -11,6 +11,8 @@ public interface IConfEmpresaRepository
     //Leer por ID
     Task<ConfEmpresa?>GetByIdAsync(int id);
 
+    //LEER POR NIT 
+    Task<ConfEmpresa?>GetByNitAsync(string nit);
     //CREATE
     Task<ConfEmpresa>CreateAsync(ConfEmpresa empresa);
 

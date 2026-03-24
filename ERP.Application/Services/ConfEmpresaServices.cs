@@ -2,6 +2,7 @@ using ERP.Application.interfaces;
 using ERP.Domain.interfaces;
 using ERP.Domain.Entities;
 using System.Runtime.CompilerServices;
+using ERP.Application.DTOs;
 
 namespace ERP.Application.Services;
 
@@ -11,25 +12,37 @@ public class ConfEmpresaService : IConfEmpresaService
     // Recibe el repositorio inyectado — no sabe si es SQL Server o PostgreSQL
     public ConfEmpresaService (IConfEmpresaRepository repository) => _repository=repository;
 
-    public async Task<IEnumerable<ConfEmpresa>> GetAllAsync()
+    public async Task<IEnumerable<ConfEmpresaResponseDTO>> GetAllAsync()
     {
-        return await _repository.GetAllAsync();
+        var empresas = await _repository.GetAllAsync();
+        return empresas.Select(ConfEmpresaMapper.ToDto);
     }
 
-    public async Task<ConfEmpresa?>GetByIdAsync(int id)
+    public async Task<ConfEmpresaResponseDTO?>GetByIdAsync(int id)
     {
-        return await _repository.GetByIdAsync(id);
+       var empresa = await _repository.GetByIdAsync(id);
+       if(empresa == null)return null;
+       return ConfEmpresaMapper.ToDto(empresa);
     }
 
-    public async Task<ConfEmpresa>CreateAsync(ConfEmpresa empresa)
+    public async Task<ConfEmpresaResponseDTO>CreateAsync(CreateConfEmpresaDTO dto)
     {
-        //aqui pueden ir las reglas de negocio ejmplo que el nit sea real etc;
-        return await _repository.CreateAsync(empresa);
+        var exite = await _repository.GetByNitAsync(dto.EmpresaNit);
+        if(exite != null)
+            throw new InvalidOperationException($"Ya existe empresa con el nit {dto.EmpresaNit}");
+
+        var entidad = ConfEmpresaMapper.ToEntity(dto);
+        var Creada = await _repository.CreateAsync(entidad);
+        return ConfEmpresaMapper.ToDto(Creada);
+
     }
 
-    public async Task<ConfEmpresa?>UpdateAsync(ConfEmpresa empresa)
+    public async Task<ConfEmpresaResponseDTO?>UpdateAsync(UpdateConfEmpresaDTO dto)
     {
-        return await _repository.UpdateAsync(empresa);
+       var entidad = ConfEmpresaMapper.ToEntity(dto);
+       var actualizada = await _repository.UpdateAsync(entidad);
+       if(actualizada ==null)return null;
+       return ConfEmpresaMapper.ToDto(actualizada);
     }
 
     public async Task<bool> DeleteAsync(int id)
