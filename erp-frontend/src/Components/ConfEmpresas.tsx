@@ -29,8 +29,8 @@ export default function Empresas() {
 
   // datos del formulario para crear una Empresa
   const [form, setForm] = useState<CreateConfEmpresa>({
-    EmpresaNit: "",
-    EmpresaNombre: "",
+    empresaNit: "",
+    empresaNombre: "",
   });
 
   // Mensaje de error para mostrar en pantalla
@@ -65,8 +65,8 @@ export default function Empresas() {
 
       // Limpia el formulario después de crear
       setForm({
-        EmpresaNit: "",
-        EmpresaNombre: "",
+        empresaNit: "",
+        empresaNombre: "",
       });
 
       await cargarEmpresas(); // recarga la lista para mostrar el nuevo registro
@@ -104,9 +104,9 @@ export default function Empresas() {
             Es como el Binding bidireccional en XAML (Mode=TwoWay) */}
         <input
           placeholder="Nit:"
-          value={form.EmpresaNit}
+          value={form.empresaNit}
           onChange={(e) =>
-            setForm({ ...form, EmpresaNit: e.target.value })
+            setForm({ ...form, empresaNit: e.target.value })
           }
           style={{ padding: "0.5rem", width: "200px" }}
         />
@@ -116,9 +116,9 @@ export default function Empresas() {
             Es como hacer: form.EmpresaNit = e.target.value en C# */}
         <input
           placeholder="EmpresaNombre"
-          value={form.EmpresaNombre}
+          value={form.empresaNombre}
           onChange={(e) =>
-            setForm({ ...form, EmpresaNombre: e.target.value })
+            setForm({ ...form, empresaNombre: e.target.value })
           }
           style={{ padding: "0.5rem", width: "300px" }}
         />
@@ -179,22 +179,22 @@ export default function Empresas() {
               emp = cada empresa, i = índice (0,1,2...) */}
           {empresas.map((emp, i) => (
             <tr
-              key={emp.EmpresaID}
+              key={emp.empresaID}
               style={{
                 background: i % 2 === 0 ? "#fff" : "#f5f9fc",
               }}
             >
               {/* key es obligatorio — React lo usa para identificar filas */}
               <td style={{ padding: "0.75rem" }}>
-                {emp.EmpresaID}
+                {emp.empresaID}
               </td>
 
               <td style={{ padding: "0.75rem" }}>
-                {emp.EmpresaNit}
+                {emp.empresaNit}
               </td>
 
               <td style={{ padding: "0.75rem" }}>
-                {emp.EmpresaNombre}
+                {emp.empresaNombre}
               </td>
 
               <td style={{ padding: "0.75rem" }}>
@@ -210,7 +210,7 @@ export default function Empresas() {
                     cursor: "pointer",
                   }}
                   onClick={() =>
-                    handlerEliminar(emp.EmpresaID)
+                    handlerEliminar(emp.empresaID)
                   }
                 >
                   Eliminar

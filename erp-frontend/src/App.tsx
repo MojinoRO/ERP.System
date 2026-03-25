@@ -1,9 +1,9 @@
-import Empresas from "./components/ConfEmpresas";
+import { LoginPage } from "./components/LogginApp";
 
 function App(){
   return(
     <div>
-      <Empresas></Empresas>
+      <LoginPage></LoginPage>
     </div>
   )
 }
