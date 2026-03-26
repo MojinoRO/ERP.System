@@ -25,8 +25,8 @@ public class ConfUsuariosServices : IConfUsuariosService
     public async Task<ConfUsuariosReponseDTO>CreateAsync(CreateConfUsuariosDTO user)
     {
         var existe = await _repo.GetByName(user.UsuarioNombre);
-        if (existe == null)
-            throw new InvalidOperationException($"Ya existe usuario con el nombre{user.UsuarioNombre}");
+        if (existe != null)
+            throw new InvalidOperationException($"Ya existe usuario con el nombre  {user.UsuarioNombre}");
         
         var newUser = ConfUsuarioMapper.ToEntity(user);
         var Creada = await _repo.CreateAsync(newUser);

@@ -17,7 +17,7 @@ public class ConfUsuariosRepository : IConfUsuariosRepository
 
     public async Task<ConfUsuarios?> GetByName(string name)
     {
-        return await _Context.ConfUsuarios.FindAsync(name);
+        return await _Context.ConfUsuarios.FirstOrDefaultAsync(u=>u.NombreUsuario== name);
     }
     public async Task<ConfUsuarios?> GetByIdAsync(int id)
     {

@@ -1,11 +1,13 @@
-import { LoginPage } from "./components/LogginApp";
+import { LoginPage } from "./Components/LogginApp";
+import {BrowserRouter, Routes, Route} from "react-router-dom"
 
 function App(){
   return(
-    <div>
-      <LoginPage></LoginPage>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" Component={LoginPage}></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
-
 export default App;

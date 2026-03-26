@@ -1,7 +1,5 @@
-using System.Formats.Asn1;
 using ERP.Application.DTOs;
 using ERP.Application.interfaces;
-using ERP.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ERP.WEBAPI.Controllers;
@@ -12,7 +10,7 @@ namespace ERP.WEBAPI.Controllers;
 public class ConfUsuariosController : ControllerBase
 {
     private readonly IConfUsuariosService _service;
-    public ConfUsuariosController(ConfUsuariosServices service )=> _service =service;
+    public ConfUsuariosController(IConfUsuariosService service )=> _service =service;
 
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
@@ -39,7 +37,7 @@ public class ConfUsuariosController : ControllerBase
 
         }catch(InvalidOperationException ex)
         {
-            return BadRequest(ex.Data);
+            return BadRequest(new {message = ex.Message});
         }
     }
 
