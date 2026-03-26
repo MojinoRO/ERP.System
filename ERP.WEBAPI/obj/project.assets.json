@@ -4502,42 +4502,35 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Soporte J3\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\WorkSpace\\ERP\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
+      "projectUniqueName": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
       "projectName": "ERP.WEBAPI",
-      "projectPath": "C:\\WorkSpace\\ERP\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
-      "packagesPath": "C:\\Users\\Soporte J3\\.nuget\\packages\\",
-      "outputPath": "C:\\WorkSpace\\ERP\\ERP.WEBAPI\\obj\\",
+      "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
+      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+      "outputPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.WEBAPI\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Soporte J3\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\WorkSpace\\ERP\\ERP.Application\\ERP.Application.csproj": {
-              "projectPath": "C:\\WorkSpace\\ERP\\ERP.Application\\ERP.Application.csproj"
+            "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Application\\ERP.Application.csproj": {
+              "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Application\\ERP.Application.csproj"
             },
-            "C:\\WorkSpace\\ERP\\ERP.Infrastructure\\ERP.Infrastructure.csproj": {
-              "projectPath": "C:\\WorkSpace\\ERP\\ERP.Infrastructure\\ERP.Infrastructure.csproj"
+            "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj": {
+              "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj"
             }
           }
         }
@@ -4546,6 +4539,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4586,7 +4584,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.124/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.418/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

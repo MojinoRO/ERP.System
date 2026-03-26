@@ -1,77 +1,141 @@
-.container {
+/* RESET GENERAL */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.loginContainer {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* ===================== */
+/* IZQUIERDA (BRANDING) */
+/* ===================== */
+.leftPanel {
+  flex: 1.2;
+  background: url("/imagen.jpg") center/cover no-repeat;
+  position: relative;
+}
+
+/* Overlay oscuro */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 32, 58, 0.75);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.overlay h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.overlay p {
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+/* ===================== */
+/* DERECHA (LOGIN) */
+/* ===================== */
+.rightPanel {
+  flex: 0.8;
+  background: #f4f6f9;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  background-color: #f0f2f5;
 }
 
+/* FORMULARIO */
 .form {
-  background-color: white;
-  padding: 48px 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 380px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 380px;
+  gap: 18px;
 }
 
-.logo {
+/* TITULO */
+.form h2 {
   text-align: center;
-  font-size: 13px;
-  color: #888;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
+  color: #0f203a;
 }
 
-.title {
-  text-align: center;
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin-bottom: 8px;
-}
-
-.label {
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 4px;
-  display: block;
-}
-
+/* INPUT GROUP */
 .inputGroup {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
-.input {
-  padding: 11px 14px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
+/* INPUTS */
+input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
   outline: none;
-  transition: border 0.2s;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
-.input:focus {
-  border-color: #4f46e5;
+input:focus {
+  border-color: #0f203a;
+  box-shadow: 0 0 0 2px rgba(15, 32, 58, 0.1);
 }
 
-.button {
+/* BOTÓN */
+button {
   padding: 12px;
-  background-color: #1a1a2e;
+  background: #0f203a;
   color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
+  border-radius: 8px;
+  font-size: 14px;
   cursor: pointer;
-  margin-top: 8px;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
 }
 
-.button:hover {
-  background-color: #4f46e5;
+button:hover {
+  background: #1b2f50;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* ===================== */
+/* RESPONSIVE (MÓVIL) */
+/* ===================== */
+@media (max-width: 768px) {
+  .loginContainer {
+    flex-direction: column;
+  }
+
+  .leftPanel {
+    display: none; /* ocultamos imagen en móvil */
+  }
+
+  .rightPanel {
+    flex: 1;
+    padding: 20px;
+  }
 }

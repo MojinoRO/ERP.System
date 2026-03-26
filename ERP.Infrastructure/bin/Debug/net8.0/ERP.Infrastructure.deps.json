@@ -554,7 +554,10 @@
       },
       "ERP.Domain/1.0.0": {
         "runtime": {
-          "ERP.Domain.dll": {}
+          "ERP.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
