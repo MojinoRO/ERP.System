@@ -25,7 +25,7 @@ public static class ConfUsuarioMapper
         };
     }
 
-    public static ConfUsuariosReponseDTO ToDto(ConfUsuariosReponseDTO entity)
+    public static ConfUsuariosReponseDTO ToDto(ConfUsuarios entity)
     {
         return new ConfUsuariosReponseDTO
         {

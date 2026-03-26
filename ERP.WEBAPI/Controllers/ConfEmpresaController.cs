@@ -33,7 +33,7 @@ public class ConfEmpresaController : ControllerBase
     //post api/empresa
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateConfEmpresaDTO dto)
+    public async Task<IActionResult>Create([FromBody] CreateConfEmpresaDTO dto)
     {
         try
         {

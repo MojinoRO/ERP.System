@@ -6,8 +6,7 @@ public interface IConfUsuariosService
 {
     public Task<IEnumerable<ConfUsuariosReponseDTO>>GetAllAsync();
     public Task<ConfUsuariosReponseDTO?>GetByIdAsync(int id);
-    public Task<CreateConfUsuariosDTO>CreateAsync(CreateConfUsuariosDTO user);
-    public Task<UpdateConfEmpresaDTO>UpdateAsync(UpdateConfUsuariosDTO user);
-    public Task<bool> DeteleAsync(int id);
-
+    public Task<ConfUsuariosReponseDTO>CreateAsync(CreateConfUsuariosDTO user);
+    public Task<ConfUsuariosReponseDTO?>UpdateAsync(UpdateConfUsuariosDTO user);
+    public Task<bool>DeleteAsync(int id);
 }

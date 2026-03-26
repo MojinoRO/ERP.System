@@ -13,6 +13,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IConfEmpresaService,ConfEmpresaService>();
 builder.Services.AddScoped<IConfEmpresaRepository,ConfEmpresaRepository>();
+builder.Services.AddScoped<IConfUsuariosRepository,ConfUsuariosRepository>();
+builder.Services.AddScoped<IConfUsuariosService,ConfUsuariosServices>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowFrontend", policy =>

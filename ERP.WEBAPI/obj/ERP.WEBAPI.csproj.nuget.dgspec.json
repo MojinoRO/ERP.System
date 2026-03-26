@@ -1,33 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "C:\\WorkSpace\\ERP\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj": {}
+    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj": {}
   },
   "projects": {
-    "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Application\\ERP.Application.csproj": {
+    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Application\\ERP.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Application\\ERP.Application.csproj",
+        "projectUniqueName": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Application\\ERP.Application.csproj",
         "projectName": "ERP.Application",
-        "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Application\\ERP.Application.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Application\\obj\\",
+        "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Application\\ERP.Application.csproj",
+        "packagesPath": "C:\\Users\\Soporte J3\\.nuget\\packages\\",
+        "outputPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Soporte J3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\ERP.Domain.csproj": {
-                "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\ERP.Domain.csproj"
+              "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Domain\\ERP.Domain.csproj": {
+                "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Domain\\ERP.Domain.csproj"
               }
             }
           }
@@ -66,22 +72,28 @@
         }
       }
     },
-    "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\ERP.Domain.csproj": {
+    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Domain\\ERP.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\ERP.Domain.csproj",
+        "projectUniqueName": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Domain\\ERP.Domain.csproj",
         "projectName": "ERP.Domain",
-        "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\ERP.Domain.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\obj\\",
+        "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Domain\\ERP.Domain.csproj",
+        "packagesPath": "C:\\Users\\Soporte J3\\.nuget\\packages\\",
+        "outputPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Soporte J3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -124,30 +136,36 @@
         }
       }
     },
-    "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj": {
+    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj",
+        "projectUniqueName": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj",
         "projectName": "ERP.Infrastructure",
-        "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Infrastructure\\obj\\",
+        "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Soporte J3\\.nuget\\packages\\",
+        "outputPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Soporte J3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\ERP.Domain.csproj": {
-                "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Domain\\ERP.Domain.csproj"
+              "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Domain\\ERP.Domain.csproj": {
+                "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Domain\\ERP.Domain.csproj"
               }
             }
           }
@@ -192,33 +210,39 @@
         }
       }
     },
-    "C:\\WorkSpace\\ERP\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj": {
+    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
+        "projectUniqueName": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
         "projectName": "ERP.WEBAPI",
-        "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.WEBAPI\\obj\\",
+        "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
+        "packagesPath": "C:\\Users\\Soporte J3\\.nuget\\packages\\",
+        "outputPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Soporte J3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Application\\ERP.Application.csproj": {
-                "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Application\\ERP.Application.csproj"
+              "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Application\\ERP.Application.csproj": {
+                "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Application\\ERP.Application.csproj"
               },
-              "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj": {
-                "projectPath": "C:\\WorkSpace\\ERP\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj"
+              "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj": {
+                "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Infrastructure\\ERP.Infrastructure.csproj"
               }
             }
           }

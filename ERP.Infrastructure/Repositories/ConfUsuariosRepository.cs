@@ -15,6 +15,10 @@ public class ConfUsuariosRepository : IConfUsuariosRepository
         return await _Context.ConfUsuarios.ToListAsync();
     }
 
+    public async Task<ConfUsuarios?> GetByName(string name)
+    {
+        return await _Context.ConfUsuarios.FindAsync(name);
+    }
     public async Task<ConfUsuarios?> GetByIdAsync(int id)
     {
         return await _Context.ConfUsuarios.FindAsync(id);
