@@ -4,5 +4,6 @@ export interface loginRequest{
 }
 
 export interface loginReponse{
-    token: string
+    UsuarioNombre: string
+    UsuarioID: number
 }

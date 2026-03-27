@@ -15,7 +15,7 @@ public class ConfUsuariosController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
     {
-        var user = _service.GetAllAsync();
+        var user = await _service.GetAllAsync();
         return Ok(user);
     }
 
