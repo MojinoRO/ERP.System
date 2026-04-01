@@ -1,5 +1,6 @@
 using ERP.Application.DTOs;
 using ERP.Application.interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ERP.WEBAPI.Controllers;
@@ -63,5 +64,14 @@ public class ConfUsuariosController : ControllerBase
         var resultado = await _service.DeleteAsync(id);
         if(!resultado) return NotFound();
         return NoContent();
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult>LoginAsync([FromBody] loginRequestDTO request)
+    {
+        var result = await _service.LoginAsync(request);
+        if(result == null) return Unauthorized();
+
+        return Ok(result);
     }
 }

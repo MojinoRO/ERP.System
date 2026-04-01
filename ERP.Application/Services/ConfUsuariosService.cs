@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
 using ERP.Application.DTOs;
 using ERP.Application.interfaces;
 using ERP.Domain.interfaces;
@@ -42,5 +40,24 @@ public class ConfUsuariosServices : IConfUsuariosService
     public async Task<bool> DeleteAsync(int id)
     {
         return await _repo.DeleteAsync(id);
+    }
+
+    public async Task<LoginResponseDTO?>LoginAsync(loginRequestDTO request)
+    {
+        var  user = await _repo.GetByName(request.NombreUsuario);
+        if(user == null)
+        return null;
+
+        if(user.ContraseñaUsuario != request.ContraseñaUsuario)
+        return null;
+
+        var token = "token_fake" + user.UsuarioID;
+
+        return new LoginResponseDTO
+        {
+            UsuarioId=user.UsuarioID,
+            NombreUsuario=user.NombreUsuario,
+            Rol= user.RolUsuario,
+        };
     }
 }

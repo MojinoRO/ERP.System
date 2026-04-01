@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using ERP.Domain.Entities;
 using ERP.Domain.interfaces;
 using ERP.Infrastructure.Data;
@@ -53,4 +52,5 @@ public class ConfUsuariosRepository : IConfUsuariosRepository
         await _Context.SaveChangesAsync();
         return true;
     }
+
 }

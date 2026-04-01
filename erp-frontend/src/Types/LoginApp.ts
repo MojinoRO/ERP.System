@@ -4,6 +4,6 @@ export interface loginRequest{
 }
 
 export interface loginReponse{
-    usuarioNombre: string
+    nombreUsuario: string
     usuarioID: number
 }

@@ -1,4 +1,4 @@
-import { LoginPage } from "./Components/LogginApp";
+import { LoginPage } from "./Pages/LogginApp";
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 
 function App(){

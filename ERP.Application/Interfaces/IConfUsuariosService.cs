@@ -9,4 +9,5 @@ public interface IConfUsuariosService
     public Task<ConfUsuariosReponseDTO>CreateAsync(CreateConfUsuariosDTO user);
     public Task<ConfUsuariosReponseDTO?>UpdateAsync(UpdateConfUsuariosDTO user);
     public Task<bool>DeleteAsync(int id);
+    public Task<LoginResponseDTO?>LoginAsync(loginRequestDTO request);
 }
