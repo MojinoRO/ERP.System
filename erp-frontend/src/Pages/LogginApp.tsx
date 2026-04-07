@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "../Components/PublicStyle.module.css";
-import { getUsuarios , loginUser } from "../Api/LogginUser";
+import { getUsuarios, loginUser } from "../Api/LogginUser";
 import type { loginReponse } from "../Types/LoginApp";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const [usuarios, setUsuarios] = useState<loginReponse[]>([]);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState<string>("");
   const [viewUser, setViewUser] = useState(false);
-  const [contraseña, setContraseña]= useState("");
+  const [contraseña, setContraseña] = useState("");
 
   useEffect(() => {
     cargarUsuarios();
@@ -27,31 +28,34 @@ export const LoginPage = () => {
     setViewUser(false);
   };
 
-  const HandledLoggin = async (e:React.MouseEvent<HTMLButtonElement>)=>{
+  const navigate = useNavigate();
+
+  const HandledLoggin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if(!usuarioSeleccionado){
-      alert("Debe Seleccionar Usuarios")
+    if (!usuarioSeleccionado) {
+      alert("Debe Seleccionar Usuarios");
     }
-    if(!contraseña){
-      alert("Contraseña incorrecta")
+    if (!contraseña) {
+      alert("Contraseña incorrecta");
     }
-    console.log(usuarioSeleccionado +"  "+ contraseña)
-    try{
+    console.log(usuarioSeleccionado + "  " + contraseña);
+    try {
       const result = await loginUser({
-      nombreUsuario: usuarioSeleccionado,
-      contraseñaUsuario: contraseña,
-    });
-    console.log("LOGIN OK:", result);
+        nombreUsuario: usuarioSeleccionado,
+        contraseñaUsuario: contraseña,
+      });
+      console.log("LOGIN OK:", result);
 
-    localStorage.setItem("token", result.token);
+      localStorage.setItem("token", result.token);
 
-    alert("Login exitoso 🚀");
+      navigate("/dashboard");
 
-    }catch(error){
-      alert("Credenciales Incorrecta")
+      alert("Login exitoso 🚀");
+    } catch (error) {
+      alert("Credenciales Incorrecta");
     }
-  }
+  };
   return (
     <div className={styles.loginContainer}>
       {/* IZQUIERDA */}
@@ -65,8 +69,8 @@ export const LoginPage = () => {
 
       {/* DERECHA */}
       <div className={styles.rightPanel}>
-        <form  style={{margin:"20px"}}  className={styles.form}>
-          <h2 style={{margin:"10px"}}>Iniciar Sesión</h2>
+        <form style={{ margin: "20px" }} className={styles.form}>
+          <h2 style={{ margin: "10px" }}>Iniciar Sesión</h2>
 
           {/* INPUT USUARIO */}
           <div className={styles.inputGroup}>
@@ -85,7 +89,8 @@ export const LoginPage = () => {
               {viewUser && usuarios.length > 0 && (
                 <div className={styles.dropdown}>
                   {usuarios.map((e, i) => (
-                    <div style={{color:"black"}}
+                    <div
+                      style={{ color: "black" }}
                       key={i}
                       className={styles.dropdownItem}
                       onClick={() => seleccionarUsuario(e)}
@@ -101,14 +106,17 @@ export const LoginPage = () => {
           {/* PASSWORD */}
           <div className={styles.inputGroup}>
             <label>Contraseña:</label>
-            <input type="password" placeholder="Ingrese su contraseña" 
-            value={contraseña}
-            onChange={(e)=>setContraseña(e.target.value)}/>
+            <input
+              type="password"
+              placeholder="Ingrese su contraseña"
+              value={contraseña}
+              onChange={(e) => setContraseña(e.target.value)}
+            />
           </div>
 
-          <button type="submit"
-          onClick={HandledLoggin}>Ingresar</button>
-
+          <button type="submit" onClick={HandledLoggin}>
+            Ingresar
+          </button>
         </form>
       </div>
     </div>
