@@ -40,7 +40,7 @@
 }
 
 .linkActive {
-  composes: link;           /* hereda los estilos de .link */
+  composes: link;
   background: rgba(99,102,241,0.25);
   color: white;
 }
