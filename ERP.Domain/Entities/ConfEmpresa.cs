@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.Contracts;
 
 namespace ERP.Domain.Entities;
 public class ConfEmpresa
@@ -16,5 +17,28 @@ public class ConfEmpresa
     [Required]
     [MaxLength(150)]
     public string EmpresaNombre{get;set;}=null!;
-    
+
+    [Required]
+    [MaxLength(150)]
+    public string EmpresaRazonSocial{get; set;}=null!;
+
+    [Required]
+    [MaxLength(150)]
+    public string EmpresaRepresentanteLegal{get; set;}=null!;
+
+    [Required]
+    [MaxLength(150)]
+    public string EmpresaTelefono{get; set;}=null!;
+
+    [Required]
+    [MaxLength(150)]
+    public string EmpresaDireccion{get;set;}=null!;
+
+    [Required]
+    [MaxLength(150)]
+    public string EmpresaEmail{get;set;}=null!;
+
+    [Required]
+    [MaxLength(150)]
+    public string EmpresaKeyLicencia{get;set;}=null!;
 }

@@ -2,20 +2,23 @@
    FUENTES Y TIPOGRAFÍA
    ===================== */
 
+/* Título principal de la página */
 .pageTitle {
-  font-size: 22px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 4px;
-  letter-spacing: -0.3px;
+  font-size: 22px;           /* Tamaño grande */
+  font-weight: 600;          /* Semi-negrita */
+  color: #111827;            /* Color oscuro */
+  margin-bottom: 4px;        /* Espacio abajo */
+  letter-spacing: -0.3px;    /* Reduce espacio entre letras */
 }
 
+/* Subtítulo de la página */
 .pageSubtitle {
-  font-size: 14px;
-  color: #6b7280;
-  margin-bottom: 24px;
+  font-size: 14px;           /* Más pequeño */
+  color: #6b7280;            /* Gris */
+  margin-bottom: 24px;       /* Separación inferior */
 }
 
+/* Título de secciones */
 .sectionTitle {
   font-size: 16px;
   font-weight: 600;
@@ -23,110 +26,127 @@
   margin-bottom: 16px;
 }
 
+/* Etiqueta de inputs */
 .label {
-  display: block;
+  display: block;            /* Ocupa toda la línea */
   font-size: 13px;
   font-weight: 500;
   color: #374151;
   margin-bottom: 6px;
 }
 
+/* Texto de ayuda */
 .helperText {
   font-size: 12px;
-  color: #9ca3af;
+  color: #9ca3af;            /* Gris claro */
   margin-top: 4px;
 }
 
+/* Texto de error */
 .errorText {
   font-size: 12px;
-  color: #ef4444;
+  color: #ef4444;            /* Rojo */
   margin-top: 4px;
 }
+
 
 /* =====================
    FORMULARIOS
    ===================== */
 
+/* Contenedor de un campo (label + input) */
 .formGroup {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;    /* Todo en columna */
   margin-bottom: 16px;
 }
 
+/* Fila de varios inputs */
 .formRow {
-  display: grid;
+  display: grid;             
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  /* Se adapta automáticamente al ancho */
+  gap: 16px;                 /* Espacio entre columnas */
   margin-bottom: 16px;
 }
 
+/* Input base */
 .input {
   height: 38px;
-  padding: 0 12px;
+  padding: 0 12px;           /* Espacio interno horizontal */
   font-size: 14px;
   color: #111827;
   background: #ffffff;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 6px;        /* Bordes redondeados */
   outline: none;
   transition:
     border-color 0.15s,
-    box-shadow 0.15s;
+    box-shadow 0.15s;        /* Animaciones suaves */
   width: 100%;
 }
 
+/* Cuando pasas el mouse */
 .input:hover {
   border-color: #9ca3af;
 }
 
+/* Cuando haces focus */
 .input:focus {
-  border-color: #6366f1;
+  border-color: #6366f1;     /* Azul */
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
+/* Input deshabilitado */
 .input:disabled {
   background: #f3f4f6;
   color: #9ca3af;
   cursor: not-allowed;
 }
 
+/* Input con error */
 .inputError {
-  composes: input;
-  border-color: #ef4444;
+  composes: input;           /* Hereda TODO de .input */
+  border-color: #ef4444;     /* Borde rojo */
 }
 
+/* Focus en error */
 .inputError:focus {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
+/* Textarea */
 .textarea {
-  composes: input;
+  composes: input;           /* Reutiliza estilos */
   height: auto;
   padding: 10px 12px;
-  resize: vertical;
+  resize: vertical;          /* Se puede agrandar verticalmente */
   min-height: 90px;
   line-height: 1.5;
 }
 
+/* Select (combo) */
 .select {
   composes: input;
-  appearance: none;
+  appearance: none;          /* Quita estilo nativo */
   background-repeat: no-repeat;
   background-position: right 12px center;
-  padding-right: 36px;
+  padding-right: 36px;       /* Espacio para ícono */
   cursor: pointer;
 }
+
 
 /* =====================
    BOTONES
    ===================== */
 
+/* Botón base */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 8px;                  /* Espacio entre icono y texto */
   height: 38px;
   padding: 0 18px;
   font-size: 14px;
@@ -140,11 +160,13 @@
   white-space: nowrap;
 }
 
+/* Botón deshabilitado */
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
+/* Botón principal */
 .btnPrimary {
   composes: btn;
   background: #6366f1;
@@ -155,6 +177,7 @@
   background: #4f46e5;
 }
 
+/* Botón secundario */
 .btnSecondary {
   composes: btn;
   background: white;
@@ -167,6 +190,7 @@
   border-color: #9ca3af;
 }
 
+/* Botón peligro */
 .btnDanger {
   composes: btn;
   background: #ef4444;
@@ -177,6 +201,7 @@
   background: #dc2626;
 }
 
+/* Botón éxito */
 .btnSuccess {
   composes: btn;
   background: #10b981;
@@ -187,16 +212,19 @@
   background: #059669;
 }
 
+/* Grupo de botones */
 .btnGroup {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
+
 /* =====================
    TARJETAS / CARDS
    ===================== */
 
+/* Card principal */
 .card {
   background: white;
   border: 1px solid #e5e7eb;
@@ -204,21 +232,24 @@
   padding: 24px;
 }
 
+/* Encabezado de card */
 .cardHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Título a un lado y acciones al otro */
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 1px solid #f3f4f6;
 }
 
+/* Título de card */
 .cardTitle {
   font-size: 15px;
   font-weight: 600;
   color: #111827;
 }
 
+/* Grid de cards */
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -226,6 +257,7 @@
   margin-bottom: 24px;
 }
 
+/* Card de estadísticas */
 .statCard {
   background: white;
   border: 1px solid #e5e7eb;
@@ -233,12 +265,14 @@
   padding: 20px 24px;
 }
 
+/* Texto pequeño */
 .statLabel {
   font-size: 13px;
   color: #6b7280;
   margin-bottom: 8px;
 }
 
+/* Número grande */
 .statValue {
   font-size: 28px;
   font-weight: 700;
@@ -246,6 +280,7 @@
   letter-spacing: -0.5px;
 }
 
+/* Badge base */
 .statBadge {
   font-size: 12px;
   font-weight: 500;
@@ -253,20 +288,24 @@
   display: inline-block;
 }
 
+/* Subida */
 .statBadgeUp {
   composes: statBadge;
   color: #10b981;
 }
 
+/* Bajada */
 .statBadgeDown {
   composes: statBadge;
   color: #ef4444;
 }
 
+
 /* =====================
    TABLAS
    ===================== */
 
+/* Contenedor con scroll */
 .tableWrapper {
   width: 100%;
   overflow-x: auto;
@@ -274,16 +313,19 @@
   border-radius: 10px;
 }
 
+/* Tabla base */
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
 
+/* Encabezado */
 .table thead {
   background: #f9fafb;
 }
 
+/* Cabeceras */
 .table th {
   padding: 11px 16px;
   text-align: left;
@@ -296,73 +338,58 @@
   white-space: nowrap;
 }
 
+/* Celdas */
 .table td {
   padding: 12px 16px;
   color: #374151;
   border-bottom: 1px solid #f3f4f6;
 }
 
+/* Última fila sin borde */
 .table tbody tr:last-child td {
   border-bottom: none;
 }
 
+/* Hover fila */
 .table tbody tr:hover {
   background: #f9fafb;
 }
+
 
 /* =====================
    BADGES / ESTADOS
    ===================== */
 
+/* Base */
 .badge {
   display: inline-flex;
   align-items: center;
   padding: 3px 10px;
-  border-radius: 999px;
+  border-radius: 999px;      /* Forma de píldora */
   font-size: 12px;
   font-weight: 500;
 }
 
-.badgeSuccess {
-  composes: badge;
-  background: #d1fae5;
-  color: #065f46;
-}
+/* Variantes */
+.badgeSuccess { composes: badge; background: #d1fae5; color: #065f46; }
+.badgeWarning { composes: badge; background: #fef3c7; color: #92400e; }
+.badgeDanger  { composes: badge; background: #fee2e2; color: #991b1b; }
+.badgeInfo    { composes: badge; background: #e0e7ff; color: #3730a3; }
+.badgeGray    { composes: badge; background: #f3f4f6; color: #374151; }
 
-.badgeWarning {
-  composes: badge;
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.badgeDanger {
-  composes: badge;
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.badgeInfo {
-  composes: badge;
-  background: #e0e7ff;
-  color: #3730a3;
-}
-
-.badgeGray {
-  composes: badge;
-  background: #f3f4f6;
-  color: #374151;
-}
 
 /* =====================
    UTILIDADES
    ===================== */
 
+/* Línea separadora */
 .divider {
   border: none;
   border-top: 1px solid #e5e7eb;
   margin: 20px 0;
 }
 
+/* Header de página */
 .pageHeader {
   display: flex;
   align-items: flex-start;
@@ -370,6 +397,7 @@
   margin-bottom: 24px;
 }
 
+/* Estado vacío */
 .emptyState {
   display: flex;
   flex-direction: column;
@@ -381,11 +409,53 @@
   gap: 8px;
 }
 
+/* Centrar formulario */
 .FormCenter {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
   background-color: #f1f5f9;
-  padding: 32px, 16px;
+  padding: 32px 16px; /* ⚠️ corregido (sin coma) */
+}
+
+/* Mejora para inputs en fila más compactos */
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* Mejora visual de la card centrada */
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+/* Header más elegante */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+/* Botones alineados */
+.btnGroup {
+  display: flex;
+  gap: 10px;
+}
+
+/* Mejor centrado */
+.FormCenter {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  padding: 32px 16px;
 }
