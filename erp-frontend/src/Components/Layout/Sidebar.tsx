@@ -1,34 +1,30 @@
-import { NavLink } from 'react-router-dom'
-import styles from './Sidebar.module.css'
+import styles from "./Sidebar.module.css";
+import { useTabs } from "../../Context/TabContext";
+import Dashboard from "../../Pages/Dashboard";
+import Users from "../../Pages/User";
 
 const NAV_ITEMS = [
-  { to: '/dashboard', label: '🏠 Dashboard'},
-  { to: '/Contabilidad',     label: '📒 Contabilidad'},
-  { to: '/Inventarios' , label: ' 📦 Inventarios'}
-]
+  { id: "/dashboard", label: "🏠 Dashboard", component: <Dashboard /> },
+  { id: "/Contabilidad", label: "📒 Contabilidad", component: <Users /> },
+];
 
 export default function Sidebar() {
+  const { openTab, activeId } = useTabs();
   return (
     <aside className={styles.sidebar}>
-
-      <div className={styles.logo}>
-        MiApp
-      </div>
+      <div className={styles.logo}>MMC System</div>
 
       <nav className={styles.nav}>
         {NAV_ITEMS.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            className={({ isActive }) =>
-              isActive ? styles.linkActive : styles.link
-            }
+          <button
+            key={item.id}
+            onClick={() => openTab(item)}
+            className={activeId === item.id ? styles.linkActive : styles.link}
           >
             {item.label}
-          </NavLink>
+          </button>
         ))}
       </nav>
-
     </aside>
-  )
+  );
 }

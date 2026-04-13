@@ -4,5 +4,5 @@ export default function Users() {
       <h1>Usuarios</h1>
       <p>Lista de usuarios aquí.</p>
     </div>
-  )
+  );
 }

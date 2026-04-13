@@ -1,13 +1,29 @@
-import styles from './TopBar.module.css'
+import styles from "./TopBar.module.css";
+import { useTabs } from "../../Context/TabContext";
 
 export default function TopBar() {
+  const { tabs, activeId, setActiveId, closeTab } = useTabs();
+  if (tabs.length === 0) return null;
   return (
-    <header className={styles.topbar}>
-      <span className={styles.title}>Bienvenido 👋</span>
-
-      <div className={styles.right}>
-        <span className={styles.avatar}>JD</span>
-      </div>
-    </header>
-  )
+    <div className={styles.topbar}>
+      {tabs.map((tab) => (
+        <div
+          key={tab.id}
+          className={tab.id === activeId ? styles.tabactive : styles.tab}
+          onClick={() => setActiveId(tab.id)}
+        >
+          <span>[tab.label]</span>
+          <button
+            className={styles.close}
+            onClick={(e) => {
+              e.stopPropagation();
+              closeTab(tab.id);
+            }}
+          >
+            x
+          </button>
+        </div>
+      ))}
+    </div>
+  );
 }
