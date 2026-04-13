@@ -48,10 +48,7 @@ export const LoginPage = () => {
       console.log("LOGIN OK:", result);
 
       localStorage.setItem("token", result.token);
-
       navigate("/dashboard");
-
-      alert("Login exitoso 🚀");
     } catch (error) {
       alert("Credenciales Incorrecta");
     }

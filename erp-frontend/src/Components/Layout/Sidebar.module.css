@@ -1,3 +1,4 @@
+/* ── Base del sidebar ── */
 .sidebar {
   width: 240px;
   height: 100vh;
@@ -15,7 +16,7 @@
   color: white;
   font-size: 20px;
   font-weight: 700;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .nav {
@@ -23,24 +24,104 @@
   flex-direction: column;
   padding: 16px 12px;
   gap: 4px;
+  overflow-y: auto;
 }
 
 .link {
+  width: 100%;
   padding: 10px 16px;
   border-radius: 8px;
-  color: rgba(255,255,255,0.6);
-  text-decoration: none;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
-  transition: background 0.15s;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .link:hover {
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   color: white;
 }
 
 .linkActive {
   composes: link;
-  background: rgba(99,102,241,0.25);
+  background: rgba(99, 102, 241, 0.25);
   color: white;
+}
+
+/* ── Submenús ── */
+.menuParent {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  text-align: left;
+}
+
+.menuParent:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+}
+
+.arrow {
+  font-size: 18px;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.arrowOpen {
+  composes: arrow;
+  transform: rotate(90deg);
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 16px;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.submenuItem {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.submenuItem:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+}
+
+.submenuItemActive {
+  composes: submenuItem;
+  color: #a5b4fc;
+  border-left: 2px solid #6366f1;
+  background: rgba(99, 102, 241, 0.15);
 }

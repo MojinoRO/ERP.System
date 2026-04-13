@@ -1,8 +1,9 @@
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
+import TabBar from "./TapBar"; // ← agregar este import
+import TabContent from "./TabContent";
 import styles from "./DashboardLayout.module.css";
 import { TabsProvider } from "../../Context/TabContext";
-import TabContent from "./TabContent";
 
 export default function DashboardLayout() {
   return (
@@ -11,6 +12,7 @@ export default function DashboardLayout() {
         <Sidebar />
         <div className={styles.main}>
           <TopBar />
+          <TabBar />
           <main className={styles.content}>
             <TabContent />
           </main>
