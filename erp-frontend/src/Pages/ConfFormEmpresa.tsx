@@ -6,7 +6,7 @@ import { GetDatosEmpresa} from "../Api/ConfEmpresaService";
 export default function FormEmpresa() {
   const [btnActivo , setBtnAcivo]= useState(false);
   const [datosEmpresa, setdatosEmpresa] =useState<CargaDatosEmpresaResponse>({
-    Empresaid: 0,
+    EmpresaID: 0,
     EmpresaNit:"",
     EmpresaDv:"",
     EmpresaNombre:"",
@@ -21,7 +21,6 @@ export default function FormEmpresa() {
     try{
        const data = await GetDatosEmpresa();
        setdatosEmpresa(data);
-       console.log(data)
     }catch(error){
       console.error(error);
       alert("Empresa Sin Datos")
@@ -81,38 +80,49 @@ export default function FormEmpresa() {
 
           <div className={s.formGroup}>
             <label className={s.label}>Establecimiento</label>
-            <input className={s.input} placeholder="Sucursal o establecimiento" disabled={!btnActivo} />
+            <input className={s.input} placeholder="Sucursal o establecimiento" disabled={!btnActivo} 
+            value={datosEmpresa.EmpresaRazonSocial}
+            onChange={handleChange}/>
           </div>
         </div>
 
         <div className={s.formRow}>
           <div className={s.formGroup}>
             <label className={s.label}>Representante Legal</label>
-            <input className={s.input} placeholder="Representante Legal" disabled={!btnActivo} />
+            <input className={s.input} placeholder="Representante Legal" disabled={!btnActivo}
+            value={datosEmpresa.EmpresaRepresentanteLegal}
+            onChange={handleChange}/>
           </div>
 
           <div className={s.formGroup}>
             <label className={s.label}>Teléfono</label>
-            <input className={s.input} placeholder="Teléfono"   disabled={!btnActivo}/>
+            <input className={s.input} placeholder="Teléfono"  disabled={!btnActivo}
+            value={datosEmpresa.EmpresaTelefono} onChange={handleChange}/>
           </div>
         </div>
 
         <div className={s.formRow}>
           <div className={s.formGroup}>
             <label className={s.label}>Dirección</label>
-            <input className={s.input} placeholder="Dirección" disabled={!btnActivo} />
+            <input className={s.input} placeholder="Dirección" disabled={!btnActivo}
+             value={datosEmpresa.EmpresaDireccion}
+             onChange={handleChange}/>
           </div>
 
           <div className={s.formGroup}>
             <label className={s.label}>Email</label>
-            <input className={s.input} placeholder="Correo electrónico" disabled={!btnActivo} />
+            <input className={s.input} placeholder="Correo electrónico" disabled={!btnActivo}
+            value={datosEmpresa.EmpresaEmail}
+            onChange={handleChange}/>
           </div>
         </div>
 
         <div className={s.formRow}>
           <div className={s.formGroup}>
             <label className={s.label}>Licencia Key</label>
-            <input className={s.input} placeholder="Clave de licencia"  type="password" disabled={!btnActivo}/>
+            <input className={s.input} placeholder="Clave de licencia"  
+            type="password" disabled={!btnActivo} value={datosEmpresa.EmpresaKeyLicencia}
+             onChange={handleChange}/>
           </div>
         </div>
 

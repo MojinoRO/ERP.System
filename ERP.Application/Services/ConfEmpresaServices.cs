@@ -18,22 +18,43 @@ public class ConfEmpresaService : IConfEmpresaService
         return empresas.Select(ConfEmpresaMapper.ToDto);
     }
 
-    public async Task<ConfEmpresaResponseDTO?>GetByIdAsync(int id)
-    {
-       var empresa = await _repository.GetByIdAsync(id);
-       if(empresa == null)return null;
-       return ConfEmpresaMapper.ToDto(empresa);
-    }
-
     public async Task<ConfEmpresaResponseDTO>CreateAsync(CreateConfEmpresaDTO dto)
     {
-        var exite = await _repository.GetByNitAsync(dto.EmpresaNit);
-        if(exite != null)
-            throw new InvalidOperationException($"Ya existe empresa con el nit {dto.EmpresaNit}");
+        if(string.IsNullOrWhiteSpace(dto.EmpresaNit))
+            throw new Exception ("El nit es obligatorio");
+        if(string.IsNullOrEmpty(dto.EmpresaNombre))
+            throw new Exception("El nombre empresa es obligatorio");
+        if(string.IsNullOrEmpty(dto.EmpresaRazonSocial))
+            throw new Exception("El razon social  es obligatorio");
+        
+        var empresa = new ConfEmpresa
+        {
+            EmpresaNit= dto.EmpresaNit,
+            EmpresaDV= dto.EmpresaDV,
+            EmpresaNombre= dto.EmpresaNombre,
+            EmpresaRazonSocial= dto.EmpresaRazonSocial,
+            EmpresaRepresentanteLegal= dto.EmpresaRepresentanteLegal,
+            EmpresaDireccion= dto.EmpresaDireccion,
+            EmpresaTelefono=dto.EmpresaTelefono,
+            EmpresaEmail=dto.EmpresaEmail,
+            EmpresaKeyLicencia=dto.EmpresaKeyLicencia
+        };
 
-        var entidad = ConfEmpresaMapper.ToEntity(dto);
-        var Creada = await _repository.CreateAsync(entidad);
-        return ConfEmpresaMapper.ToDto(Creada);
+        await _repository.CreateAsync    (empresa);
+        var respo = new ConfEmpresaResponseDTO
+        {
+            EmpresaNit= empresa.EmpresaNit,
+            EmpresaDV= empresa.EmpresaDV,
+            EmpresaNombre=empresa.EmpresaNombre,
+            EmpresaRazonSocial=empresa.EmpresaRazonSocial,
+            EmpresaRepresentanteLegal= empresa.EmpresaRazonSocial,
+            EmpresaDireccion=empresa.EmpresaDireccion,
+            EmpresaTelefono=empresa.EmpresaTelefono,
+            EmpresaEmail=empresa.EmpresaEmail,
+            EmpresaKeyLicencia=empresa.EmpresaKeyLicencia
+        };
+
+        return respo;
 
     }
 
@@ -43,10 +64,5 @@ public class ConfEmpresaService : IConfEmpresaService
        var actualizada = await _repository.UpdateAsync(entidad);
        if(actualizada ==null)return null;
        return ConfEmpresaMapper.ToDto(actualizada);
-    }
-
-    public async Task<bool> DeleteAsync(int id)
-    {
-        return await _repository.DeleteAsync(id);        
     }
 }

@@ -4,19 +4,19 @@ import api from "./AxiosConfig"
 export const GetDatosEmpresa = async (): Promise<CargaDatosEmpresaResponse> => {
   const resp = await api.get("/ConfEmpresa");
 
-  const data = resp.data[0]; // 👈 sacas el primero
-
+  const data = resp.data[0]; //  sacas el primero
+  console.log(data)
   return {
-    EmpresaDv: data.empresaDv,
-    Empresaid: data.empresa,
+    EmpresaID: data.empresaID,
     EmpresaNit: data.empresaNit,
+    EmpresaDv: data.empresaDV,
     EmpresaNombre: data.empresaNombre,
-    EmpresaRazonSocial: "",
-    EmpresaRepresentanteLegal: "",
-    EmpresaTelefono: "",
-    EmpresaDireccion: "",
-    EmpresaEmail: "",
-    EmpresaKeyLicencia: ""
+    EmpresaRazonSocial:data.empresaRazonSocial,
+    EmpresaRepresentanteLegal: data.empresaRepresentanteLegal,
+    EmpresaTelefono: data.empresaTelefono,
+    EmpresaDireccion: data.empresaDireccion,
+    EmpresaEmail: data.empresaEmail,
+    EmpresaKeyLicencia:data.empresaKeyLicencia
   };
 };
 

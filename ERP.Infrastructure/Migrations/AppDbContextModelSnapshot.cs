@@ -29,6 +29,11 @@ namespace ERP.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmpresaID"));
 
+                    b.Property<string>("EmpresaDV")
+                        .IsRequired()
+                        .HasMaxLength(1)
+                        .HasColumnType("nvarchar(1)");
+
                     b.Property<string>("EmpresaDireccion")
                         .IsRequired()
                         .HasMaxLength(150)

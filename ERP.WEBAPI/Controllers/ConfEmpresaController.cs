@@ -21,14 +21,6 @@ public class ConfEmpresaController : ControllerBase
         var empresa = await _service.GetAllAsync();
         return Ok(empresa);
     }
-    //GET api/ConfEmpresa/1
-    [HttpGet("{id}")]
-    public async Task<IActionResult>GetById(int id)
-    {
-        var empresa = await _service.GetByIdAsync(id);
-        if(empresa == null)return NotFound();
-        return Ok(empresa);
-    }
     
     //post api/empresa
 
@@ -38,7 +30,7 @@ public class ConfEmpresaController : ControllerBase
         try
         {
             var creada = await _service.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById),new {id= creada.EmpresaID },creada);
+            return Ok(creada);
 
         }
         catch (InvalidOperationException ex)
@@ -55,14 +47,6 @@ public class ConfEmpresaController : ControllerBase
         var UpdateEmpresa = await _service.UpdateAsync(dto);
         if(UpdateEmpresa == null) return NotFound();
         return Ok(UpdateEmpresa);
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var resultado = await _service.DeleteAsync(id);
-        if(!resultado) return NotFound();
-        return NoContent();
     }
 
 }

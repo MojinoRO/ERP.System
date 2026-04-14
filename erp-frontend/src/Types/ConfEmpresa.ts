@@ -1,5 +1,5 @@
 export interface CargaDatosEmpresaRequest{
-  Empresaid: number
+  EmpresaID: number
   EmpresaNit:string,
   EmpresaDv:string,
   EmpresaNombre:string,
@@ -12,7 +12,7 @@ export interface CargaDatosEmpresaRequest{
 }
 
 export interface CargaDatosEmpresaResponse{
-  Empresaid: number
+  EmpresaID: number
   EmpresaNit:string,
   EmpresaDv:string,
   EmpresaNombre:string,

@@ -13,6 +13,9 @@ public class ConfEmpresa
     [MaxLength(15)]
     public string EmpresaNit{get;set;}=null!;
 
+    [Required]
+    [MaxLength(1)]
+    public string EmpresaDV{get;set;}=null!;
     
     [Required]
     [MaxLength(150)]

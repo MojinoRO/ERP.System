@@ -29,7 +29,14 @@ public static  class ConfEmpresaMapper
         {
             EmpresaID=entity.EmpresaID,
             EmpresaNit=entity.EmpresaNit,
-            EmpresaNombre=entity.EmpresaNombre
+            EmpresaDV= entity.EmpresaDV,
+            EmpresaNombre=entity.EmpresaNombre,
+            EmpresaRazonSocial=entity.EmpresaRazonSocial,
+            EmpresaRepresentanteLegal=entity.EmpresaRepresentanteLegal,
+            EmpresaDireccion=entity.EmpresaDireccion,
+            EmpresaTelefono=entity.EmpresaTelefono,
+            EmpresaEmail=entity.EmpresaEmail,
+            EmpresaKeyLicencia=entity.EmpresaKeyLicencia
         };
     }
 }
