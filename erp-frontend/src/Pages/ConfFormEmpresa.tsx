@@ -1,8 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./shared.module.css";
+import type { CargaDatosEmpresaResponse } from "../Types/ConfEmpresa";
+import { GetDatosEmpresa} from "../Api/ConfEmpresaService";
 
 export default function FormEmpresa() {
   const [btnActivo , setBtnAcivo]= useState(false);
+  const [datosEmpresa, setdatosEmpresa] =useState<CargaDatosEmpresaResponse>({
+    Empresaid: 0,
+    EmpresaNit:"",
+    EmpresaDv:"",
+    EmpresaNombre:"",
+    EmpresaRazonSocial:"",
+    EmpresaRepresentanteLegal:"",
+    EmpresaTelefono:"",
+    EmpresaDireccion:"",
+    EmpresaEmail:"",
+    EmpresaKeyLicencia:""
+  })
+  const cargarDatosEmpresa = async()=>{
+    try{
+       const data = await GetDatosEmpresa();
+       setdatosEmpresa(data);
+       console.log(data)
+    }catch(error){
+      console.error(error);
+      alert("Empresa Sin Datos")
+    }
+  }
+
+  useEffect(()=>{
+    cargarDatosEmpresa();
+  },[])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setdatosEmpresa({
+      ...datosEmpresa,
+      [name]: value
+    });
+  };
+
   return (
     <div className={s.FormCenter}>
       <div className={s.card} style={{ width: "100%", maxWidth: "900px" }}>
@@ -20,19 +58,25 @@ export default function FormEmpresa() {
         <div className={s.formRow}>
           <div className={s.formGroup}>
             <label className={s.label}>NIT Empresa</label>
-            <input className={s.input} placeholder="Ingrese NIT" disabled={!btnActivo} />
+            <input className={s.input} placeholder="Ingrese NIT" disabled={!btnActivo}
+             value={datosEmpresa.EmpresaNit}  
+             onChange={handleChange}/>
           </div>
 
           <div className={s.formGroup}>
             <label className={s.label}>Dígito Verificación</label>
-            <input className={s.input} placeholder="DV"  disabled={!btnActivo}/>
+            <input className={s.input} placeholder="DV" disabled={!btnActivo}
+             value={datosEmpresa.EmpresaDv}
+             onChange={handleChange}/>
           </div>
         </div>
 
         <div className={s.formRow}>
           <div className={s.formGroup}>
             <label className={s.label}>Nombre Empresa</label>
-            <input className={s.input} placeholder="Nombre comercial" disabled={!btnActivo} />
+            <input className={s.input} placeholder="Nombre comercial" disabled={!btnActivo}
+             value={datosEmpresa.EmpresaNombre}
+             onChange={handleChange} />
           </div>
 
           <div className={s.formGroup}>

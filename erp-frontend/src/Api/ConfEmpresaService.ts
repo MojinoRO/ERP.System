@@ -1,35 +1,26 @@
-import api from "../api/AxiosConfig";
-import type {
-  ConfEmpresa,
-  CreateConfEmpresa,
-  UpdateConfEmpresa,
-} from "../types/ConfEmpresa";
+import type { CargaDatosEmpresaRequest, CargaDatosEmpresaResponse } from "../Types/ConfEmpresa";
+import api from "./AxiosConfig"
 
-//get obtener todas las empresas
-export const getEmpresas = async (): Promise<ConfEmpresa[]> => {
-  const reponse = await api.get<ConfEmpresa[]>("/ConfEmpresa");
-  return reponse.data;
+export const GetDatosEmpresa = async (): Promise<CargaDatosEmpresaResponse> => {
+  const resp = await api.get("/ConfEmpresa");
+
+  const data = resp.data[0]; // 👈 sacas el primero
+
+  return {
+    EmpresaDv: data.empresaDv,
+    Empresaid: data.empresa,
+    EmpresaNit: data.empresaNit,
+    EmpresaNombre: data.empresaNombre,
+    EmpresaRazonSocial: "",
+    EmpresaRepresentanteLegal: "",
+    EmpresaTelefono: "",
+    EmpresaDireccion: "",
+    EmpresaEmail: "",
+    EmpresaKeyLicencia: ""
+  };
 };
-// get obtener por id
-export const getEmpresaById = async (id: number): Promise<ConfEmpresa> => {
-  const reponse = await api.get<ConfEmpresa>(`/ConfEmpresa/${id}`);
-  return reponse.data;
-};
-// POST — crear una empresa
-export const createEmpresa = async (
-  empresa: CreateConfEmpresa,
-): Promise<ConfEmpresa> => {
-  const response = await api.post<ConfEmpresa>("/ConfEmpresa", empresa);
-  return response.data;
-};
-//PUT -- Actualizar empresa
-export const UpdateEmpresa = async (
-  id: number,
-  empresa: UpdateConfEmpresa,
-): Promise<ConfEmpresa> => {
-  const response = await api.put<ConfEmpresa>(`/ConfEmpresa/${id}`, empresa);
-  return response.data;
-};
-export const DeleteEmpresa = async (id: number): Promise<void> => {
-  await api.delete(`/ConfEmpresa/${id}`);
-};
+
+export const saveDatosEmpresa = async(data:CargaDatosEmpresaRequest) :Promise<void> =>{
+  await api.post("/ConfEmpresa",data);
+}
+

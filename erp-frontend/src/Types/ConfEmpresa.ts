@@ -1,18 +1,25 @@
-// Lo que la API devuelve (GET)
-export interface ConfEmpresa {
-  empresaID: number;
-  empresaNit: string;
-  empresaNombre: string;
+export interface CargaDatosEmpresaRequest{
+  Empresaid: number
+  EmpresaNit:string,
+  EmpresaDv:string,
+  EmpresaNombre:string,
+  EmpresaRazonSocial:string,
+  EmpresaRepresentanteLegal:string,
+  EmpresaTelefono:string,
+  EmpresaDireccion:string,
+  EmpresaEmail:string,
+  EmpresaKeyLicencia: string
 }
 
-// Lo que enviamos para CREAR (POST)
-export interface CreateConfEmpresa {
-  empresaNit: string;
-  empresaNombre: string;
-}
-// Lo que enviamos para ACTUALIZAR (PUT)
-export interface UpdateConfEmpresa {
-  empresaID: number;
-  empresaNit: string;
-  empresaNombre: string;
+export interface CargaDatosEmpresaResponse{
+  Empresaid: number
+  EmpresaNit:string,
+  EmpresaDv:string,
+  EmpresaNombre:string,
+  EmpresaRazonSocial:string,
+  EmpresaRepresentanteLegal:string,
+  EmpresaTelefono:string,
+  EmpresaDireccion:string,
+  EmpresaEmail:string,
+  EmpresaKeyLicencia: string
 }

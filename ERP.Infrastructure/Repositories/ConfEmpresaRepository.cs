@@ -16,11 +16,6 @@ public class ConfEmpresaRepository : IConfEmpresaRepository
         return await _Context.ConfEmpresa.ToListAsync();
     }
 
-    public async Task<ConfEmpresa?> GetByIdAsync( int id)
-    {
-        return await _Context.ConfEmpresa.FindAsync(id);
-    }
-
     public async Task<ConfEmpresa>CreateAsync(ConfEmpresa empresa)
     {
         _Context.ConfEmpresa.Add(empresa);
@@ -39,18 +34,4 @@ public class ConfEmpresaRepository : IConfEmpresaRepository
         return existe;
     }
 
-    public async Task<bool>DeleteAsync(int id)
-    {
-        var existe = await _Context.ConfEmpresa.FindAsync(id);
-        if(existe == null) return false;
-
-        _Context.ConfEmpresa.Remove(existe);
-        await _Context.SaveChangesAsync();
-        return true;
-    }
-
-    public async Task<ConfEmpresa?>GetByNitAsync(string nit)
-    {
-        return await _Context.ConfEmpresa.FirstOrDefaultAsync(e=> e.EmpresaNit == nit);
-    }
 }

@@ -8,17 +8,10 @@ public interface IConfEmpresaRepository
     // LEER LAS QUE EXISTEN 
     Task<IEnumerable<ConfEmpresa>>GetAllAsync();
 
-    //Leer por ID
-    Task<ConfEmpresa?>GetByIdAsync(int id);
-
-    //LEER POR NIT 
-    Task<ConfEmpresa?>GetByNitAsync(string nit);
     //CREATE
     Task<ConfEmpresa>CreateAsync(ConfEmpresa empresa);
 
     //UPDATE
     Task<ConfEmpresa?>UpdateAsync(ConfEmpresa empresa);
 
-    //DELETE
-    Task<bool> DeleteAsync (int id);
 }

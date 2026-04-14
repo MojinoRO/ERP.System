@@ -12,4 +12,7 @@ public class CreateConfEmpresaDTO
     [Required(ErrorMessage ="El Nombre Empresa es un campo obligatorio")]
     [MaxLength(150,ErrorMessage ="El Nombre no puede tener mas de 150 caracteres")]
     public string EmpresaNombre{get; set;}=null!;
+    [Required]
+    [MaxLength(150,ErrorMessage ="Debe agregar establecimiento")]
+    public string EmpresaEstablecimiento{get;set;}=null!;
 }
