@@ -7,6 +7,7 @@ import ConfFormEmpresa from "../../Pages/ConfFormEmpresa";
 import { useState } from "react";
 import type React from "react";
 
+
 interface NavChild {
   id: string;
   label: string;
@@ -74,7 +75,6 @@ export default function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo}>MMC System</div>
-
       <nav className={styles.nav}>
         {NAV_ITEMS.map((item) => {
           if (item.children) {

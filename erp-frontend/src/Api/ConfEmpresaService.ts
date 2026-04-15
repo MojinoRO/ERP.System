@@ -21,6 +21,5 @@ export const GetDatosEmpresa = async (): Promise<CargaDatosEmpresaResponse> => {
 };
 
 export const saveDatosEmpresa = async(data:CargaDatosEmpresaRequest) :Promise<void> =>{
-  await api.post("/ConfEmpresa",data);
+  await api.post(`/ConfEmpresa/${data.EmpresaID}`,data);
 }
-
