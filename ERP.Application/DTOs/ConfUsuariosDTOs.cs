@@ -6,7 +6,7 @@ namespace ERP.Application.DTOs
         public int UsuarioID{get;set;}
         public string UsuarioNombre{get; set;}=string.Empty;
         public string ContraseñaUsuario{get;set;}=string.Empty;
-        public string UsuarioRol{get;set;}=string.Empty;
+        public int UsuarioRol{get;set;}
     }
 
     public class CreateConfUsuariosDTO
@@ -14,7 +14,7 @@ namespace ERP.Application.DTOs
         public int UsuarioID{get;set;}
         public string UsuarioNombre{get; set;}=string.Empty;
         public string ContraseñaUsuario{get;set;}=string.Empty;
-        public string UsuarioRol{get;set;}=string.Empty;
+        public int  UsuarioRol{get;set;}
     }
 
     public class UpdateConfUsuariosDTO
@@ -22,11 +22,17 @@ namespace ERP.Application.DTOs
         public int UsuarioID{get;set;}
         public string UsuarioNombre{get; set;}=string.Empty;
         public string ContraseñaUsuario{get;set;}=string.Empty;
-        public string UsuarioRol{get;set;}=string.Empty;
+        public int UsuarioRol{get;set;}
     }
 
     public class DeleteConfUsuario
     {
         public int UsuarioID{get;set;}
+    }
+
+    public class LoginDto
+    {
+        public string UsuarioNombre {get;set;}=null!;
+        public string ContraseñaUsuario{get;set;}=null!;
     }
 }

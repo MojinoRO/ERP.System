@@ -45,5 +45,25 @@ namespace ERP.WEBAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult<ConfUsuariosDTO>>Login([FromBody] LoginDto dto)
+        {
+            try
+            {
+                if(dto == null)return BadRequest("Datos Invalidos");
+                var Usuario = await _service.LoginRequest(dto);
+
+                if(Usuario == null)return Unauthorized("Usuario o contraseña incorrectos");
+
+                return Ok(Usuario);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        
     }
 }

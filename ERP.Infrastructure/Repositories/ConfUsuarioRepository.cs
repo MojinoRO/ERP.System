@@ -41,7 +41,7 @@ namespace ERP.Infrastructure.Repositories
             var user = await _context.ConfUsuarios.FindAsync(id);
             if(user != null)
             {
-                user.RolUsuario="1";
+                user.RolUsuario=1;
                 await _context.SaveChangesAsync();
             };
         }      
@@ -49,6 +49,11 @@ namespace ERP.Infrastructure.Repositories
         public async Task<bool>ExistUser(int id)
         {
             return await _context.ConfUsuarios.AnyAsync(u=>u.UsuarioID ==id);
+        }
+
+        public async Task<ConfUsuarios?>GetByName(string userName)
+        {
+            return await _context.ConfUsuarios.FirstOrDefaultAsync(e =>e.NombreUsuario == userName);
         }
     }
 }

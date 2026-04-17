@@ -18,13 +18,14 @@ export const LoginPage = () => {
     try {
       const data = await getUsuarios();
       setUsuarios(data);
+      console.log(data);
     } catch (error) {
       alert("No se ha podido cargar Usuario: " + error);
     }
   };
 
   const seleccionarUsuario = (user: loginReponse) => {
-    setUsuarioSeleccionado(user.nombreUsuario);
+    setUsuarioSeleccionado(user.usuarioNombre);
     setViewUser(false);
   };
 
@@ -42,8 +43,8 @@ export const LoginPage = () => {
     console.log(usuarioSeleccionado + "  " + contraseña);
     try {
       const result = await loginUser({
-        nombreUsuario: usuarioSeleccionado,
-        contraseñaUsuario: contraseña,
+        UsuarioNombre: usuarioSeleccionado,
+        ContraseñaUsuario: contraseña,
       });
       console.log("LOGIN OK:", result);
 
@@ -92,7 +93,7 @@ export const LoginPage = () => {
                       className={styles.dropdownItem}
                       onClick={() => seleccionarUsuario(e)}
                     >
-                      {e.nombreUsuario}
+                      {e.usuarioNombre}
                     </div>
                   ))}
                 </div>

@@ -18,7 +18,7 @@ namespace ERP.Domain.Entities
         public string ContraseñaUsuario{get;set;}=null!;
 
         [Required]
-        public string RolUsuario{get;set;}=string.Empty;
+        public int RolUsuario{get;set;}
         
     }
 }

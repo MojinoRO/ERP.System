@@ -9,5 +9,6 @@ namespace ERP.Application.Interfaces
         Task<ConfUsuariosDTO>CreateUserAsync(CreateConfUsuariosDTO dto);
         Task<ConfUsuariosDTO>UpdateUserAsync(int id,UpdateConfUsuariosDTO dto);
         Task DeleteAsync(int id);
+        Task<ConfUsuariosDTO?>LoginRequest(LoginDto dto);
     }
 }

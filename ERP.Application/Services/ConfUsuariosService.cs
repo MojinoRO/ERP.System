@@ -3,6 +3,7 @@ using ERP.Domain.Entities;
 using ERP.Application.DTOs;
 using ERP.Domain.Interfaces;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 
 namespace ERP.Application.Services
@@ -44,7 +45,7 @@ namespace ERP.Application.Services
                 throw new ArgumentException("El Nombre de Usuario es requerido");
             if(string.IsNullOrEmpty(dto.ContraseñaUsuario))
                 throw new ArgumentException("Clave Obligatoria");
-            if(string.IsNullOrEmpty(dto.UsuarioRol))
+            if(dto.UsuarioRol == 0)
                 throw new ArgumentException("Rol requerido");
 
 
@@ -72,7 +73,7 @@ namespace ERP.Application.Services
                 throw new ArgumentException("El Nombre de Usuario es requerido");
             if(string.IsNullOrEmpty(dto.ContraseñaUsuario))
                 throw new ArgumentException("Clave Obligatoria");
-            if(string.IsNullOrEmpty(dto.UsuarioRol))
+            if(dto.UsuarioRol==0)
                 throw new ArgumentException("Rol requerido");
 
             var Usuario = await _repository.GetByIdAsync(id);
@@ -99,6 +100,21 @@ namespace ERP.Application.Services
             if(existe== null)
                 throw new ArgumentException("El Usuario ID a eliminar Incorrecto");
             await _repository.DeleteAsync(id);
+        }
+
+        public async Task<ConfUsuariosDTO?>LoginRequest(LoginDto dto)
+        {
+            var usuario = await _repository.GetByName(dto.UsuarioNombre);
+            if(usuario == null)return null;
+            if(usuario.ContraseñaUsuario != usuario.ContraseñaUsuario) return null;
+
+            return new ConfUsuariosDTO
+            {
+                UsuarioID=usuario.UsuarioID,
+                UsuarioNombre=usuario.NombreUsuario,
+                ContraseñaUsuario=usuario.ContraseñaUsuario,
+                UsuarioRol=usuario.RolUsuario,
+            };
         }
     }
 }

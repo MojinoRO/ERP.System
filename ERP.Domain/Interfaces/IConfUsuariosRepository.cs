@@ -10,5 +10,6 @@ namespace ERP.Domain.Interfaces
         Task<ConfUsuarios>UpdateAsync(ConfUsuarios UserUpdate);
         Task DeleteAsync(int id);
         Task <bool> ExistUser(int id);
+        Task <ConfUsuarios?> GetByName(string UsuarioName);
     }
 }

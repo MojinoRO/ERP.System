@@ -7,8 +7,8 @@ export const getUsuarios = async () =>{
 
 
 export const loginUser =async(data:{
-    nombreUsuario : string;
-    contraseñaUsuario :string;
+    UsuarioNombre : string;
+    ContraseñaUsuario :string;
 }) => {
     const response = await api.post("/ConfUsuarios/login",data);
     return response.data;   
