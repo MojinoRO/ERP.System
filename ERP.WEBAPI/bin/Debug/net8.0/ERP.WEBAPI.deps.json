@@ -11,6 +11,7 @@
           "ERP.Application": "1.0.0",
           "ERP.Infrastructure": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.24",
+          "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.EntityFrameworkCore.Design": "8.0.0",
           "Swashbuckle.AspNetCore": "6.6.2"
         },

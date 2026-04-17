@@ -1,11 +1,23 @@
 using ERP.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using ERP.WEBAPI.Middleware;
+using ERP.Application.Interfaces;
+using ERP.Application.Services;
+using ERP.Domain.Entities;
+using ERP.Infrastructure.Repositories;
+using ERP.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
+// ─── REGISTRAR REPOSITORIOS (Infrastructure) ─────────────────
+// Cuando alguien pida IProductoRepository, dale ProductoRepository
+builder.Services.AddScoped<IConfUsuariosRepository,ConfUsuariosRepository>();
+// ─── REGISTRAR SERVICIOS (Application) ───────────────────────
+// Cuando alguien pida IProductoService, dale ProductoService
+builder.Services.AddScoped<IConfUsuariosService, ConfUsuariosServices>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {

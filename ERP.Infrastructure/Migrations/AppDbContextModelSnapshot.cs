@@ -21,7 +21,7 @@ namespace ERP.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ERP.Domain.Entities.ConfEmpresa", b =>
+            modelBuilder.Entity("ConfEmpresa", b =>
                 {
                     b.Property<int>("EmpresaID")
                         .ValueGeneratedOnAdd()
@@ -97,8 +97,9 @@ namespace ERP.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("RolUsuario")
-                        .HasColumnType("int");
+                    b.Property<string>("RolUsuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UsuarioID");
 
