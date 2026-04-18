@@ -18,6 +18,8 @@ builder.Services.AddScoped<IConfUsuariosRepository,ConfUsuariosRepository>();
 // ─── REGISTRAR SERVICIOS (Application) ───────────────────────
 // Cuando alguien pida IProductoService, dale ProductoService
 builder.Services.AddScoped<IConfUsuariosService, ConfUsuariosServices>();
+builder.Services.AddScoped<IConfEmpresaRepository,ConfEmpresaRepository>();
+builder.Services.AddScoped<IConfEmpresaService,ConfEmpresaService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {
