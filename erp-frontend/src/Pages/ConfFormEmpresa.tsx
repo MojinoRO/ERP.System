@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import s from "./shared.module.css";
 import type { CargaDatosEmpresaResponse } from "../Types/ConfEmpresa";
-import { GetDatosEmpresa } from "../Api/ConfEmpresaService";
+import { GetDatosEmpresa, saveDatosEmpresa } from "../Api/ConfEmpresaService";
 
 export default function FormEmpresa() {
   const [btnActivo, setBtnAcivo] = useState(false);
@@ -40,6 +40,17 @@ export default function FormEmpresa() {
     });
   };
 
+  const SaveChanged = async() =>{
+    try{
+      await saveDatosEmpresa(datosEmpresa);
+      alert("Datos cargados correctamente");
+      setBtnAcivo(false);
+    }catch(error){
+      console.log(error);
+      alert("Error al guardar")
+    }
+  }
+
   return (
     <div className={s.FormCenter}>
       <div className={s.card} style={{ width: "100%", maxWidth: "900px" }}>
@@ -53,7 +64,7 @@ export default function FormEmpresa() {
             >
               Editar
             </button>
-            <button className={s.btnSuccess} onClick={() => setBtnAcivo(false)}>
+            <button className={s.btnSuccess} onClick={() => SaveChanged()} disabled={!btnActivo}>
               Guardar
             </button>
           </div>
