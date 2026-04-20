@@ -12,4 +12,5 @@ public class AppDbContext : DbContext
     // Aquí irán los DbSet de cada entida
     public DbSet<ConfEmpresa>ConfEmpresa {get;set;}
     public DbSet<ConfUsuarios>ConfUsuarios{get;set;}
+    public DbSet<ConfVendedores>ConfVendedores{get;set;}
 }
