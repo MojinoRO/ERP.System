@@ -5,7 +5,6 @@ export const GetDatosEmpresa = async (): Promise<CargaDatosEmpresaResponse> => {
   const resp = await api.get("/ConfEmpresa");
 
   const data = resp.data[0]; //  sacas el primero
-  console.log(data)
   return {
     EmpresaID: data.empresaID,
     EmpresaNit: data.empresaNit,

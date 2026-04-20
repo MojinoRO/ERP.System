@@ -59,12 +59,12 @@ export default function FormEmpresa() {
           <h1 className={s.pageTitle}>Datos Empresa</h1>
           <div className={s.btnGroup}>
             <button
-              className={s.btnSecondary}
+              className={`${s.btn} ${s.btnEdit}`}
               onClick={() => setBtnAcivo(true)}
             >
               Editar
             </button>
-            <button className={s.btnSuccess} onClick={() => SaveChanged()} disabled={!btnActivo}>
+            <button className={`${s.btn} ${s.btnSuccess}`} onClick={() => SaveChanged()} disabled={!btnActivo}>
               Guardar
             </button>
           </div>

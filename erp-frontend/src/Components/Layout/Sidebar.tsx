@@ -6,6 +6,7 @@ import Inventarios from "../../Pages/Inventarios";
 import ConfFormEmpresa from "../../Pages/ConfFormEmpresa";
 import { useState } from "react";
 import type React from "react";
+import ConfFormDigitadores from "../../Pages/ConfFormDigitadores";
 
 
 interface NavChild {
@@ -50,6 +51,11 @@ const NAV_ITEMS: NavItems[] = [
         id: "ConfEmpresa",
         label: "DatosEmpresa",
         component: <ConfFormEmpresa />,
+      },
+        {
+        id:"ConfVendedores",
+        label:"Digitadores",
+        component:<ConfFormDigitadores/>
       },
       {
         id: "ConfUsuarios",
