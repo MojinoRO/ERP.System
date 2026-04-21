@@ -1,25 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "../Style/FormVendedores.module.css";
 import gs from "./shared.module.css"
-
-interface Vendedores {
-    VendedorID: number;
-    CodigoVendedor: string;
-    IdentificacionVendedor: string;
-    NombreVendedor: string;
-    EstadoVendedor: number;
-}
+import { type responseVendedores } from "../Types/ConfVendedores"
+import {GetVendedores} from "../Api/ConfVendedores"
 
 export default function ConfFormDigitadores() {
-    const [form, setform] = useState<Vendedores>({
-        VendedorID: 0,
-        CodigoVendedor: "",
-        IdentificacionVendedor: "",
-        NombreVendedor: "",
-        EstadoVendedor: 0       
-    });
+    const [lista, setLista]=useState<responseVendedores[]>([]);
+    const[vendedorSelected, setVendedorSelected]=useState<responseVendedores | null>(null)
+    const[btnActive, setBtnActive]=useState(false);
 
-    const [Lista, SetLista] = useState<Vendedores[]>([]);
+    useEffect(()=>{
+        ChangedVendedores();
+    },[])
+
+    const ChangedVendedores = async ()=>{
+        try{
+            const data =await GetVendedores();
+            setLista(data);
+            setBtnActive(false)
+        }catch(error){
+            console.log(error);
+            alert("Error al cargar Datos");
+        }
+    }
 
     return (
         <div className={s.container}>
@@ -27,7 +30,6 @@ export default function ConfFormDigitadores() {
 
             <div className={s.grid}>
 
-                {/* 🟦 FORMULARIO */}
                 <div className={s.formulario}>
 
                     <div className={s.formRow}>
@@ -37,7 +39,13 @@ export default function ConfFormDigitadores() {
                             <input 
                                 className={`${s.input} ${s.codigo}`} 
                                 placeholder="Código" 
-                                value={form.CodigoVendedor}
+                                value={vendedorSelected?.vendedorCodigo}
+                                onChange={(e)=>{
+                                    setVendedorSelected({
+                                        ...vendedorSelected!,vendedorCodigo:e.target.value
+                                    })
+                                }}
+                                disabled={!btnActive}
                             />
                         </div>
 
@@ -46,7 +54,13 @@ export default function ConfFormDigitadores() {
                             <input 
                                 className={s.input} 
                                 placeholder="Ingrese Nombre" 
-                                value={form.NombreVendedor}
+                                value={vendedorSelected?.vendedorNombre}
+                                disabled={!btnActive}
+                                onChange={(e)=>{
+                                    setVendedorSelected({
+                                        ...vendedorSelected!,vendedorNombre:e.target.value
+                                    })
+                                }}
                             />
                         </div>
 
@@ -55,13 +69,21 @@ export default function ConfFormDigitadores() {
                             <input 
                                 className={s.input} 
                                 placeholder="Identificación" 
-                                value={form.IdentificacionVendedor}
+                                value={vendedorSelected?.vendedorIdentificacion}
+                                disabled={!btnActive}
+                                onChange={(e)=>{
+                                    setVendedorSelected({
+                                        ...vendedorSelected!,vendedorIdentificacion: e.target.value
+                                    })
+                                }}
                             />
                         </div>
 
                         <div className={s.formGroup}>
                             <label>Estado</label>
-                            <select className={s.select}>
+                            <select className={s.select}
+                                    value={vendedorSelected?.vendedorEstado}
+                                    disabled={!btnActive}>
                                 <option value="0">Activo</option>
                                 <option value="1">Inactivo</option>
                             </select>
@@ -69,7 +91,6 @@ export default function ConfFormDigitadores() {
 
                     </div>
 
-                    {/* 🔥 BOTONES */}
                     <div className={s.buttonGroup} style={{margin:"10px"}}>
                         <button className={`${gs.btn} ${gs.btnPrimary}`}>Crear</button>
                         <button className={`${gs.btn} ${gs.btnEdit}`}>Modificar</button>
@@ -79,7 +100,6 @@ export default function ConfFormDigitadores() {
 
                 </div>
 
-                {/* 🟩 LISTADO */}
                 <div className={s.list}>
 
                     <div className={s.listHeader}>
@@ -96,12 +116,14 @@ export default function ConfFormDigitadores() {
                             </tr>
                         </thead>
 
-                        <tbody>
-                            {Lista.map((d, i) => (
-                                <tr key={i}>
-                                    <td>{d.CodigoVendedor}</td>
-                                    <td>{d.NombreVendedor}</td>
-                                    <td>{d.EstadoVendedor === 0 ? "Activo" : "Inactivo"}</td>
+                        <tbody> 
+                            {lista.map((d, i) => (
+                                <tr key={i}
+                                    onClick={()=>setVendedorSelected(d)}
+                                    className={vendedorSelected?.vendedorID === d.vendedorID ? s.selectedRow : ""}>
+                                    <td>{d.vendedorCodigo}</td>
+                                    <td>{d.vendedorNombre}</td>
+                                    <td>{d.vendedorEstado === 0 ? "Activo" : "Inactivo"}</td>
                                 </tr>
                             ))}
                         </tbody>

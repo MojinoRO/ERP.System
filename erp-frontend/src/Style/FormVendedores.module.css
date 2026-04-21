@@ -64,3 +64,12 @@
 .table tbody tr:hover {
   background: #f9fbff;
 }
+
+.selectedRow {
+    background-color: #d0e7ff; /* azul clarito */
+    cursor: pointer;
+}
+
+.selectedRow:hover {
+    background-color: #b9dbff;
+}

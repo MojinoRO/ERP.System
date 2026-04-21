@@ -18,7 +18,6 @@ export const LoginPage = () => {
     try {
       const data = await getUsuarios();
       setUsuarios(data);
-      console.log(data);
     } catch (error) {
       alert("No se ha podido cargar Usuario: " + error);
     }
