@@ -20,6 +20,8 @@ builder.Services.AddScoped<IConfUsuariosRepository,ConfUsuariosRepository>();
 builder.Services.AddScoped<IConfUsuariosService, ConfUsuariosServices>();
 builder.Services.AddScoped<IConfEmpresaRepository,ConfEmpresaRepository>();
 builder.Services.AddScoped<IConfEmpresaService,ConfEmpresaService>();
+builder.Services.AddScoped<IConfVendedoresRepository, ConfVendedoresRepository>();
+builder.Services.AddScoped<IConfVendedoresServices, ConfVendedoresService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {

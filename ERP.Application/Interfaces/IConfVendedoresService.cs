@@ -7,9 +7,9 @@ namespace ERP.Application.Interfaces
     public interface IConfVendedoresServices
     {
         Task<IEnumerable<ConfVendedoresDTO>>GetALLAsync();
-        Task<ConfVendedores?>GetByIdAsync(int id);
-        Task<ConfVendedores>CreateAsync(CreateConfVendedoresDTO dto);
-        Task<ConfVendedores>UpdateAsyc(int id,UpdateConfVendedoresDTO dto);
+        Task<ConfVendedoresDTO?>GetByIdAsync(int id);
+        Task<ConfVendedoresDTO>CreateAsync(CreateConfVendedoresDTO dto);
+        Task<ConfVendedoresDTO>UpdateAsyc(int id,UpdateConfVendedoresDTO dto);
         Task DeleteAsync(int id);
     }
 }

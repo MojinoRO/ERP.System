@@ -64,6 +64,8 @@ namespace ERP.Application.Services
                 VendedorEstado=dto.VendedorEstado
             };
 
+            await _repository.CreateAsync(NewVendedor);
+
             return new ConfVendedoresDTO
             {
                 VendedorCodigo=NewVendedor.CodigoVendedor,
@@ -73,7 +75,7 @@ namespace ERP.Application.Services
             };
         }
 
-        public async Task<ConfVendedoresDTO>UpdateAsyc(int id , CreateConfVendedoresDTO dto)
+        public async Task<ConfVendedoresDTO>UpdateAsyc(int id , UpdateConfVendedoresDTO dto)
         {
             if(string.IsNullOrEmpty(dto.VendedorCodigo))
                 throw new ArgumentException("Codigo de vendedor vacio");
@@ -81,8 +83,6 @@ namespace ERP.Application.Services
                 throw new ArgumentException("identificacion vacia");
             if(string.IsNullOrEmpty(dto.VendedorNombre))
                 throw new ArgumentException("Nombre de vendedor es obligatorio");
-            if(dto.VendedorEstado ==0)
-                throw new ArgumentException("Seleccione estado del vendedor");
             
             var ven = await _repository.GetById(id);
             if(ven == null)
@@ -101,6 +101,14 @@ namespace ERP.Application.Services
                 VendedorNombre=update.VendedorNombre,
                 VendedorEstado=update.VendedorEstado,
             };
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var user = await _repository.GetById(id);
+            if(user== null)
+                throw new ArgumentException("Vendedor a eliminar no existe");
+            await _repository.DeleteAsync(id);
         }
     }
 }
