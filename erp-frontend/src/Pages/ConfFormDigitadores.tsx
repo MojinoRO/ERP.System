@@ -7,7 +7,11 @@ import {GetVendedores} from "../Api/ConfVendedores"
 export default function ConfFormDigitadores() {
     const [lista, setLista]=useState<responseVendedores[]>([]);
     const[vendedorSelected, setVendedorSelected]=useState<responseVendedores | null>(null)
-    const[btnActive, setBtnActive]=useState(false);
+    const[formActive, setformActive]=useState(false);
+    const[btncreate, setbtncreate]=useState(false);
+    const[btnEdit, setbtnEdit]=useState(false);
+    const[btnsave, setbtnsave]=useState(false);
+    const[btnDelete, setbtnDelete]=useState(false);
 
     useEffect(()=>{
         ChangedVendedores();
@@ -17,7 +21,7 @@ export default function ConfFormDigitadores() {
         try{
             const data =await GetVendedores();
             setLista(data);
-            setBtnActive(false)
+            setformActive(false)
         }catch(error){
             console.log(error);
             alert("Error al cargar Datos");
@@ -45,7 +49,7 @@ export default function ConfFormDigitadores() {
                                         ...vendedorSelected!,vendedorCodigo:e.target.value
                                     })
                                 }}
-                                disabled={!btnActive}
+                                disabled={!formActive}
                             />
                         </div>
 
@@ -55,7 +59,7 @@ export default function ConfFormDigitadores() {
                                 className={s.input} 
                                 placeholder="Ingrese Nombre" 
                                 value={vendedorSelected?.vendedorNombre}
-                                disabled={!btnActive}
+                                disabled={!formActive}
                                 onChange={(e)=>{
                                     setVendedorSelected({
                                         ...vendedorSelected!,vendedorNombre:e.target.value
@@ -70,7 +74,7 @@ export default function ConfFormDigitadores() {
                                 className={s.input} 
                                 placeholder="Identificación" 
                                 value={vendedorSelected?.vendedorIdentificacion}
-                                disabled={!btnActive}
+                                disabled={!formActive}
                                 onChange={(e)=>{
                                     setVendedorSelected({
                                         ...vendedorSelected!,vendedorIdentificacion: e.target.value
@@ -83,7 +87,7 @@ export default function ConfFormDigitadores() {
                             <label>Estado</label>
                             <select className={s.select}
                                     value={vendedorSelected?.vendedorEstado}
-                                    disabled={!btnActive}>
+                                    disabled={!formActive}>
                                 <option value="0">Activo</option>
                                 <option value="1">Inactivo</option>
                             </select>
@@ -92,10 +96,10 @@ export default function ConfFormDigitadores() {
                     </div>
 
                     <div className={s.buttonGroup} style={{margin:"10px"}}>
-                        <button className={`${gs.btn} ${gs.btnPrimary}`}>Crear</button>
-                        <button className={`${gs.btn} ${gs.btnEdit}`}>Modificar</button>
-                        <button className={`${gs.btn} ${gs.btnSuccess}`}>Guardar</button>
-                        <button className={`${gs.btn} ${gs.btnDanger}`}>Eliminar</button>
+                        <button className={`${gs.btn} ${gs.btnPrimary}`} disabled={!btncreate}>Crear</button>
+                        <button className={`${gs.btn} ${gs.btnEdit}`} disabled={!btnEdit}>Modificar</button>
+                        <button className={`${gs.btn} ${gs.btnSuccess}`} disabled={!btnsave}>Guardar</button>
+                        <button className={`${gs.btn} ${gs.btnDanger}`} disabled={!btnDelete}>Eliminar</button>
                     </div>
 
                 </div>
