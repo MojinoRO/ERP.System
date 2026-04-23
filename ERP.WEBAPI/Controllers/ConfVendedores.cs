@@ -39,5 +39,22 @@ namespace ERP.WEBAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UpdateConfVendedoresDTO>>Update(int id,[FromBody] UpdateConfVendedoresDTO dto)
+        {
+            try
+            {
+                if(dto == null){
+                    return BadRequest("sin datos");
+                }
+                var update = await _service.UpdateAsyc(id,dto);
+                return Ok(update);
+                
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -2,47 +2,59 @@ import { useEffect, useState } from "react";
 import s from "../Style/FormVendedores.module.css";
 import gs from "./shared.module.css";
 import { type responseVendedores } from "../Types/ConfVendedores";
-import { GetVendedores } from "../Api/ConfVendedores";
+import { GetVendedores, GetVendedorByID } from "../Api/ConfVendedores";
+import { GetDatosEmpresa } from "../Api/ConfEmpresaService";
 
 export default function ConfFormDigitadores() {
   const [lista, setLista] = useState<responseVendedores[]>([]);
   const [vendedorSelected, setVendedorSelected] =
     useState<responseVendedores | null>(null);
   const [formActive, setformActive] = useState(false);
-  const [stateBtn, setStateBtn] = useState<"create" | "edit" | "idle">("idle");
-  const isCreating = stateBtn === "create";
-  const isEdit = stateBtn === "edit";
-  const isidle = stateBtn === "idle";
 
-  const HandledCreate = () => {
-    if (vendedorSelected) {
+
+  const [btnCreate,setbtnCreate]=useState(true);
+  const [btnEdit,setbtnEdit]=useState(true);
+  const [btnSave,setbtnSave]=useState(true);
+  const [btnDelete,setbtnDelete]=useState(true);  
+
+  const handledCreate= ()=>{
+    if(vendedorSelected){
       alert("Hay datos cargados, guarde o limpie antes");
+      console.log(vendedorSelected);
       return;
     }
     setVendedorSelected({
-      vendedorID: 0,
-      vendedorCodigo: "",
-      vendedorIdentificacion: "",
-      vendedorNombre: "",
-      vendedorEstado: 0,
+      vendedorID:0,
+      vendedorCodigo:"",
+      vendedorIdentificacion:"",
+      vendedorNombre:"",
+      vendedorEstado:0
     });
 
-    setStateBtn("create");
     setformActive(true);
-  };
+    setbtnDelete(false);
+    setbtnEdit(false);
+    setbtnCreate(false);
+  }
 
-  const handledEdit = () => {
-    if (vendedorSelected == null) {
-      alert("Debe Seleccionar vendedor a modificar");
+  const handledEdit =()=>{
+    if(!vendedorSelected){
+      alert("Debe seleccionar Vendedor a Modificar")
       return;
     }
     setformActive(true);
-    setStateBtn("edit");
-  };
+    setbtnCreate(false);
+    setbtnDelete(false);
+    setbtnEdit(false);
+  }
 
-  const handledSave = () => {
-    alert("Se va a guardar");
-  };
+  const handledSave = async () =>{
+    try{
+      const data= await GetVendedorByID(vendedorSelected?.vendedorID);
+    }catch(error){
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     ChangedVendedores();
@@ -132,28 +144,26 @@ export default function ConfFormDigitadores() {
           <div className={s.buttonGroup} style={{ margin: "10px" }}>
             <button
               className={`${gs.btn} ${gs.btnPrimary}`}
-              disabled={!isidle}
-              onClick={HandledCreate}
+              disabled={!btnCreate}
+              onClick={handledCreate}
             >
               Crear
             </button>
             <button
               className={`${gs.btn} ${gs.btnEdit}`}
-              disabled={!isidle || !vendedorSelected}
-              onClick={() => handledEdit()}
+              disabled={!btnEdit}
+              onClick={handledEdit}
             >
               Modificar
             </button>
-            <button
-              className={`${gs.btn} ${gs.btnSuccess}`}
-              disabled={!isidle || !vendedorSelected}
+            <button className={`${gs.btn} ${gs.btnSuccess}`}
+              disabled={!btnSave}
             >
               Guardar
             </button>
             <button
               className={`${gs.btn} ${gs.btnDanger}`}
-              disabled={!isidle || !vendedorSelected}
-              onClick={() => handledSave()}
+              disabled={!btnDelete}
             >
               Eliminar
             </button>
