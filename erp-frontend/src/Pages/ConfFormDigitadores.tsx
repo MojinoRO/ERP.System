@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import s from "../Style/FormVendedores.module.css";
 import gs from "./shared.module.css";
 import { type responseVendedores } from "../Types/ConfVendedores";
-import { GetVendedores, GetVendedoresByID } from "../Api/ConfVendedores";
+import { GetVendedores, UpdatVendedores, CreateVendedores } from "../Api/ConfVendedores";
+
 
 export default function ConfFormDigitadores() {
   const [lista, setLista] = useState<responseVendedores[]>([]);
@@ -33,6 +34,7 @@ export default function ConfFormDigitadores() {
     setbtnDelete(false);
     setbtnEdit(false);
     setbtnCreate(false);
+    setbtnSave(true);
   };
 
   const handledEdit = () => {
@@ -41,28 +43,59 @@ export default function ConfFormDigitadores() {
       return;
     }
     setformActive(true);
-    setbtnCreate(false);
     setbtnDelete(false);
     setbtnEdit(false);
+    setbtnCreate(false);
+    setbtnSave(true);
   };
+  
 
-  const handledSave = async () => {
-    try {
-      if (!vendedorSelected) {
-        alert("Seleccione un vendedor");
+  const validarVendedor = (v: responseVendedores)=>{
+    if(!v.vendedorCodigo?.trim()){
+      alert("Debe asignar código de vendedo")
+      return false;
+    }
+    if(!v.vendedorIdentificacion?.trim()){
+      alert("Debe asignar identificación de vendedor");
+      return false;
+    }
+    if(!v.vendedorNombre?.trim()){
+      alert("Debe asignar nombre de vendedor");
+      return false;
+    }
+    return true;
+  }
+
+  const handledSave = async()=>{ 
+    try{
+      if(!vendedorSelected){
+        alert("No hay datos para guardar");
         return;
       }
-      const data = await GetVendedoresByID(vendedorSelected.vendedorID);
-      if (data) {
-        console.log("vendedor", data);
-      } else {
-        console.log("No se encontro vendedor");
+      if(!validarVendedor(vendedorSelected!))return;
+      let ok = false;
+      if(vendedorSelected?.vendedorID ===0){
+        ok = await CreateVendedores(vendedorSelected);
+        alert(ok ? "Vendedor Creado Correctamente" : "Error Al Crear Vendedor");
+        console.log(vendedorSelected);
+      }else{
+        ok= await UpdatVendedores(vendedorSelected);
+        alert(ok ? "Vendedor Actualizado Correctamente" : "Error Al Actualizar Vendedor")
       }
-    } catch (error) {
-      alert("Error al enviar datos");
+      // Reset UI 
+      setformActive(false);
+      setbtnCreate(true);
+      setbtnDelete(true);
+      setbtnEdit(true);
+      setbtnSave(true);
+      setVendedorSelected(null);
+      ChangedVendedores();
+
+    }catch(error){
+      alert("Error al Guardar vendedor");
       console.log(error);
     }
-  };
+  }
 
   useEffect(() => {
     ChangedVendedores();
@@ -140,6 +173,11 @@ export default function ConfFormDigitadores() {
                 className={s.select}
                 value={vendedorSelected?.vendedorEstado}
                 disabled={!formActive}
+                onChange={(e)=>{
+                  setVendedorSelected({
+                    ...vendedorSelected!,vendedorEstado:Number(e.target.value)
+                  })
+                }}
               >
                 <option value="0">Activo</option>
                 <option value="1">Inactivo</option>
@@ -199,9 +237,7 @@ export default function ConfFormDigitadores() {
               {lista.map((d, i) => (
                 <tr
                   key={i}
-                  onClick={() => {
-                    setVendedorSelected(d);
-                  }}
+                  onClick={()=> setVendedorSelected(d)}
                   className={
                     vendedorSelected?.vendedorID === d.vendedorID
                       ? s.selectedRow
