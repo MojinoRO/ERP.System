@@ -49,8 +49,6 @@ namespace ERP.Application.Services
                 throw new ArgumentException("identificacion vacia");
             if(string.IsNullOrEmpty(dto.VendedorNombre))
                 throw new ArgumentException("Nombre de vendedor es obligatorio");
-            if(dto.VendedorEstado ==0)
-                throw new ArgumentException("Seleccione estado del vendedor");
 
             var existe = await _repository.GetByCodigoAsync(dto.VendedorCodigo);
             if(existe != null)
@@ -103,12 +101,9 @@ namespace ERP.Application.Services
             };
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var user = await _repository.GetById(id);
-            if(user== null)
-                throw new ArgumentException("Vendedor a eliminar no existe");
-            await _repository.DeleteAsync(id);
+            return await _repository.DeleteAsync(id);
         }
     }
 }

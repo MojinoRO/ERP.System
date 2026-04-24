@@ -8,7 +8,7 @@ namespace ERP.Domain.Interfaces
         Task<ConfVendedores?>GetById(int id);
         Task<ConfVendedores>CreateAsync(ConfVendedores vendedorNew);
         Task<ConfVendedores>UPdateAsync(ConfVendedores UpdateVendedor);
-        Task DeleteAsync(int id);
+        Task <bool>DeleteAsync(int id);
         Task<bool> ExisteAsync(int id);
         Task<ConfVendedores?>GetByCodigoAsync(string codigo);
     }

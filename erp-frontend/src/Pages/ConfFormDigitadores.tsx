@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import s from "../Style/FormVendedores.module.css";
 import gs from "./shared.module.css";
 import { type responseVendedores } from "../Types/ConfVendedores";
-import { GetVendedores, UpdatVendedores, CreateVendedores } from "../Api/ConfVendedores";
+import { GetVendedores, UpdatVendedores, CreateVendedores, deleteVendedores } from "../Api/ConfVendedores";
+
 
 
 export default function ConfFormDigitadores() {
@@ -91,9 +92,34 @@ export default function ConfFormDigitadores() {
       setVendedorSelected(null);
       ChangedVendedores();
 
-    }catch(error){
+    }catch(error:any){
       alert("Error al Guardar vendedor");
-      console.log(error);
+      console.log(error.response?.data);
+    }
+  }
+
+  const handledDelete = async () =>{
+    try{
+      let ok = false;
+      if(!vendedorSelected){
+        alert("Debe Seleccionar Vendedor A Eliminar");
+        return;
+      }
+      const confirmation = window.confirm("Estas seguro de eliminar Vendedor");
+      if(!confirmation)return;
+      ok = await deleteVendedores(vendedorSelected);
+      alert(ok ? "Vendedor Eliminado correctamente " : "Error al Eliminar Vendedor");
+       // Reset UI 
+      setformActive(false);
+      setbtnCreate(true);
+      setbtnDelete(true);
+      setbtnEdit(true);
+      setbtnSave(true);
+      setVendedorSelected(null);
+      ChangedVendedores();
+
+    }catch(error){
+      return(error)
     }
   }
 

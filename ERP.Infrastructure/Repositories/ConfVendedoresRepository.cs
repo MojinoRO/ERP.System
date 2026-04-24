@@ -1,5 +1,4 @@
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
+
 using ERP.Domain.Entities;
 using ERP.Domain.Interfaces;
 using ERP.Infrastructure.Data;
@@ -38,15 +37,16 @@ namespace ERP.Infrastructure.Repositories
             return  vendedorUpdate;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var vendedor = await _context.ConfVendedores.FindAsync(id);
             if(vendedor == null)
             {
-                throw new ArgumentException("Id no existe en la base de datos");
+                return false;
             }
              _context.ConfVendedores.Remove(vendedor);
              await _context.SaveChangesAsync();
+             return true;
         }
 
         public async Task<bool>ExisteAsync(int id)

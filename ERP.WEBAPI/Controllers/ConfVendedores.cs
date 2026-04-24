@@ -56,5 +56,20 @@ namespace ERP.WEBAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult>Delete(int id)
+        {
+            try
+            {
+                var delete = await _service.DeleteAsync(id);
+                if(!delete)return NotFound("VendedorID No existe");
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

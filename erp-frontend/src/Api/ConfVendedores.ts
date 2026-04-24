@@ -44,3 +44,13 @@ export const UpdatVendedores = async (data:responseVendedores):Promise<boolean>=
     return false;
   }
 }
+
+export const deleteVendedores= async(data:responseVendedores) :Promise<boolean>=>{
+  try{
+    const eliminar = await api.delete(`/ConfVendedores/${data.vendedorID}`);
+    return eliminar.status ===200 || eliminar.status===201;
+  }catch(error:any){
+    console.log(error.response.data);
+    return false;
+  }
+}

@@ -10,6 +10,6 @@ namespace ERP.Application.Interfaces
         Task<ConfVendedoresDTO?>GetByIdAsync(int id);
         Task<ConfVendedoresDTO>CreateAsync(CreateConfVendedoresDTO dto);
         Task<ConfVendedoresDTO>UpdateAsyc(int id,UpdateConfVendedoresDTO dto);
-        Task DeleteAsync(int id);
+        Task<bool> DeleteAsync(int id);
     }
 }
