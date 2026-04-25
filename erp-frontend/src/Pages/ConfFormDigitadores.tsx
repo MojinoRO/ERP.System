@@ -1,10 +1,13 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import s from "../Style/FormVendedores.module.css";
 import gs from "./shared.module.css";
 import { type responseVendedores } from "../Types/ConfVendedores";
-import { GetVendedores, UpdatVendedores, CreateVendedores, deleteVendedores } from "../Api/ConfVendedores";
-
-
+import {
+  GetVendedores,
+  UpdatVendedores,
+  CreateVendedores,
+  deleteVendedores,
+} from "../Api/ConfVendedores";
 
 export default function ConfFormDigitadores() {
   const [lista, setLista] = useState<responseVendedores[]>([]);
@@ -49,41 +52,44 @@ export default function ConfFormDigitadores() {
     setbtnCreate(false);
     setbtnSave(true);
   };
-  
 
-  const validarVendedor = (v: responseVendedores)=>{
-    if(!v.vendedorCodigo?.trim()){
-      alert("Debe asignar código de vendedo")
+  const validarVendedor = (v: responseVendedores) => {
+    if (!v.vendedorCodigo?.trim()) {
+      alert("Debe asignar código de vendedo");
       return false;
     }
-    if(!v.vendedorIdentificacion?.trim()){
+    if (!v.vendedorIdentificacion?.trim()) {
       alert("Debe asignar identificación de vendedor");
       return false;
     }
-    if(!v.vendedorNombre?.trim()){
+    if (!v.vendedorNombre?.trim()) {
       alert("Debe asignar nombre de vendedor");
       return false;
     }
     return true;
-  }
+  };
 
-  const handledSave = async()=>{ 
-    try{
-      if(!vendedorSelected){
+  const handledSave = async () => {
+    try {
+      if (!vendedorSelected) {
         alert("No hay datos para guardar");
         return;
       }
-      if(!validarVendedor(vendedorSelected!))return;
+      if (!validarVendedor(vendedorSelected!)) return;
       let ok = false;
-      if(vendedorSelected?.vendedorID ===0){
+      if (vendedorSelected?.vendedorID === 0) {
         ok = await CreateVendedores(vendedorSelected);
         alert(ok ? "Vendedor Creado Correctamente" : "Error Al Crear Vendedor");
         console.log(vendedorSelected);
-      }else{
-        ok= await UpdatVendedores(vendedorSelected);
-        alert(ok ? "Vendedor Actualizado Correctamente" : "Error Al Actualizar Vendedor")
+      } else {
+        ok = await UpdatVendedores(vendedorSelected);
+        alert(
+          ok
+            ? "Vendedor Actualizado Correctamente"
+            : "Error Al Actualizar Vendedor",
+        );
       }
-      // Reset UI 
+      // Reset UI
       setformActive(false);
       setbtnCreate(true);
       setbtnDelete(true);
@@ -91,25 +97,26 @@ export default function ConfFormDigitadores() {
       setbtnSave(true);
       setVendedorSelected(null);
       ChangedVendedores();
-
-    }catch(error:any){
+    } catch (error: any) {
       alert("Error al Guardar vendedor");
       console.log(error.response?.data);
     }
-  }
+  };
 
-  const handledDelete = async () =>{
-    try{
+  const handledDelete = async () => {
+    try {
       let ok = false;
-      if(!vendedorSelected){
+      if (!vendedorSelected) {
         alert("Debe Seleccionar Vendedor A Eliminar");
         return;
       }
       const confirmation = window.confirm("Estas seguro de eliminar Vendedor");
-      if(!confirmation)return;
+      if (!confirmation) return;
       ok = await deleteVendedores(vendedorSelected);
-      alert(ok ? "Vendedor Eliminado correctamente " : "Error al Eliminar Vendedor");
-       // Reset UI 
+      alert(
+        ok ? "Vendedor Eliminado correctamente " : "Error al Eliminar Vendedor",
+      );
+      // Reset UI
       setformActive(false);
       setbtnCreate(true);
       setbtnDelete(true);
@@ -117,11 +124,10 @@ export default function ConfFormDigitadores() {
       setbtnSave(true);
       setVendedorSelected(null);
       ChangedVendedores();
-
-    }catch(error){
-      return(error)
+    } catch (error) {
+      return error;
     }
-  }
+  };
 
   useEffect(() => {
     ChangedVendedores();
@@ -199,10 +205,11 @@ export default function ConfFormDigitadores() {
                 className={s.select}
                 value={vendedorSelected?.vendedorEstado}
                 disabled={!formActive}
-                onChange={(e)=>{
+                onChange={(e) => {
                   setVendedorSelected({
-                    ...vendedorSelected!,vendedorEstado:Number(e.target.value)
-                  })
+                    ...vendedorSelected!,
+                    vendedorEstado: Number(e.target.value),
+                  });
                 }}
               >
                 <option value="0">Activo</option>
@@ -238,6 +245,7 @@ export default function ConfFormDigitadores() {
             <button
               className={`${gs.btn} ${gs.btnDanger}`}
               disabled={!btnDelete}
+              onClick={handledDelete}
             >
               Eliminar
             </button>
@@ -263,7 +271,7 @@ export default function ConfFormDigitadores() {
               {lista.map((d, i) => (
                 <tr
                   key={i}
-                  onClick={()=> setVendedorSelected(d)}
+                  onClick={() => setVendedorSelected(d)}
                   className={
                     vendedorSelected?.vendedorID === d.vendedorID
                       ? s.selectedRow
