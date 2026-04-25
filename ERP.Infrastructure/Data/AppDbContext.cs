@@ -1,3 +1,4 @@
+using System.Data.Common;
 using ERP.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
  
@@ -13,4 +14,5 @@ public class AppDbContext : DbContext
     public DbSet<ConfEmpresa>ConfEmpresa {get;set;}
     public DbSet<ConfUsuarios>ConfUsuarios{get;set;}
     public DbSet<ConfVendedores>ConfVendedores{get;set;}
+    public DbSet<ConfCategorias>ConfCategorias{get;set;}
 }
