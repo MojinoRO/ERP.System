@@ -2,23 +2,20 @@
    FUENTES Y TIPOGRAFÍA
    ===================== */
 
-/* Título principal de la página */
 .pageTitle {
-  font-size: 22px;           /* Tamaño grande */
-  font-weight: 600;          /* Semi-negrita */
-  color: #111827;            /* Color oscuro */
-  margin-bottom: 4px;        /* Espacio abajo */
-  letter-spacing: -0.3px;    /* Reduce espacio entre letras */
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
 }
 
-/* Subtítulo de la página */
 .pageSubtitle {
-  font-size: 14px;           /* Más pequeño */
-  color: #6b7280;            /* Gris */
-  margin-bottom: 24px;       /* Separación inferior */
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 24px;
 }
 
-/* Título de secciones */
 .sectionTitle {
   font-size: 16px;
   font-weight: 600;
@@ -26,78 +23,68 @@
   margin-bottom: 16px;
 }
 
-/* Etiqueta de inputs */
 .label {
-  display: block;            /* Ocupa toda la línea */
+  display: block;
   font-size: 13px;
   font-weight: 500;
   color: #374151;
   margin-bottom: 6px;
 }
 
-/* Texto de ayuda */
 .helperText {
   font-size: 12px;
-  color: #9ca3af;            /* Gris claro */
+  color: #9ca3af;
   margin-top: 4px;
 }
 
-/* Texto de error */
 .errorText {
   font-size: 12px;
-  color: #ef4444;            /* Rojo */
+  color: #ef4444;
   margin-top: 4px;
 }
-
 
 /* =====================
    FORMULARIOS
    ===================== */
 
-/* Contenedor de un campo (label + input) */
 .formGroup {
   display: flex;
-  flex-direction: column;    /* Todo en columna */
+  flex-direction: column;
   margin-bottom: 16px;
 }
 
-/* Fila de varios inputs */
+/* Fusionado: había dos definiciones de .formRow idénticas */
 .formRow {
-  display: grid;             
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  /* Se adapta automáticamente al ancho */
-  gap: 16px;                 /* Espacio entre columnas */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
   margin-bottom: 16px;
 }
 
-/* Input base */
 .input {
   height: 38px;
-  padding: 0 12px;           /* Espacio interno horizontal */
+  padding: 0 12px;
   font-size: 14px;
   color: #111827;
   background: #ffffff;
   border: 1px solid #d1d5db;
-  border-radius: 6px;        /* Bordes redondeados */
+  border-radius: 6px;
   outline: none;
   transition:
     border-color 0.15s,
-    box-shadow 0.15s;        /* Animaciones suaves */
+    box-shadow 0.15s;
   width: 100%;
 }
 
-/* Cuando pasas el mouse */
 .input:hover {
   border-color: #9ca3af;
 }
 
-/* Cuando haces focus */
 .input:focus {
-  border-color: #6366f1;     /* Azul */
+  border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
-/* Input deshabilitado */
 .input:disabled {
   background: #f3f4f6;
   color: #9ca3af;
@@ -105,35 +92,31 @@
   opacity: 0.8;
 }
 
-/* Input con error */
 .inputError {
-  composes: input;           /* Hereda TODO de .input */
-  border-color: #ef4444;     /* Borde rojo */
+  composes: input;
+  border-color: #ef4444;
 }
 
-/* Focus en error */
 .inputError:focus {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-/* Textarea */
 .textarea {
-  composes: input;           /* Reutiliza estilos */
+  composes: input;
   height: auto;
   padding: 10px 12px;
-  resize: vertical;          /* Se puede agrandar verticalmente */
+  resize: vertical;
   min-height: 90px;
   line-height: 1.5;
 }
 
-/* Select (combo) */
 .select {
   composes: input;
-  appearance: none;          /* Quita estilo nativo */
+  appearance: none;
   background-repeat: no-repeat;
   background-position: right 12px center;
-  padding-right: 36px;       /* Espacio para ícono */
+  padding-right: 36px;
   cursor: pointer;
 }
 
@@ -141,32 +124,30 @@
    TARJETAS / CARDS
    ===================== */
 
-/* Card principal */
+/* Fusionado: había dos definiciones de .card y .cardHeader */
 .card {
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
 }
 
-/* Encabezado de card */
 .cardHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Título a un lado y acciones al otro */
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin-bottom: 24px;
   padding-bottom: 16px;
   border-bottom: 1px solid #f3f4f6;
 }
 
-/* Título de card */
 .cardTitle {
   font-size: 15px;
   font-weight: 600;
   color: #111827;
 }
 
-/* Grid de cards */
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -174,7 +155,6 @@
   margin-bottom: 24px;
 }
 
-/* Card de estadísticas */
 .statCard {
   background: white;
   border: 1px solid #e5e7eb;
@@ -182,14 +162,12 @@
   padding: 20px 24px;
 }
 
-/* Texto pequeño */
 .statLabel {
   font-size: 13px;
   color: #6b7280;
   margin-bottom: 8px;
 }
 
-/* Número grande */
 .statValue {
   font-size: 28px;
   font-weight: 700;
@@ -197,7 +175,6 @@
   letter-spacing: -0.5px;
 }
 
-/* Badge base */
 .statBadge {
   font-size: 12px;
   font-weight: 500;
@@ -205,24 +182,20 @@
   display: inline-block;
 }
 
-/* Subida */
 .statBadgeUp {
   composes: statBadge;
   color: #10b981;
 }
 
-/* Bajada */
 .statBadgeDown {
   composes: statBadge;
   color: #ef4444;
 }
 
-
 /* =====================
    TABLAS
    ===================== */
 
-/* Contenedor con scroll */
 .tableWrapper {
   width: 100%;
   overflow-x: auto;
@@ -230,19 +203,17 @@
   border-radius: 10px;
 }
 
-/* Tabla base */
+/* Fusionado: había dos definiciones de .table con propiedades complementarias */
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
 
-/* Encabezado */
 .table thead {
   background: #f9fafb;
 }
 
-/* Cabeceras */
 .table th {
   padding: 11px 16px;
   text-align: left;
@@ -255,58 +226,83 @@
   white-space: nowrap;
 }
 
-/* Celdas */
 .table td {
   padding: 12px 16px;
   color: #374151;
   border-bottom: 1px solid #f3f4f6;
 }
 
-/* Última fila sin borde */
 .table tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* Hover fila */
+.table tbody tr {
+  border-top: 1px solid #eee;
+  cursor: pointer;
+}
+
 .table tbody tr:hover {
   background: #f9fafb;
 }
 
+.selectedRow {
+  background-color: #d0e7ff;
+  cursor: pointer;
+}
+
+.selectedRow:hover {
+  background-color: #b9dbff;
+}
 
 /* =====================
    BADGES / ESTADOS
    ===================== */
 
-/* Base */
 .badge {
   display: inline-flex;
   align-items: center;
   padding: 3px 10px;
-  border-radius: 999px;      /* Forma de píldora */
+  border-radius: 999px;
   font-size: 12px;
   font-weight: 500;
 }
 
-/* Variantes */
-.badgeSuccess { composes: badge; background: #d1fae5; color: #065f46; }
-.badgeWarning { composes: badge; background: #fef3c7; color: #92400e; }
-.badgeDanger  { composes: badge; background: #fee2e2; color: #991b1b; }
-.badgeInfo    { composes: badge; background: #e0e7ff; color: #3730a3; }
-.badgeGray    { composes: badge; background: #f3f4f6; color: #374151; }
-
+.badgeSuccess {
+  composes: badge;
+  background: #d1fae5;
+  color: #065f46;
+}
+.badgeWarning {
+  composes: badge;
+  background: #fef3c7;
+  color: #92400e;
+}
+.badgeDanger {
+  composes: badge;
+  background: #fee2e2;
+  color: #991b1b;
+}
+.badgeInfo {
+  composes: badge;
+  background: #e0e7ff;
+  color: #3730a3;
+}
+.badgeGray {
+  composes: badge;
+  background: #f3f4f6;
+  color: #374151;
+}
 
 /* =====================
    UTILIDADES
    ===================== */
 
-/* Línea separadora */
 .divider {
   border: none;
   border-top: 1px solid #e5e7eb;
   margin: 20px 0;
 }
 
-/* Header de página */
 .pageHeader {
   display: flex;
   align-items: flex-start;
@@ -314,7 +310,6 @@
   margin-bottom: 24px;
 }
 
-/* Estado vacío */
 .emptyState {
   display: flex;
   flex-direction: column;
@@ -326,42 +321,7 @@
   gap: 8px;
 }
 
-/* Centrar formulario */
-.FormCenter {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  background-color: #f1f5f9;
-  padding: 32px 16px; /* ⚠️ corregido (sin coma) */
-}
-
-/* Mejora para inputs en fila más compactos */
-.formRow {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-/* Mejora visual de la card centrada */
-.card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-}
-
-/* Header más elegante */
-.cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-
-/* Mejor centrado */
+/* Fusionado: había dos definiciones de .FormCenter idénticas */
 .FormCenter {
   display: flex;
   justify-content: center;
@@ -371,7 +331,10 @@
   padding: 32px 16px;
 }
 
-/* BOTONES */
+/* =====================
+   BOTONES
+   ===================== */
+
 .buttonGroup {
   display: flex;
   gap: 10px;
@@ -390,22 +353,51 @@
   margin: 5px;
 }
 
-.btnPrimary { background: #4A90E2; }
-.btnEdit { background: #6C63FF; }
-.btnSuccess { background: #2ECC71; }
-.btnDanger { background: #E74C3C; }
-.btnExit { background: #34495E; }
+.btnPrimary {
+  background: #4a90e2;
+}
+.btnEdit {
+  background: #6c63ff;
+}
+.btnSuccess {
+  background: #2ecc71;
+}
+.btnDanger {
+  background: #e74c3c;
+}
+.btnExit {
+  background: #34495e;
+}
 
-.btn:hover { opacity: 0.85; }
-.btn:active { opacity: 0.7; }
-
+.btn:hover {
+  opacity: 0.85;
+}
+.btn:active {
+  opacity: 0.7;
+}
 .btn:disabled {
-  background: #BDC3C7; /* gris claro */
+  background: #bdc3c7;
   cursor: not-allowed;
   color: #ecf0f1;
 }
-
-/* Opcional: quitar hover cuando está deshabilitado */
 .btn:disabled:hover {
   opacity: 0.6;
+}
+
+/* =====================
+   LAYOUT
+   ===================== */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.formulario,
+.list {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }

@@ -3,6 +3,7 @@ using ERP.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERP.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260427011339_createConfCategorias")]
+    partial class createConfCategorias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,8 +106,8 @@ namespace ERP.Infrastructure.Migrations
                     b.Property<int>("ImpuestoACargo")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TarifaImpuesto")
-                        .HasColumnType("decimal(5,2)");
+                    b.Property<int>("TarifaImpuesto")
+                        .HasColumnType("int");
 
                     b.HasKey("CategoriasID");
 

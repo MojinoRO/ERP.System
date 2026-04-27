@@ -8,8 +8,8 @@ namespace ERP.Application.Interfaces
         Task<IEnumerable<ConfCategoriasDto>>getAllAsync();
         Task<ConfCategoriasDto?>getByIdAsync(int id);
         Task<ConfCategoriasDto?>getByCodigoAsync(string codigo);
-        Task<ConfCategoriasDto>CreateAsync(CreateConfCategorias categoria);
-        Task<ConfCategoriasDto>UpdateAsync(UpdateConfCategoriasDto categoria);
+        Task<ConfCategoriasDto>CreateAsync(CreateConfCategoriasDto categoria);
+        Task<ConfCategoriasDto>UpdateAsync(int id, UpdateConfCategoriasDto categoria);
         public Task<bool>DeleteAsync(int id);
     }
 }

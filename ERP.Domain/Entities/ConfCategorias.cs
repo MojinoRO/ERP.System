@@ -19,8 +19,8 @@ namespace ERP.Domain.Entities
         [Required]
         public int ImpuestoACargo{get;set;}
 
-        [Required]
-        public int TarifaImpuesto{get;set;}
+        [Column(TypeName = "decimal(5,2)")]
+        public decimal TarifaImpuesto { get; set; }
 
         [Required]
         public int Estado {get;set;}
