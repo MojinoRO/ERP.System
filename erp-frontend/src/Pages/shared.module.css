@@ -31,18 +31,6 @@
   margin-bottom: 6px;
 }
 
-.helperText {
-  font-size: 12px;
-  color: #9ca3af;
-  margin-top: 4px;
-}
-
-.errorText {
-  font-size: 12px;
-  color: #ef4444;
-  margin-top: 4px;
-}
-
 /* =====================
    FORMULARIOS
    ===================== */
@@ -53,7 +41,6 @@
   margin-bottom: 16px;
 }
 
-/* Fusionado: había dos definiciones de .formRow idénticas */
 .formRow {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -70,9 +57,7 @@
   border: 1px solid #d1d5db;
   border-radius: 6px;
   outline: none;
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
+  transition: all 0.15s ease;
   width: 100%;
 }
 
@@ -92,118 +77,17 @@
   opacity: 0.8;
 }
 
-.inputError {
-  composes: input;
-  border-color: #ef4444;
-}
-
-.inputError:focus {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
-
-.textarea {
-  composes: input;
-  height: auto;
-  padding: 10px 12px;
-  resize: vertical;
-  min-height: 90px;
-  line-height: 1.5;
-}
-
 .select {
   composes: input;
   appearance: none;
-  background-repeat: no-repeat;
-  background-position: right 12px center;
   padding-right: 36px;
   cursor: pointer;
 }
 
 /* =====================
-   TARJETAS / CARDS
+   TABLAS (MEJORADAS)
    ===================== */
 
-/* Fusionado: había dos definiciones de .card y .cardHeader */
-.card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-}
-
-.cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.cardTitle {
-  font-size: 15px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.statCard {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 20px 24px;
-}
-
-.statLabel {
-  font-size: 13px;
-  color: #6b7280;
-  margin-bottom: 8px;
-}
-
-.statValue {
-  font-size: 28px;
-  font-weight: 700;
-  color: #111827;
-  letter-spacing: -0.5px;
-}
-
-.statBadge {
-  font-size: 12px;
-  font-weight: 500;
-  margin-top: 6px;
-  display: inline-block;
-}
-
-.statBadgeUp {
-  composes: statBadge;
-  color: #10b981;
-}
-
-.statBadgeDown {
-  composes: statBadge;
-  color: #ef4444;
-}
-
-/* =====================
-   TABLAS
-   ===================== */
-
-.tableWrapper {
-  width: 100%;
-  overflow-x: auto;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-}
-
-/* Fusionado: había dos definiciones de .table con propiedades complementarias */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -211,124 +95,53 @@
 }
 
 .table thead {
-  background: #f9fafb;
+  background: #f1f3f5;
 }
 
-.table th {
-  padding: 11px 16px;
-  text-align: left;
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 1px solid #e5e7eb;
-  white-space: nowrap;
-}
-
+.table th,
 .table td {
-  padding: 12px 16px;
-  color: #374151;
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.table tbody tr:last-child td {
-  border-bottom: none;
+  padding: 10px;
+  text-align: left;
 }
 
 .table tbody tr {
   border-top: 1px solid #eee;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
+/* Hover general */
 .table tbody tr:hover {
-  background: #f9fafb;
+  background: #f4f7ff;
 }
 
+/* 🔥 FILA SELECCIONADA (estilo ERP PRO) */
 .selectedRow {
-  background-color: #d0e7ff;
-  cursor: pointer;
-}
-
-.selectedRow:hover {
-  background-color: #b9dbff;
-}
-
-/* =====================
-   BADGES / ESTADOS
-   ===================== */
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
+  background: linear-gradient(90deg, #e6f0ff 0%, #f5f9ff 100%);
+  border-left: 4px solid #4a90e2;
   font-weight: 500;
+  box-shadow: inset 0 0 0 1px #4a90e2;
+  animation: fadeSelect 0.2s ease;
 }
 
-.badgeSuccess {
-  composes: badge;
-  background: #d1fae5;
-  color: #065f46;
-}
-.badgeWarning {
-  composes: badge;
-  background: #fef3c7;
-  color: #92400e;
-}
-.badgeDanger {
-  composes: badge;
-  background: #fee2e2;
-  color: #991b1b;
-}
-.badgeInfo {
-  composes: badge;
-  background: #e0e7ff;
-  color: #3730a3;
-}
-.badgeGray {
-  composes: badge;
-  background: #f3f4f6;
-  color: #374151;
+/* Hover cuando está seleccionada */
+.selectedRow:hover {
+  background: linear-gradient(90deg, #dce9ff 0%, #edf4ff 100%);
 }
 
-/* =====================
-   UTILIDADES
-   ===================== */
-
-.divider {
-  border: none;
-  border-top: 1px solid #e5e7eb;
-  margin: 20px 0;
+/* Texto más destacado */
+.selectedRow td {
+  color: #1e3a8a;
 }
 
-.pageHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-
-.emptyState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px;
-  color: #9ca3af;
-  font-size: 14px;
-  gap: 8px;
-}
-
-/* Fusionado: había dos definiciones de .FormCenter idénticas */
-.FormCenter {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  background-color: #f1f5f9;
-  padding: 32px 16px;
+/* Animación suave */
+@keyframes fadeSelect {
+  from {
+    background: #ffffff;
+  }
+  to {
+    background: #e6f0ff;
+  }
 }
 
 /* =====================
@@ -356,15 +169,19 @@
 .btnPrimary {
   background: #4a90e2;
 }
+
 .btnEdit {
   background: #6c63ff;
 }
+
 .btnSuccess {
   background: #2ecc71;
 }
+
 .btnDanger {
   background: #e74c3c;
 }
+
 .btnExit {
   background: #34495e;
 }
@@ -372,16 +189,9 @@
 .btn:hover {
   opacity: 0.85;
 }
+
 .btn:active {
   opacity: 0.7;
-}
-.btn:disabled {
-  background: #bdc3c7;
-  cursor: not-allowed;
-  color: #ecf0f1;
-}
-.btn:disabled:hover {
-  opacity: 0.6;
 }
 
 /* =====================
@@ -400,4 +210,9 @@
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.fieldset {
+  margin: 0;
+  border-color: transparent;
 }

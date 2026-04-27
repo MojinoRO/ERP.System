@@ -7,6 +7,8 @@ import { useState } from "react";
 import type React from "react";
 import ConfFormDigitadores from "../../Pages/ConfFormDigitadores";
 import ConfFormCategorias from "../../Pages/ConfFormCategorias";
+import {ChevronDown} from "lucide-react"
+
 
 interface NavChild {
   id: string;
@@ -120,7 +122,12 @@ export default function Sidebar() {
                     {item.icon} {item.label}
                   </span>
                   <span className={isOpen ? styles.arrowOpen : styles.arrow}>
-                    ⌵
+                    <ChevronDown 
+                    size={12}
+                    style={{
+                      transition:'transform 0.2s ease',
+                      transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                    }}/>
                   </span>
                 </button>
 
@@ -143,7 +150,12 @@ export default function Sidebar() {
                                 isSubOpen ? styles.arrowOpen : styles.arrow
                               }
                             >
-                              ⌵
+                              <ChevronDown
+                              size={12}
+                              style={{
+                                transition:'transform 0.2s ease',
+                                transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                              }}/>
                             </span>
                           </button>
 

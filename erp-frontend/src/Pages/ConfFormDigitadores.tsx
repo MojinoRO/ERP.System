@@ -274,7 +274,7 @@ export default function ConfFormDigitadores() {
                   onClick={() => setVendedorSelected(d)}
                   className={
                     vendedorSelected?.vendedorID === d.vendedorID
-                      ? s.selectedRow
+                      ? gs.selectedRow
                       : ""
                   }
                 >
