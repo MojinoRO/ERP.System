@@ -1,7 +1,6 @@
 import styles from "./Sidebar.module.css";
 import { useTabs } from "../../Context/TabContext";
 import Dashboard from "../../Pages/Dashboard";
-import Users from "../../Pages/User";
 import Inventarios from "../../Pages/Inventarios";
 import ConfFormEmpresa from "../../Pages/ConfFormEmpresa";
 import { useState } from "react";
@@ -15,12 +14,18 @@ interface NavChild {
   component: React.ReactNode;
 }
 
+interface NavTitle {
+  id: string;
+  label: string;
+  children?: NavChild[];
+}
+
 interface NavItems {
   id: string;
   label: string;
   icon: string;
   component?: React.ReactNode;
-  children?: NavChild[];
+  children?: NavTitle[];
 }
 
 const NAV_ITEMS: NavItems[] = [
@@ -35,9 +40,8 @@ const NAV_ITEMS: NavItems[] = [
     label: "Contabilidad",
     icon: "📊",
   },
-
   {
-    id: "Invetatios",
+    id: "Inventarios", // corregido typo
     label: "Inventarios",
     icon: "📦",
     component: <Inventarios />,
@@ -48,19 +52,31 @@ const NAV_ITEMS: NavItems[] = [
     icon: "⚙️",
     children: [
       {
-        id: "ConfEmpresa",
-        label: "DatosEmpresa",
-        component: <ConfFormEmpresa />,
+        id: "Basica",
+        label: "Básica  ",
+        children: [
+          {
+            id: "ConfEmpresa",
+            label: "Datos Empresa",
+            component: <ConfFormEmpresa />,
+          },
+          {
+            id: "ConfVendedores",
+            label: "Digitadores",
+            component: <ConfFormDigitadores />,
+          },
+        ],
       },
       {
-        id: "ConfVendedores",
-        label: "Digitadores",
-        component: <ConfFormDigitadores />,
-      },
-      {
-        id: "ConfCategorias",
-        label: "Categorias Articulos",
-        component: <ConfFormCategorias />,
+        id: "Inventarios",
+        label: "Inventarios ",
+        children: [
+          {
+            id: "ConfCategorias",
+            label: "Categorías Artículos",
+            component: <ConfFormCategorias />,
+          },
+        ],
       },
     ],
   },
@@ -69,8 +85,8 @@ const NAV_ITEMS: NavItems[] = [
 export default function Sidebar() {
   const { openTab, activeId } = useTabs();
 
-  //guardo los padres que estan abiertos
   const [openMenu, setOpenMenus] = useState<string[]>([]);
+  const [openSubMenu, setOpenSubMenus] = useState<string[]>([]);
 
   function toggleMenu(id: string) {
     setOpenMenus((prev) =>
@@ -78,16 +94,24 @@ export default function Sidebar() {
     );
   }
 
+  function toggleSubMenu(id: string) {
+    setOpenSubMenus((prev) =>
+      prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id],
+    );
+  }
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo}>MMC System</div>
+
       <nav className={styles.nav}>
         {NAV_ITEMS.map((item) => {
+          // 🔹 ITEM CON HIJOS (Nivel 1)
           if (item.children) {
             const isOpen = openMenu.includes(item.id);
+
             return (
               <div key={item.id}>
-                {/*Boton padre*/}
                 <button
                   className={styles.menuParent}
                   onClick={() => toggleMenu(item.id)}
@@ -99,27 +123,58 @@ export default function Sidebar() {
                     ⌵
                   </span>
                 </button>
+
+                {/* NIVEL 2 */}
                 {isOpen && (
                   <div className={styles.submenu}>
-                    {item.children.map((child) => (
-                      <button
-                        key={child.id}
-                        className={
-                          activeId === child.id
-                            ? styles.submenuItemActive
-                            : styles.submenuItem
-                        }
-                        onClick={() => openTab(child)}
-                      >
-                        {child.label}
-                      </button>
-                    ))}
+                    {item.children.map((group) => {
+                      const isSubOpen = openSubMenu.includes(group.id);
+
+                      return (
+                        <div key={group.id}>
+                          {/* TITULO NIVEL 2 */}
+                          <button
+                            className={styles.submenuTitle}
+                            onClick={() => toggleSubMenu(group.id)}
+                          >
+                            {group.label}
+                            <span
+                              className={
+                                isSubOpen ? styles.arrowOpen : styles.arrow
+                              }
+                            >
+                              ⌵
+                            </span>
+                          </button>
+
+                          {/* NIVEL 3 */}
+                          {isSubOpen && (
+                            <div className={styles.submenuChild}>
+                              {group.children?.map((child) => (
+                                <button
+                                  key={child.id}
+                                  className={
+                                    activeId === child.id
+                                      ? styles.submenuItemActive
+                                      : styles.submenuItem
+                                  }
+                                  onClick={() => openTab(child)}
+                                >
+                                  {child.label}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
             );
           }
-          //--items sin hijos
+
+          // 🔹 ITEM NORMAL
           return (
             <button
               key={item.id}
@@ -132,8 +187,7 @@ export default function Sidebar() {
                 })
               }
             >
-              {item.icon}
-              {item.label}
+              {item.icon} {item.label}
             </button>
           );
         })}

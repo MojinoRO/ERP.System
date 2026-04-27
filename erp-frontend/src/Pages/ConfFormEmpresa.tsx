@@ -40,16 +40,19 @@ export default function FormEmpresa() {
     });
   };
 
-  const SaveChanged = async() =>{
-    try{
+  const SaveChanged = async () => {
+    if (btnActivo === false) {
+      return;
+    }
+    try {
       await saveDatosEmpresa(datosEmpresa);
       alert("Datos cargados correctamente");
       setBtnAcivo(false);
-    }catch(error){
+    } catch (error) {
       console.log(error);
-      alert("Error al guardar")
+      alert("Error al guardar");
     }
-  }
+  };
 
   return (
     <div className={s.FormCenter}>
@@ -64,7 +67,10 @@ export default function FormEmpresa() {
             >
               Editar
             </button>
-            <button className={`${s.btn} ${s.btnSuccess}`} onClick={() => SaveChanged()} disabled={!btnActivo}>
+            <button
+              className={`${s.btn} ${s.btnSuccess}`}
+              onClick={() => SaveChanged()}
+            >
               Guardar
             </button>
           </div>

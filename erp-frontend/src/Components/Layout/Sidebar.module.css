@@ -25,13 +25,15 @@
   padding: 16px 12px;
   gap: 4px;
   overflow-y: auto;
+  background-color: #1e1e2d; /* 🔥 consistente */
 }
 
+/* ── Nivel 1 ── */
 .link {
   width: 100%;
   padding: 10px 16px;
   border-radius: 8px;
-  background: none;
+  background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
@@ -54,7 +56,7 @@
   color: white;
 }
 
-/* ── Submenús ── */
+/* ── Nivel 1 con hijos ── */
 .menuParent {
   width: 100%;
   display: flex;
@@ -62,7 +64,7 @@
   justify-content: space-between;
   padding: 10px 16px;
   border-radius: 8px;
-  background: none;
+  background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
@@ -79,6 +81,7 @@
   color: white;
 }
 
+/* ── Flecha ── */
 .arrow {
   font-size: 18px;
   transition: transform 0.2s;
@@ -90,19 +93,53 @@
   transform: rotate(90deg);
 }
 
+/* ── Nivel 2 ── */
 .submenu {
   display: flex;
   flex-direction: column;
-  padding-left: 16px;
+  padding-left: 12px;
   gap: 2px;
   margin-bottom: 4px;
+  background-color: #1e1e2d; /* 🔥 mismo fondo */
 }
 
+/* TITULO nivel 2 */
+.submenuTitle {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.submenuTitle:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+/* ── Nivel 3 ── */
+.submenuChild {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  gap: 2px;
+  background-color: #1e1e2d; /* 🔥 mismo fondo */
+}
+
+/* items nivel 3 */
 .submenuItem {
   width: 100%;
   padding: 8px 16px;
   border-radius: 6px;
-  background: none;
+  background: transparent;
   border: none;
   color: rgba(255, 255, 255, 0.5);
   font-size: 13px;
@@ -111,6 +148,7 @@
   transition:
     background 0.15s,
     color 0.15s;
+
   border-left: 2px solid rgba(255, 255, 255, 0.1);
 }
 
