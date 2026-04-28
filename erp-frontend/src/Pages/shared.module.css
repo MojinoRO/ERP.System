@@ -216,3 +216,8 @@
   margin: 0;
   border-color: transparent;
 }
+
+.disabledTable {
+  pointer-events: none;
+  opacity: 0.6;
+}

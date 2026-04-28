@@ -39,13 +39,11 @@ export const LoginPage = () => {
     if (!contraseña) {
       alert("Contraseña incorrecta");
     }
-    console.log(usuarioSeleccionado + "  " + contraseña);
     try {
       const result = await loginUser({
         UsuarioNombre: usuarioSeleccionado,
         ContraseñaUsuario: contraseña,
       });
-      console.log("LOGIN OK:", result);
 
       localStorage.setItem("token", result.token);
       navigate("/dashboard");

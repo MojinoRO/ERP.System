@@ -1,8 +1,7 @@
 import s from "./shared.module.css";
 import { type CategoriasResponse } from "../Types/ConfCategorias";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAllCategorias, getByCodigo } from "../Api/ConfCategoriasService";
-
 const CUENTAS = [
   { label: "Ingresos" },
   { label: "Devoluciones venta" },
@@ -20,6 +19,7 @@ export default function ConfFormCategorias() {
   const [form, setForm] = useState(false);
   const [listaCategorias, setListaCategorias] = useState<CategoriasResponse[]>([]);
   const [catagoriaSelected, setCategoriaSelected] = useState<CategoriasResponse | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const validate = (c:CategoriasResponse)=>{
     if(!c.categoriaCodigo?.trim()){
@@ -32,10 +32,11 @@ export default function ConfFormCategorias() {
   const validateCodigo= async()=>{
     try{
       if(!validate(catagoriaSelected!)) return;
+      console.log(catagoriaSelected?.categoriaCodigo);
       const  ok = await getByCodigo(catagoriaSelected!.categoriaCodigo);
-      console.log(ok);
       if(ok){
         alert("codigo ya existe");
+        inputRef.current?.focus();
         return;
       }
     }catch(error:any){
@@ -59,7 +60,14 @@ export default function ConfFormCategorias() {
 
   // 🔹 Botones (modo ERP)
   const handleCrear = () => {
-    setCategoriaSelected(null);
+    setCategoriaSelected({
+      categoriasID:0,
+      categoriaCodigo:"",
+      categoriaNombre:"",
+      impuestoACargo:0,
+      tarifaImpuesto:19,
+      estado:0
+    });
     setForm(true);
   };
 
@@ -106,12 +114,23 @@ export default function ConfFormCategorias() {
                 <label className={s.label}>Código</label>
                 <input className={s.input} placeholder="Cód."
                 value={catagoriaSelected?.categoriaCodigo}
-                onBlur={validateCodigo}/>
+                onKeyDown={(e)=>{
+                  if(e.key =="Enter"){
+                    validateCodigo();
+                  }
+                }}
+                ref={inputRef}
+                onChange={(e)=>setCategoriaSelected(prev =>({
+                  ...prev!,categoriaCodigo:e.target.value
+                }))}/>
               </div>
               <div className={s.formGroup}>
                 <label className={s.label}>Nombre</label>
                 <input className={s.input} placeholder="Nombre categoría"
-                value={catagoriaSelected?.categoriaNombre}/>
+                value={catagoriaSelected?.categoriaNombre}
+                onChange={(e)=>setCategoriaSelected(prev=>({
+                  ...prev!, categoriaNombre :e.target.value.toUpperCase()
+                }))}/>
               </div>
             </div>
 
@@ -178,7 +197,6 @@ export default function ConfFormCategorias() {
                 </tbody>
               </table>
             </div>
-
           </fieldset>
 
           {/* 🔹 Botones (SIEMPRE activos) */}
@@ -205,7 +223,7 @@ export default function ConfFormCategorias() {
             <input className={s.search} placeholder="Buscar..." />
           </div>
 
-          <table className={s.table}>
+          <table className={`${s.table} ${form ? s.disabledTable : ""}`}>
             <thead>
               <tr>
                 <th>Código</th>
