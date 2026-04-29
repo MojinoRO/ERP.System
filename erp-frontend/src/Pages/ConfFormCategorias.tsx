@@ -1,7 +1,14 @@
 import s from "./shared.module.css";
 import { type CategoriasResponse } from "../Types/ConfCategorias";
-import { useEffect, useRef, useState } from "react";
-import { getAllCategorias, getByCodigo } from "../Api/ConfCategoriasService";
+import { useEffect, useState } from "react";
+import {
+  CreateCategoria,
+  deleteCategorias,
+  getAllCategorias,
+  getByCodigo,
+  updateCategorias,
+} from "../Api/ConfCategoriasService";
+
 const CUENTAS = [
   { label: "Ingresos" },
   { label: "Devoluciones venta" },
@@ -15,35 +22,58 @@ const CUENTAS = [
 
 export default function ConfFormCategorias() {
   const NATURALEZA_OPTIONS = ["C", "D"] as const;
+  const emptyCategoria: CategoriasResponse = {
+    categoriaID: 0,
+    categoriaCodigo: "",
+    categoriaNombre: "",
+    impuestoACargo: 0,
+    tarifaImpuesto: 19,
+    estado: 0,
+  };
+  const [listaCategorias, setListaCategorias] = useState<CategoriasResponse[]>(
+    [],
+  );
+  const [categoriaSelected, setCategoriaSelected] = useState(emptyCategoria);
+  const [btnState, setBtnState] = useState<"lectura" | "creando">("lectura");
 
-  const [form, setForm] = useState(false);
-  const [listaCategorias, setListaCategorias] = useState<CategoriasResponse[]>([]);
-  const [catagoriaSelected, setCategoriaSelected] = useState<CategoriasResponse | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const validate = (c:CategoriasResponse)=>{
-    if(!c.categoriaCodigo?.trim()){
+  const validate = (c: CategoriasResponse) => {
+    if (!c.categoriaCodigo?.trim()) {
       alert("Codigo Categoria necesario");
       return false;
     }
-    return true;
-  }
-
-  const validateCodigo= async()=>{
-    try{
-      if(!validate(catagoriaSelected!)) return;
-      console.log(catagoriaSelected?.categoriaCodigo);
-      const  ok = await getByCodigo(catagoriaSelected!.categoriaCodigo);
-      if(ok){
-        alert("codigo ya existe");
-        inputRef.current?.focus();
-        return;
-      }
-    }catch(error:any){
-      console.log(error);
+    if (!c.categoriaNombre?.trim()) {
+      alert("Nombre de la Categoria necesario");
+      return false;
     }
-  }
+    return true;
+  };
 
+  const validateCodigo = async (): Promise<boolean> => {
+    try {
+      const codigo = categoriaSelected.categoriaCodigo?.trim();
+      if (!codigo) return false;
+
+      const existe = await getByCodigo(codigo);
+
+      if (existe) {
+        const duplicado = listaCategorias.some(
+          (x) =>
+            x.categoriaCodigo === codigo &&
+            x.categoriaID !== categoriaSelected.categoriaID,
+        );
+
+        if (duplicado) {
+          alert("Código ya existe, no se puede continuar");
+          return false; // BLOQUEA
+        }
+      }
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
   // 🔹 Cargar categorías
   const changedCategorias = async () => {
     try {
@@ -60,40 +90,71 @@ export default function ConfFormCategorias() {
 
   // 🔹 Botones (modo ERP)
   const handleCrear = () => {
-    setCategoriaSelected({
-      categoriasID:0,
-      categoriaCodigo:"",
-      categoriaNombre:"",
-      impuestoACargo:0,
-      tarifaImpuesto:19,
-      estado:0
-    });
-    setForm(true);
+    setCategoriaSelected(emptyCategoria);
+    setBtnState("creando");
   };
 
   const handleModificar = () => {
-    if (!catagoriaSelected) {
-      alert("Seleccione una categoría");
+    if (categoriaSelected.categoriaID === 0) {
+      alert("Debe seleccionar categoría a Modificar");
       return;
     }
-    setForm(true);
+    setBtnState("creando");
   };
 
-  const handleGuardar = () => {
-    // Aquí luego conectas tu API
-    setForm(false);
-  };
+  const handleGuardar = async () => {
+    try {
+      if (!categoriaSelected) return alert("No hay datos para guardar");
+      if (!validate(categoriaSelected)) return;
 
-  const handleEliminar = () => {
-    if (!catagoriaSelected) {
-      alert("Seleccione una categoría");
-      return;
+      const codigoOk = await validateCodigo();
+      if (!codigoOk) return;
+
+      const isNew = categoriaSelected.categoriaID === 0;
+
+      const ok = isNew
+        ? await CreateCategoria(categoriaSelected)
+        : await updateCategorias(categoriaSelected);
+
+      const accion = isNew ? "crear" : "actualizar";
+
+      alert(
+        ok
+          ? `Categoría ${accion}da correctamente`
+          : `Error al ${accion} categoría`,
+      );
+
+      if (ok) {
+        setCategoriaSelected(emptyCategoria);
+        setBtnState("lectura");
+        changedCategorias();
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error inesperado");
     }
-    const ok = window.confirm("¿Eliminar categoría?");
-    if (!ok) return;
+  };
 
-    // Aquí luego conectas tu API
-    setCategoriaSelected(null);
+  const handleEliminar = async () => {
+    try {
+      if (!categoriaSelected || !categoriaSelected.categoriaID) {
+        alert("Seleccione una categoría válida");
+        return;
+      }
+      const ok = window.confirm("¿Eliminar categoría?");
+      if (!ok) return;
+      const eliminar = await deleteCategorias(categoriaSelected);
+      if (!eliminar) {
+        alert("No se pudo eliminar categoria");
+      } else {
+        alert("Categoria Eliminada correctamente");
+      }
+      await changedCategorias();
+      setCategoriaSelected(emptyCategoria);
+      setBtnState("lectura");
+    } catch (error: any) {
+      console.log(error?.response?.data || error.message);
+    }
   };
 
   return (
@@ -103,42 +164,57 @@ export default function ConfFormCategorias() {
       <div className={s.grid}>
         {/* ── Panel izquierdo ── */}
         <div className={s.formulario}>
-          
           {/* el formulario bloqueado automáticamente */}
-          <fieldset disabled={!form} className={s.fieldset}>
-            
+          <fieldset disabled={btnState === "lectura"} className={s.fieldset}>
             <h3 className={s.sectionTitle}>Información general</h3>
 
             <div className={`${s.formRow} ${s.cols2}`}>
               <div className={s.formGroup}>
                 <label className={s.label}>Código</label>
-                <input className={s.input} placeholder="Cód."
-                value={catagoriaSelected?.categoriaCodigo}
-                onKeyDown={(e)=>{
-                  if(e.key =="Enter"){
-                    validateCodigo();
+                <input
+                  className={s.input}
+                  placeholder="Cód."
+                  value={categoriaSelected?.categoriaCodigo}
+                  onBlur={async () => {
+                    await validateCodigo();
+                  }}
+                  onChange={(e) =>
+                    setCategoriaSelected((prev) => ({
+                      ...prev!,
+                      categoriaCodigo: e.target.value,
+                    }))
                   }
-                }}
-                ref={inputRef}
-                onChange={(e)=>setCategoriaSelected(prev =>({
-                  ...prev!,categoriaCodigo:e.target.value
-                }))}/>
+                />
               </div>
               <div className={s.formGroup}>
                 <label className={s.label}>Nombre</label>
-                <input className={s.input} placeholder="Nombre categoría"
-                value={catagoriaSelected?.categoriaNombre}
-                onChange={(e)=>setCategoriaSelected(prev=>({
-                  ...prev!, categoriaNombre :e.target.value.toUpperCase()
-                }))}/>
+                <input
+                  className={s.input}
+                  placeholder="Nombre categoría"
+                  value={categoriaSelected?.categoriaNombre}
+                  onChange={(e) =>
+                    setCategoriaSelected((prev) => ({
+                      ...prev!,
+                      categoriaNombre: e.target.value.toUpperCase(),
+                    }))
+                  }
+                />
               </div>
             </div>
 
             <div className={`${s.formRow} ${s.cols2}`}>
               <div className={s.formGroup}>
                 <label className={s.label}>Impuesto a cargo</label>
-                <select className={s.select}
-                  value={catagoriaSelected?.impuestoACargo}>
+                <select
+                  className={s.select}
+                  value={categoriaSelected?.impuestoACargo}
+                  onChange={(e) =>
+                    setCategoriaSelected((prev) => ({
+                      ...prev!,
+                      impuestoACargo: Number(e.target.value),
+                    }))
+                  }
+                >
                   <option value="0">IVA incluido</option>
                   <option value="1">Exento</option>
                   <option value="2">Excluido</option>
@@ -146,14 +222,32 @@ export default function ConfFormCategorias() {
               </div>
               <div className={s.formGroup}>
                 <label className={s.label}>Tarifa IVA (%)</label>
-                <input className={s.input} placeholder="0.00" 
-                value={catagoriaSelected?.tarifaImpuesto}/>
+                <input
+                  className={s.input}
+                  placeholder="0.00"
+                  value={categoriaSelected?.tarifaImpuesto}
+                  onChange={(e) =>
+                    setCategoriaSelected((prev) => ({
+                      ...prev!,
+                      tarifaImpuesto: Number(e.target.value),
+                    }))
+                  }
+                />
               </div>
             </div>
 
             <div className={s.formGroup}>
               <label className={s.label}>Estado</label>
-              <select className={s.select}>
+              <select
+                className={s.select}
+                value={categoriaSelected.estado}
+                onChange={(e) =>
+                  setCategoriaSelected((prev) => ({
+                    ...prev!,
+                    estado: Number(e.target.value),
+                  }))
+                }
+              >
                 <option value="0">Activo</option>
                 <option value="1">Inactivo</option>
               </select>
@@ -181,7 +275,10 @@ export default function ConfFormCategorias() {
                         <input className={s.input} placeholder="Ej. 410505" />
                       </td>
                       <td>
-                        <input className={s.input} placeholder="Nombre cuenta" />
+                        <input
+                          className={s.input}
+                          placeholder="Nombre cuenta"
+                        />
                       </td>
                       <td>
                         <select className={s.select}>
@@ -199,18 +296,34 @@ export default function ConfFormCategorias() {
             </div>
           </fieldset>
 
-          {/* 🔹 Botones (SIEMPRE activos) */}
           <div className={s.buttonGroup}>
-            <button className={`${s.btn} ${s.btnPrimary}`} onClick={handleCrear}>
+            <button
+              className={`${s.btn} ${s.btnPrimary}`}
+              onClick={handleCrear}
+              disabled={btnState !== "lectura"}
+              type="button"
+            >
               Crear
             </button>
-            <button className={`${s.btn} ${s.btnEdit}`} onClick={handleModificar}>
+            <button
+              className={`${s.btn} ${s.btnEdit}`}
+              onClick={handleModificar}
+              disabled={btnState !== "lectura"}
+            >
               Modificar
             </button>
-            <button className={`${s.btn} ${s.btnSuccess}`} onClick={handleGuardar}>
+            <button
+              className={`${s.btn} ${s.btnSuccess}`}
+              onClick={handleGuardar}
+              disabled={btnState !== "creando"}
+            >
               Guardar
             </button>
-            <button className={`${s.btn} ${s.btnDanger}`} onClick={handleEliminar}>
+            <button
+              className={`${s.btn} ${s.btnDanger}`}
+              onClick={handleEliminar}
+              disabled={btnState !== "lectura"}
+            >
               Eliminar
             </button>
           </div>
@@ -223,7 +336,9 @@ export default function ConfFormCategorias() {
             <input className={s.search} placeholder="Buscar..." />
           </div>
 
-          <table className={`${s.table} ${form ? s.disabledTable : ""}`}>
+          <table
+            className={`${s.table} ${btnState !== "lectura" ? s.disabledTable : ""}`}
+          >
             <thead>
               <tr>
                 <th>Código</th>
@@ -238,7 +353,7 @@ export default function ConfFormCategorias() {
                   key={i}
                   onClick={() => setCategoriaSelected(d)}
                   className={
-                      catagoriaSelected?.categoriaCodigo === d.categoriaCodigo
+                    categoriaSelected?.categoriaCodigo === d.categoriaCodigo
                       ? s.selectedRow
                       : ""
                   }

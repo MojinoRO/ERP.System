@@ -70,7 +70,7 @@ namespace ERP.WEBAPI.Controllers
         }
 
 
-        [HttpPut("id/{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<ConfCategoriasDto>>UpdateCategoria(int id,[FromBody]UpdateConfCategoriasDto dto)
         {
             if(!ModelState.IsValid)
@@ -85,7 +85,7 @@ namespace ERP.WEBAPI.Controllers
             }
         }
 
-        [HttpDelete("id/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult>deleteCategorias(int id)
         {
             if(id ==0)
