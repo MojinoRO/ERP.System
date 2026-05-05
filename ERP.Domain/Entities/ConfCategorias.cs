@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO.Compression;
 namespace ERP.Domain.Entities
 {
     public class ConfCategorias
@@ -24,6 +25,8 @@ namespace ERP.Domain.Entities
 
         [Required]
         public int Estado {get;set;}
+
+        public ICollection<ConfSubCategorias>SubCategorias{get; set;}= new List<ConfSubCategorias>();
 
     }
 }

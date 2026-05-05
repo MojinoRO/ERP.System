@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj": {}
+    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WebApi\\ERP.WEBAPI.csproj": {}
   },
   "projects": {
     "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.Application\\ERP.Application.csproj": {
@@ -196,14 +196,14 @@
         }
       }
     },
-    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj": {
+    "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WebApi\\ERP.WEBAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
+        "projectUniqueName": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WebApi\\ERP.WEBAPI.csproj",
         "projectName": "ERP.WEBAPI",
-        "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
+        "projectPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WebApi\\ERP.WEBAPI.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\obj\\",
+        "outputPath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"

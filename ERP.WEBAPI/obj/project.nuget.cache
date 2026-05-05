@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9vbukoXp7sg=",
+  "dgSpecHash": "dsTaK3JsmiA=",
   "success": true,
-  "projectFilePath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WEBAPI\\ERP.WEBAPI.csproj",
+  "projectFilePath": "C:\\WorkSpace\\ERP.System\\ERP.System\\ERP.WebApi\\ERP.WEBAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
