@@ -40,6 +40,7 @@ namespace ERP.Infrastructure.Repositories
 
         public async Task<ConfSubCategorias>UpdateSubCategoriasAsync(ConfSubCategorias subcategoria)
         {
+            _context.ConfSubCategorias.Update(subcategoria);
             await _context.SaveChangesAsync();
             return subcategoria;
         }

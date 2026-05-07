@@ -59,12 +59,12 @@ namespace ERP.Application.Services
             return _mapper.Map<ConfSubCategeriasDTOs>(sb);
         }
 
-        public async Task <ConfSubCategeriasDTOs>UpdateSubCategoriasAsync(UpdateSubCategeriasDTOs subcategoria)
+        public async Task <ConfSubCategeriasDTOs>UpdateSubCategoriasAsync(int id,UpdateSubCategeriasDTOs subcategoria)
         {
             if(subcategoria == null)
                 throw new ArgumentException(nameof(subcategoria));
 
-            var request = await _repo.getByIDAsync(subcategoria.SubCategoriasID);
+            var request = await _repo.getByIDAsync(id);
             if(request == null)
                 throw new ArgumentException("Subcategoria No Existe en la base de datos");
 
@@ -73,8 +73,8 @@ namespace ERP.Application.Services
                 throw new ArgumentException(" codigo o nombre en blanco debe validar");
 
             var existe= await _repo.getByCodigoAsync(subcategoria.SubCategoriaCodigo);
-            if(existe != null && existe.SubCategoriaID != subcategoria.SubCategoriasID)
-                throw new ArgumentException("Codigo de subcategoria ya exuste");
+            if(existe != null && existe.CategoriaID != subcategoria.CategoriaID)
+                throw new ArgumentException("Codigo de subcategoria ya existe");
 
             _mapper.Map(subcategoria,request);
 

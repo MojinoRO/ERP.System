@@ -1,3 +1,4 @@
+using System.Drawing;
 using ERP.Application.DTOs;
 using ERP.Application.Interfaces;
 using ERP.Infrastructure.Migrations;
@@ -66,6 +67,38 @@ namespace ERP.WEBAPI.Controllers
             {
                 var subcategoria  = await _service.CreateSubCategoriasAsync(dto);
                 return CreatedAtAction(nameof(GetById),new {id = subcategoria.CategoriaID},subcategoria);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
+        [HttpPut("id/{id}")]
+        public async Task<ActionResult<UpdateSubCategeriasDTOs>>UpdateSubCategorias(int id,[FromBody]UpdateSubCategeriasDTOs dto)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try
+            {
+                var update = await _service.UpdateSubCategoriasAsync(id,dto);
+                return Ok(update);
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+        
+
+        [HttpDelete("id/{id}")]
+        public async Task<ActionResult>DeleteSubCategorias(int id)
+        {
+            var requestId = await _service.getByIDAsync(id);
+            if(requestId == null)return BadRequest("Id a eliminar no existe");
+            try
+            {
+                var eliminado = await _service.deleteSubCategoriasAsync(id);
+                return NoContent();
             }
             catch(Exception ex)
             {
