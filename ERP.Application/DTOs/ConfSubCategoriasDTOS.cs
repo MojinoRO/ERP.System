@@ -4,12 +4,11 @@ namespace ERP.Application.DTOs
 {
     public class ConfSubCategeriasDTOs
     {
-        public int SubCategoriasID{get;set;}
+        public int SubCategoriaID{get;set;}
         public int CategoriaID{get; set;}
         public string SubCategoriaCodigo{get;set;}=string.Empty;
-        public string SubCategoriasCodigo{get;set;}=string.Empty;
-        public string CategoriasCodigo{get;set;}=string.Empty;
-        public string CategoriasNombre{get;set;}=string.Empty;
+        public string SubCategoriaNombre{get;set;}=string.Empty;
+        public int Estado {get; set;}
     }
     public class CreateSubCategeriasDTOs
     {
@@ -23,7 +22,9 @@ namespace ERP.Application.DTOs
 
         [Required(ErrorMessage ="Nombre Obligatorio")]
         [StringLength(150,ErrorMessage ="Nombre desbordado")]
-        public string SubCategoriasCodigo{get;set;}=string.Empty;
+        public string SubCategoriaNombre{get;set;}=string.Empty;
+        
+        public int Estado {get; set;}
     }
     public class UpdateSubCategeriasDTOs
     {
@@ -36,6 +37,8 @@ namespace ERP.Application.DTOs
         
         [Required(ErrorMessage ="Nombre Obligatorio")]
         [StringLength(150,ErrorMessage ="Nombre desbordado")]
-        public string SubCategoriasCodigo{get;set;}=string.Empty;
+        public string SubCategoriaNombre{get;set;}=string.Empty;
+        
+        public int Estado {get; set;}
     }
 }

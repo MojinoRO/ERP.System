@@ -6,11 +6,15 @@ using ERP.Application.Services;
 using ERP.Domain.Entities;
 using ERP.Infrastructure.Repositories;
 using ERP.Domain.Interfaces;
+using ERP.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
     
 // ─── REGISTRAR REPOSITORIOS (Infrastructure) ─────────────────
 // Cuando alguien pida IProductoRepository, dale ProductoRepository
@@ -24,6 +28,8 @@ builder.Services.AddScoped<IConfVendedoresRepository, ConfVendedoresRepository>(
 builder.Services.AddScoped<IConfVendedoresServices, ConfVendedoresService>();
 builder.Services.AddScoped<IConfCatagoriasRepository,ConfCategoriasRepository>();
 builder.Services.AddScoped<IConfCategoriasServices,ConfCategoriasService>();
+builder.Services.AddScoped<IConfSubCategoriasRepository,ConfSubCategoriasRepository>();
+builder.Services.AddScoped<IConfSubCategoriasService,ConfSubCategoriasService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {

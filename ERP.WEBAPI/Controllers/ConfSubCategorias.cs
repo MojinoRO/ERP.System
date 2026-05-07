@@ -1,0 +1,76 @@
+using ERP.Application.DTOs;
+using ERP.Application.Interfaces;
+using ERP.Infrastructure.Migrations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ERP.WEBAPI.Controllers
+{
+    [ApiController]
+    [Route("api/[Controller]")]
+
+    public class ConfSubCategoriasController : ControllerBase
+    {
+        private readonly IConfSubCategoriasService _service;
+
+        public ConfSubCategoriasController(IConfSubCategoriasService service ) => _service =service;
+
+        [HttpGet]
+        public async Task<ActionResult<ConfSubCategeriasDTOs>> ListadoSubcategorias()
+        {
+            try
+            {
+                var ListSubCategorias = await _service.getAllAsync();
+                return Ok(ListSubCategorias);
+                
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
+        [HttpGet("id/{id}")]
+        public async Task <ActionResult<ConfSubCategeriasDTOs>>GetById(int id)
+        {
+            try
+            {
+                var subcategoria = await _service.getByIDAsync(id);
+                if(subcategoria == null) return BadRequest("Subcategoria No Existe");
+                return Ok(subcategoria);
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
+        [HttpGet("Codigo/{codigo}")]
+        public async Task<ActionResult<ConfSubCategeriasDTOs>>GetByCodigo(string codigo)
+        {
+            try
+            {
+                var subcategoria = await _service.getByCodigoAsync(codigo);
+                if(subcategoria == null) return BadRequest("Codigo No Existe");
+                return Ok(subcategoria);
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<CreateSubCategeriasDTOs>>CreateSubCategorias(CreateSubCategeriasDTOs dto)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try
+            {
+                var subcategoria  = await _service.CreateSubCategoriasAsync(dto);
+                return CreatedAtAction(nameof(GetById),new {id = subcategoria.CategoriaID},subcategoria);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+    }
+}

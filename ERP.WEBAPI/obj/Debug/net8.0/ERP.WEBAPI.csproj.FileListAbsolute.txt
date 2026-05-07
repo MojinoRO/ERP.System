@@ -5,6 +5,8 @@ C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.deps.j
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.runtimeconfig.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.pdb
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\AutoMapper.dll
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\Azure.Core.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\Azure.Identity.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\Humanizer.dll

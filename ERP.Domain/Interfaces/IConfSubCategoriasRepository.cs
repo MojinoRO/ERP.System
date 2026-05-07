@@ -7,7 +7,7 @@ namespace ERP.Domain.Interfaces
         Task<IEnumerable<ConfSubCategorias>>getAllAsync();
         Task<ConfSubCategorias?>getByIDAsync(int id);
         Task<ConfSubCategorias?>getByCodigoAsync(string codigo);
-        Task<ConfSubCategorias?>getByCategoriaID(int CategoriaID);
+        Task<IEnumerable<ConfSubCategorias>>getByCategoriaID(int CategoriaID);
         Task<ConfSubCategorias>CreateSubCategoriasAsync(ConfSubCategorias subCategorias);
         Task<ConfSubCategorias>UpdateSubCategoriasAsync(ConfSubCategorias subCategorias);
         Task<bool>deleteSubCategoriasAsync(int id);

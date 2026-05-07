@@ -8,8 +8,8 @@ namespace ERP.Application.Interfaces
         Task<ConfSubCategeriasDTOs?>getByIDAsync(int id);
         Task<ConfSubCategeriasDTOs?>getByCodigoAsync(string codigo);
         Task<ConfSubCategeriasDTOs?>getByCategoriaID(int CategoriaID);
-        Task<CreateSubCategeriasDTOs>CreateSubCategoriasAsync(CreateSubCategeriasDTOs subCategorias);
-        Task<UpdateSubCategeriasDTOs>UpdateSubCategoriasAsync(UpdateSubCategeriasDTOs subCategorias);
+        Task<ConfSubCategeriasDTOs>CreateSubCategoriasAsync(CreateSubCategeriasDTOs subCategorias);
+        Task<ConfSubCategeriasDTOs>UpdateSubCategoriasAsync(UpdateSubCategeriasDTOs subCategorias);
         Task<bool>deleteSubCategoriasAsync(int id);
     }
 }

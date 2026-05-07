@@ -16,6 +16,8 @@ namespace ERP.Domain.Entities
         [Required]
         public string SubCategoriaNombre {get;set;}=null!;
 
+        public int Estado {get; set;}
+
         //propiedad de navegacion sobre confcategorias
         public ConfCategorias ConfCategorias {get ; set;}=null!;
 
