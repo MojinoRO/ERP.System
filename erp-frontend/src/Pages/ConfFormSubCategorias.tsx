@@ -1,8 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./shared.module.css";
 import {BtnEdit, BtnEliminar, BtnSave, BtonCrear} from "../Components/component"
+import type {SubCategoriasResponse} from "../Types/ConfSubCategorias"
+import { GetAllSubCategorias } from "../Api/ConfSubCategorias"
+
+
 export default function ConfFormSubCategorias(){
+
+    const emptySubCategorias : SubCategoriasResponse = {
+        subCategoriaID : 0,
+        categoriaID:0,
+        subCategoriaCodigo:"",
+        subCategoriaNombre:"",
+        estado:0
+    }
     const [formState , setFormState]=useState<"lectura"|"edicion">("edicion");
+    const [listadoSubcategorias, setListaSubCategorias]=useState<SubCategoriasResponse[]>([]);
+
+    const ListarSubCategorias = async () => {
+        try{
+            const data = await GetAllSubCategorias();
+            setListaSubCategorias(data)
+        }catch(error:any){
+            return console.log("Error al cargar SubCategorias",error.response?.data)
+        }
+    }
+
+    useEffect(()=>{
+        ListarSubCategorias()
+    },[])
+
     return(
         <div className={s.container}>
             <h2 className={s.pageTitle}>Subcategorías de artículos</h2>
@@ -39,6 +66,34 @@ export default function ConfFormSubCategorias(){
                         <button className={`${s.btn} ${s.btnSuccess}`}> <BtnSave/></button>
                         <button className={`${s.btn} ${s.btnDanger}`}> <BtnEliminar/> </button>
                     </div>
+                </div>
+
+                <div className={s.list}>
+                    <div className={s.listHeader}>
+                        <h3 >Listado Subcategorías </h3>
+                        <input className={s.search}></input>
+                    </div>
+                    
+                    <table className={`${s.table} ${formState !== "lectura" ? s.disabled : ""}`}>
+                        <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombre</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {listadoSubcategorias.map((d,i) => (
+                                <tr 
+                                key={i}>
+                                    <td>{d.subCategoriaCodigo}</td>
+                                    <td>{d.subCategoriaNombre}</td>
+                                    <td>{d.estado}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
