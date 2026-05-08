@@ -8,6 +8,7 @@ import {
   getByCodigo,
   updateCategorias,
 } from "../Api/ConfCategoriasService";
+import {BtnEdit,BtonCrear,BtnEliminar,BtnSave} from "../Components/component"
 
 const CUENTAS = [
   { label: "Ingresos" },
@@ -303,28 +304,28 @@ export default function ConfFormCategorias() {
               disabled={btnState !== "lectura"}
               type="button"
             >
-              Crear
+              <BtonCrear/>
             </button>
             <button
               className={`${s.btn} ${s.btnEdit}`}
               onClick={handleModificar}
               disabled={btnState !== "lectura"}
             >
-              Modificar
+              <BtnEdit/>
             </button>
             <button
               className={`${s.btn} ${s.btnSuccess}`}
               onClick={handleGuardar}
               disabled={btnState !== "creando"}
             >
-              Guardar
+              <BtnSave/>
             </button>
             <button
               className={`${s.btn} ${s.btnDanger}`}
               onClick={handleEliminar}
               disabled={btnState !== "lectura"}
             >
-              Eliminar
+              <BtnEliminar/>
             </button>
           </div>
         </div>

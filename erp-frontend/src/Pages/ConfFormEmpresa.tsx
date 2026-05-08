@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import s from "./shared.module.css";
 import type { CargaDatosEmpresaResponse } from "../Types/ConfEmpresa";
 import { GetDatosEmpresa, saveDatosEmpresa } from "../Api/ConfEmpresaService";
+import {BtnEdit,BtnSave} from "../Components/component"
 
 export default function FormEmpresa() {
   const [btnActivo, setBtnAcivo] = useState(false);
@@ -65,13 +66,13 @@ export default function FormEmpresa() {
               className={`${s.btn} ${s.btnEdit}`}
               onClick={() => setBtnAcivo(true)}
             >
-              Editar
+              <BtnEdit/>
             </button>
             <button
               className={`${s.btn} ${s.btnSuccess}`}
               onClick={() => SaveChanged()}
             >
-              Guardar
+              <BtnSave/>
             </button>
           </div>
         </div>
