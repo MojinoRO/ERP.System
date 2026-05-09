@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, type ReactElement } from "react";
 import s from "./shared.module.css";
 import {BtnEdit, BtnEliminar, BtnSave, BtonCrear} from "../Components/component"
 import type {SubCategoriasResponse} from "../Types/ConfSubCategorias"
@@ -16,6 +16,8 @@ export default function ConfFormSubCategorias(){
     }
     const [formState , setFormState]=useState<"lectura"|"edicion">("edicion");
     const [listadoSubcategorias, setListaSubCategorias]=useState<SubCategoriasResponse[]>([]);
+    const [subCategoriaSelected , setSubCategoriaSelected] =useState(emptySubCategorias);
+
 
     const ListarSubCategorias = async () => {
         try{
@@ -25,10 +27,16 @@ export default function ConfFormSubCategorias(){
             return console.log("Error al cargar SubCategorias",error.response?.data)
         }
     }
-
     useEffect(()=>{
         ListarSubCategorias()
     },[])
+
+    const HandledChanged = (e : React.ChangeEvent<HTMLInputElement>)=>{
+        const {name, value} =e.target;
+        setListaSubCategorias({
+            ...listadoSubcategorias,[name]: value.toUpperCase(),
+        })
+    }
 
     return(
         <div className={s.container}>
@@ -47,13 +55,18 @@ export default function ConfFormSubCategorias(){
                                 </select>
 
                                 <label className={s.label}>Código</label>
-                                <input className={s.input}></input>
+                                <input className={s.input}
+                                value={subCategoriaSelected.subCategoriaCodigo}
+                                onChange={HandledChanged}></input>
                                 
                                 <label className={s.label}>Nombre Subcategoría</label>
-                                <input className={s.input}></input>
+                                <input className={s.input}
+                                value={subCategoriaSelected.subCategoriaNombre}
+                                onChange={HandledChanged}></input>
 
                                 <label className={s.label}>Estado</label>
-                                <select className={s.select}>
+                                <select className={s.select}
+                                value={subCategoriaSelected.estado}>
                                     <option value="0">Activo</option>
                                     <option value="1">Inactivo</option>
                                 </select>
@@ -71,7 +84,7 @@ export default function ConfFormSubCategorias(){
                 <div className={s.list}>
                     <div className={s.listHeader}>
                         <h3 >Listado Subcategorías </h3>
-                        <input className={s.search}></input>
+                        <input className={s.search} placeholder="Ingrese Nombre Subcategorías ... "></input>
                     </div>
                     
                     <table className={`${s.table} ${formState !== "lectura" ? s.disabled : ""}`}>
@@ -86,7 +99,10 @@ export default function ConfFormSubCategorias(){
                         <tbody>
                             {listadoSubcategorias.map((d,i) => (
                                 <tr 
-                                key={i}>
+                                key={i}
+                                onClick={()=>setSubCategoriaSelected(d)}
+                                className={subCategoriaSelected?.subCategoriaCodigo === d.subCategoriaCodigo 
+                                        ? s.selectedRow : "" }>
                                     <td>{d.subCategoriaCodigo}</td>
                                     <td>{d.subCategoriaNombre}</td>
                                     <td>{d.estado}</td>
