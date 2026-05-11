@@ -9,6 +9,8 @@ namespace ERP.Application.DTOs
         public string SubCategoriaCodigo{get;set;}=string.Empty;
         public string SubCategoriaNombre{get;set;}=string.Empty;
         public int Estado {get; set;}
+        public string CategoriaCodigo{get;set;}=string.Empty;
+        public string CategoriaNombre{get;set;}=string.Empty;
     }
     public class CreateSubCategeriasDTOs
     {

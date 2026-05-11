@@ -13,7 +13,7 @@ namespace ERP.Infrastructure.Repositories
 
         public async Task<IEnumerable<ConfSubCategorias>> getAllAsync()
         {
-            return await _context.ConfSubCategorias.ToListAsync();
+            return await _context.ConfSubCategorias.Include(x=>x.ConfCategorias).ToListAsync();
         }
 
         public async Task<ConfSubCategorias?>getByIDAsync(int id)

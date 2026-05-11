@@ -9,9 +9,15 @@ namespace ERP.Application.Mapping
         public MapppingProfile()
         {
             //entity to DTO
-            CreateMap<ConfSubCategorias,ConfSubCategeriasDTOs>();
+            CreateMap<ConfSubCategorias,ConfSubCategeriasDTOs>().ForMember(
+                dest => dest.CategoriaCodigo,
+                opt =>opt.MapFrom(src => src.ConfCategorias.CategoriaCodigo)
+            ). ForMember(
+                dest =>dest.CategoriaNombre,
+                opt => opt.MapFrom(src =>src.ConfCategorias.CategoriaNombre)
+            );
             
-            //dto to entity
+            //DTO to entity
             CreateMap<CreateSubCategeriasDTOs,ConfSubCategorias>();
             CreateMap<UpdateSubCategeriasDTOs,ConfSubCategorias>();
         }
