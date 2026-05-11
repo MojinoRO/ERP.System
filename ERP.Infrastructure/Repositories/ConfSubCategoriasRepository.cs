@@ -18,12 +18,14 @@ namespace ERP.Infrastructure.Repositories
 
         public async Task<ConfSubCategorias?>getByIDAsync(int id)
         {
-            return  await _context.ConfSubCategorias.AsNoTracking().FirstOrDefaultAsync(s => s.SubCategoriaID == id);
+            return  await _context.ConfSubCategorias.AsNoTracking()
+            .FirstOrDefaultAsync(s => s.SubCategoriaID == id);
         }
 
         public async Task<ConfSubCategorias?>getByCodigoAsync(string codigo)
         {
-            return await _context.ConfSubCategorias.AsNoTracking().FirstOrDefaultAsync(s => s.SubCategoriaCodigo == codigo);
+            return await _context.ConfSubCategorias.AsNoTracking().FirstOrDefaultAsync
+            (s => s.SubCategoriaCodigo == codigo);
         }
 
         public async Task<IEnumerable<ConfSubCategorias>>getByCategoriaID(int categoriaid)

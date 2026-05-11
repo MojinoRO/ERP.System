@@ -53,7 +53,7 @@ namespace ERP.Application.Services
                     throw new ArgumentException(" codigo o nombre en blanco debe validar");
             var existe= await _repo.getByCodigoAsync(subcategoria.SubCategoriaCodigo);
             if(existe != null)
-                throw new ArgumentException("Codigo de subcategoria ya exuste");
+                throw new ArgumentException("Codigo de subcategoria ya existe");
             var sb = _mapper.Map<ConfSubCategorias>(subcategoria);
             await _repo.CreateSubCategoriasAsync(sb);
             return _mapper.Map<ConfSubCategeriasDTOs>(sb);
