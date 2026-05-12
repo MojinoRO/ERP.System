@@ -22,10 +22,10 @@ namespace ERP.Infrastructure.Repositories
             .FirstOrDefaultAsync(s => s.SubCategoriaID == id);
         }
 
-        public async Task<ConfSubCategorias?>getByCodigoAsync(string codigo)
+        public async Task<ConfSubCategorias?>getByCodigoAsync(string codigo , int CategoriaID)
         {
             return await _context.ConfSubCategorias.AsNoTracking().FirstOrDefaultAsync
-            (s => s.SubCategoriaCodigo == codigo);
+            (s => s.SubCategoriaCodigo == codigo && s.CategoriaID== CategoriaID );
         }
 
         public async Task<IEnumerable<ConfSubCategorias>>getByCategoriaID(int categoriaid)

@@ -1,8 +1,5 @@
-using System.Drawing;
 using ERP.Application.DTOs;
 using ERP.Application.Interfaces;
-using ERP.Infrastructure.Migrations;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ERP.WEBAPI.Controllers
@@ -45,12 +42,12 @@ namespace ERP.WEBAPI.Controllers
         }
 
         [HttpGet("Codigo/{codigo}")]
-        public async Task<ActionResult<ConfSubCategeriasDTOs>>GetByCodigo(string codigo)
+        public async Task<ActionResult<ConfSubCategeriasDTOs>>GetByCodigo(string codigo , int CategoriaID)
         {
             try
             {
-                var subcategoria = await _service.getByCodigoAsync(codigo);
-                if(subcategoria == null) return BadRequest("Codigo No Existe");
+                var subcategoria = await _service.getByCodigoAsync(codigo,CategoriaID);
+                if(subcategoria == null) return NotFound("Codigo No Existe");
                 return Ok(subcategoria);
             }catch(Exception ex)
             {

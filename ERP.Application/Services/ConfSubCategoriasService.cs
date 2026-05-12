@@ -3,7 +3,6 @@ using ERP.Application.Interfaces;
 using ERP.Domain.Entities;
 using ERP.Domain.Interfaces;
 using AutoMapper;
-using System.Dynamic;
 
 namespace ERP.Application.Services
 {
@@ -30,9 +29,9 @@ namespace ERP.Application.Services
             return _mapper.Map<ConfSubCategeriasDTOs>(sb);
         }
 
-        public async Task<ConfSubCategeriasDTOs?>getByCodigoAsync(string codigo)
+        public async Task<ConfSubCategeriasDTOs?>getByCodigoAsync(string codigo , int CategoriaID)
         {
-            var sb = await _repo.getByCodigoAsync(codigo);
+            var sb = await _repo.getByCodigoAsync(codigo,CategoriaID);
             if(sb == null)return null;
             return _mapper.Map<ConfSubCategeriasDTOs>(sb);
         }
@@ -51,7 +50,7 @@ namespace ERP.Application.Services
             if(string.IsNullOrWhiteSpace(subcategoria.SubCategoriaCodigo) ||
                 string.IsNullOrWhiteSpace(subcategoria.SubCategoriaNombre))
                     throw new ArgumentException(" codigo o nombre en blanco debe validar");
-            var existe= await _repo.getByCodigoAsync(subcategoria.SubCategoriaCodigo);
+            var existe= await _repo.getByCodigoAsync(subcategoria.SubCategoriaCodigo , subcategoria.CategoriaID);
             if(existe != null)
                 throw new ArgumentException("Codigo de subcategoria ya existe");
             var sb = _mapper.Map<ConfSubCategorias>(subcategoria);
@@ -72,7 +71,7 @@ namespace ERP.Application.Services
             if(string.IsNullOrEmpty(subcategoria.SubCategoriaCodigo) || string.IsNullOrEmpty(subcategoria.SubCategoriaNombre))
                 throw new ArgumentException(" codigo o nombre en blanco debe validar");
 
-            var existe= await _repo.getByCodigoAsync(subcategoria.SubCategoriaCodigo);
+            var existe= await _repo.getByCodigoAsync(subcategoria.SubCategoriaCodigo, subcategoria.CategoriaID);
             if(existe != null && existe.CategoriaID != subcategoria.CategoriaID)
                 throw new ArgumentException("Codigo de subcategoria ya existe");
 

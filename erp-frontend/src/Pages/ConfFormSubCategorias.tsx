@@ -33,16 +33,11 @@ import { FaSleigh } from "react-icons/fa";
         alert("Nombre Vacío")
         return false;
       }
-      return true
-    }
-
-    const valideteCodigo = async():Promise<boolean>=>{
-      try{
-
-        
-      }catch(error:any){
-        console.log(error.response.data) 
+      if(c.categoriaID==0){
+        alert("Debe seleccionar la Categoria");
+        return false;
       }
+      return true
     }
 
     const [formState, setFormState] = useState<"lectura" | "edicion">("lectura");
@@ -119,6 +114,10 @@ import { FaSleigh } from "react-icons/fa";
       }catch(error:any){
         return console.log(error.response.data)
       }
+    }
+
+    const HandledSave = async()=>{
+
     }
     return (
       <div className={s.container}>
@@ -240,8 +239,8 @@ import { FaSleigh } from "react-icons/fa";
                     key={i}
                     onClick={() => setSubCategoriaSelected(d)}
                     className={
-                      subCategoriaSelected?.subCategoriaCodigo ===
-                      d.subCategoriaCodigo
+                      subCategoriaSelected?.subCategoriaID ==
+                      d.subCategoriaID
                         ? s.selectedRow
                         : ""
                     }

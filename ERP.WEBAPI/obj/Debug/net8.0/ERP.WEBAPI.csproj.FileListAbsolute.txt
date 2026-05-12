@@ -1,3 +1,11 @@
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.csproj.AssemblyReference.cache
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.AssemblyInfoInputs.cache
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.AssemblyInfo.cs
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.csproj.CoreCompileInputs.cache
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.sourcelink.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\appsettings.Development.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\appsettings.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.exe
@@ -122,14 +130,6 @@ C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.Infrastructur
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.Application.pdb
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.Infrastructure.pdb
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.Domain.pdb
-C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.csproj.AssemblyReference.cache
-C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.GeneratedMSBuildEditorConfig.editorconfig
-C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.AssemblyInfoInputs.cache
-C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.AssemblyInfo.cs
-C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.csproj.CoreCompileInputs.cache
-C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.MvcApplicationPartsAssemblyInfo.cs
-C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.MvcApplicationPartsAssemblyInfo.cache
-C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.sourcelink.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\staticwebassets.build.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\staticwebassets.development.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\staticwebassets\msbuild.ERP.WEBAPI.Microsoft.AspNetCore.StaticWebAssets.props
