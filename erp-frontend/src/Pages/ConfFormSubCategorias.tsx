@@ -1,4 +1,4 @@
-  import React, { useEffect, useState, type AnyActionArg } from "react";
+  import React, { useEffect, useState } from "react";
   import s from "./shared.module.css";
   import {
     BtnEdit,
@@ -7,10 +7,9 @@
     BtonCrear,
   } from "../Components/component";
   import type { SubCategoriasResponse } from "../Types/ConfSubCategorias";
-  import { deleteSubcategorias, GetAllSubCategorias } from "../Api/ConfSubCategorias";
+  import { deleteSubcategorias, GetAllSubCategorias, Validate ,CreateSubcategorias,UpdateSubcategoria} from "../Api/ConfSubCategorias";
   import { type CategoriasResponse } from "../Types/ConfCategorias";
-  import { getAllCategorias } from "../Api/ConfCategoriasService";
-import { FaSleigh } from "react-icons/fa";
+  import { getAllCategorias  } from "../Api/ConfCategoriasService";
 
   export default function ConfFormSubCategorias() {
 
@@ -24,12 +23,12 @@ import { FaSleigh } from "react-icons/fa";
       estado: 0,
     };
 
-    const ValideteCampos = (c :CategoriasResponse)=>{
-      if(!c.categoriaCodigo?.trim()){
+    const ValideteCampos = (c :SubCategoriasResponse)=>{
+      if(!c.subCategoriaCodigo?.trim()){
         alert("Codigo Vacío")
         return false;
       }
-      if(!c.categoriaNombre?.trim()){
+      if(!c.subCategoriaNombre?.trim()){
         alert("Nombre Vacío")
         return false;
       }
@@ -116,9 +115,50 @@ import { FaSleigh } from "react-icons/fa";
       }
     }
 
-    const HandledSave = async()=>{
+    const HandledSave = async () => {
+      if (!subCategoriaSelected) {
+        alert("No hay datos para guardar");
+        return;
+      }
 
-    }
+      if (!ValideteCampos(subCategoriaSelected)) return;
+
+      try {
+
+        const codigoOk = await Validate(
+          subCategoriaSelected.subCategoriaCodigo,
+          subCategoriaSelected.categoriaID
+        );
+
+        if (!codigoOk) {
+          alert("El código ya existe para esta categoría");
+          return;
+        }
+
+        const isNew = subCategoriaSelected.subCategoriaID === 0;
+
+        const ok = isNew
+          ? await CreateSubcategorias(subCategoriaSelected)
+          : await UpdateSubcategoria(subCategoriaSelected);
+
+        const action = isNew ? "creada" : "actualizada";
+
+        alert(
+          ok
+            ? `Subcategoría ${action} correctamente`
+            : `Error al ${isNew ? "crear" : "actualizar"} la subcategoría`
+        );
+
+      } catch (error: any) {
+
+        console.error(error);
+
+        alert(
+          error?.response?.data?.message ||
+          "Ocurrió un error inesperado"
+        );
+      }
+    };
     return (
       <div className={s.container}>
         <h2 className={s.pageTitle}>Subcategorías de artículos</h2>
@@ -202,7 +242,8 @@ import { FaSleigh } from "react-icons/fa";
                 <BtnEdit />
               </button>
               <button className={`${s.btn} ${s.btnSuccess}`}
-                disabled={formState !=="edicion"}>
+                disabled={formState !=="edicion"}
+                onClick={HandledSave}>
                 <BtnSave />
               </button>
               <button className={`${s.btn} ${s.btnDanger}`}

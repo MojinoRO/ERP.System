@@ -9,13 +9,15 @@ export const GetAllSubCategorias = async (): Promise<
   return data;
 };
 
-export const Validate = async(codigo : string, CategoriaID :number) : Promise<boolean> =>{
+export const Validate =async(codigo :string , CategoriaID:number):Promise<boolean>=>{
   try{
-    const valide = await api.get(`/ConfSubCategorias/codigo/${codigo}?CategoriaID=${CategoriaID}`)
-    return valide.status >= 200 && valide.status <300
-  }catch(error:any){
-    console.log(error.response.data);
+    await api.get(`/ConfSubCategorias/Codigo/${codigo}?CategoriaID=${CategoriaID}`);
     return false;
+  }catch (error:any){
+    if(error.response?.status === 400){
+      return true;
+    }
+    throw error;
   }
 }
 
@@ -31,8 +33,18 @@ export const deleteSubcategorias = async (id : number) : Promise<boolean> =>{
 
 export const CreateSubcategorias =async(data:SubCategoriasResponse): Promise<boolean>=>{
   try{
-    const crear = await api.post("/ConfSubcategorias",data);
+    const crear = await api.post("/ConfSubCategorias",data);
     return crear.status ===200 || crear.status ===201;
+  }catch(error:any){
+    console.log(error.response.data);
+    return false;
+  }
+}
+
+export const UpdateSubcategoria = async(data:SubCategoriasResponse) : Promise<boolean>=>{
+  try{
+    const update  = await api.put(`/ConfSubCategorias/id/${data.subCategoriaID}`,data)
+    return update.status ===200 && update.status < 300
   }catch(error:any){
     console.log(error.response.data);
     return false;
