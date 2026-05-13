@@ -9,6 +9,7 @@ import ConfFormDigitadores from "../../Pages/ConfFormDigitadores";
 import ConfFormCategorias from "../../Pages/ConfFormCategorias";
 import {ChevronDown} from "lucide-react"
 import ConfFormSubCategorias from "../../Pages/ConfFormSubCategorias";
+import ConfFormMarcas from "../../Pages/ConfFormMarcas"
 
 
 interface NavChild {
@@ -83,6 +84,11 @@ const NAV_ITEMS: NavItems[] = [
             id: "ConfSubCategorias",
             label:"Subcategorías Artículos",
             component:<ConfFormSubCategorias/>
+          },
+          {
+            id:"ConfMarcas",
+            label:"Marcas",
+            component:<ConfFormMarcas/>
           }
         ],
       },
