@@ -186,6 +186,10 @@
   background: #34495e;
 }
 
+.btnCancel {
+  background: #808080;
+}
+
 .btn:hover {
   opacity: 0.85;
 }
