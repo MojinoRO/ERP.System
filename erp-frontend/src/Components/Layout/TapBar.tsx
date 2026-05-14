@@ -1,5 +1,6 @@
 import { useTabs } from "../../Context/TabContext";
 import styles from "./TabBar.module.css";
+import { XSquare } from "lucide-react";
 
 export default function TabBar() {
   const { tabs, activeId, setActiveId, closeTab } = useTabs();
@@ -22,7 +23,7 @@ export default function TabBar() {
               closeTab(tab.id);
             }}
           >
-            ❌
+            <XSquare />
           </button>
         </div>
       ))}
