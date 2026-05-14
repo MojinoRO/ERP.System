@@ -30,6 +30,8 @@ builder.Services.AddScoped<IConfCatagoriasRepository,ConfCategoriasRepository>()
 builder.Services.AddScoped<IConfCategoriasServices,ConfCategoriasService>();
 builder.Services.AddScoped<IConfSubCategoriasRepository,ConfSubCategoriasRepository>();
 builder.Services.AddScoped<IConfSubCategoriasService,ConfSubCategoriasService>();
+builder.Services.AddScoped<IConfMarcasRepository,ConfMarcasRepository>();
+builder.Services.AddScoped<IConfMarcaservice,ConfMarcasService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {

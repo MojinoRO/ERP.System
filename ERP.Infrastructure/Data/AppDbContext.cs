@@ -17,7 +17,7 @@ public class AppDbContext : DbContext
     public DbSet<ConfVendedores>ConfVendedores{get;set;}
     public DbSet<ConfCategorias>ConfCategorias{get;set;}
     public DbSet<ConfSubCategorias>ConfSubCategorias{get; set;}
-
+    public DbSet<ConfMarcas>ConfMarcas{get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -8,7 +8,7 @@ namespace ERP.Application.Mapping
     {
         public MapppingProfile()
         {
-            //entity to DTO
+            //entity to DTO con fk
             CreateMap<ConfSubCategorias,ConfSubCategeriasDTOs>().ForMember(
                 dest => dest.CategoriaCodigo,
                 opt =>opt.MapFrom(src => src.ConfCategorias.CategoriaCodigo)
@@ -16,10 +16,15 @@ namespace ERP.Application.Mapping
                 dest =>dest.CategoriaNombre,
                 opt => opt.MapFrom(src =>src.ConfCategorias.CategoriaNombre)
             );
-            
+
+            //entity to dto sin fk
+            CreateMap<ConfMarcas,ConfMarcasDto>();
+
             //DTO to entity
             CreateMap<CreateSubCategeriasDTOs,ConfSubCategorias>();
             CreateMap<UpdateSubCategeriasDTOs,ConfSubCategorias>();
+            CreateMap<CreateConfMarcasDto,ConfMarcas>();
+            CreateMap<UpdateConfMarcasDto,ConfMarcas>();
         }
     }
 }

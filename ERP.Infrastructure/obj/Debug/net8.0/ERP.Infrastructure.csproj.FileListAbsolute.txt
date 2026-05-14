@@ -47,6 +47,7 @@ C:\WorkSpace\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\refint\ERP.Infrastru
 C:\WorkSpace\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.pdb
 C:\WorkSpace\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\ref\ERP.Infrastructure.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\bin\Debug\net8.0\ERP.Infrastructure.deps.json
+C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\bin\Debug\net8.0\ERP.Infrastructure.runtimeconfig.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\bin\Debug\net8.0\ERP.Infrastructure.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\bin\Debug\net8.0\ERP.Infrastructure.pdb
 C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\bin\Debug\net8.0\ERP.Domain.dll
@@ -61,4 +62,5 @@ C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infr.
 C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\refint\ERP.Infrastructure.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.pdb
+C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\ERP.Infrastructure.genruntimeconfig.cache
 C:\WorkSpace\ERP.System\ERP.System\ERP.Infrastructure\obj\Debug\net8.0\ref\ERP.Infrastructure.dll

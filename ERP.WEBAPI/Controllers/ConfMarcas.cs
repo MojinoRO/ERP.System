@@ -1,0 +1,85 @@
+using System.Dynamic;
+using ERP.Application.DTOs;
+using ERP.Application.Interfaces;
+using ERP.Application.Services;
+using ERP.Infrastructure.Migrations;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ERP.WEBAPI.Controllers
+{
+    [ApiController]
+    [Route("api/[Controller]")]
+    public class ConfMarcasController : ControllerBase
+    {
+        private readonly IConfMarcaservice _service;
+        public ConfMarcasController(IConfMarcaservice service)=>_service=service;
+
+        [HttpGet]
+        public async Task<ActionResult<ConfMarcasDto>> ListaMarcas()
+        {
+            try
+            {
+                var Marcas =  await _service.GetAllAsync();
+                return Ok(Marcas);
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<ConfMarcasDto>>BuscarPorId(int id)
+        {
+            try
+            {
+                var marca = await _service.GetByIdAsync(id);
+                return Ok(marca);
+
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
+        [HttpGet("codigo/{codigo}")]
+        public async Task<ActionResult<ConfMarcasDto>>BuscaCodigo(string codigo)
+        {
+            try
+            {
+                var marca = await _service.GetByCodigoAsync(codigo);
+                return Ok(marca);
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }            
+        }
+
+        [HttpGet("nombre/{nombre}")]
+        public async Task<ActionResult<ConfMarcasDto>>buscarPorNombre(string nombre)
+        {
+            try
+            {
+                var marca = await _service.GetByNombreAsync(nombre);
+                return Ok(marca);
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }            
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<CreateConfMarcasDto>>CrearMarca( [FromBody]CreateConfMarcasDto dto)
+        {
+            if(!ModelState.IsValid)return BadRequest(ModelState);
+            try
+            {
+                var Crear = await _service.CreateAsync(dto);
+                return CreatedAtAction(nameof(BuscarPorId), new{id = Crear.MarcaID},Crear);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }          
+        }
+    }
+}

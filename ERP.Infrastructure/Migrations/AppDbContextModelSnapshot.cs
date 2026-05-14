@@ -16,7 +16,7 @@ namespace ERP.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -109,6 +109,32 @@ namespace ERP.Infrastructure.Migrations
                     b.HasKey("CategoriasID");
 
                     b.ToTable("ConfCategorias");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.ConfMarcas", b =>
+                {
+                    b.Property<int>("MarcaID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MarcaID"));
+
+                    b.Property<string>("CodigoMarca")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MarcaNombre")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("MarcaID");
+
+                    b.ToTable("ConfMarcas");
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.ConfSubCategorias", b =>
