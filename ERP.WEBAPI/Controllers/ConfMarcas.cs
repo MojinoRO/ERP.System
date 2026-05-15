@@ -81,5 +81,38 @@ namespace ERP.WEBAPI.Controllers
                 return StatusCode(500,ex.Message);
             }          
         }
+
+        [HttpPut]
+        public async Task<ActionResult<UpdateConfMarcasDto>>updateMarca([FromBody] UpdateConfMarcasDto dto)
+        {
+            if(dto == null)return BadRequest("Actualizacion sin datos");
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            try
+            {
+                var update = await _service.UpdateAsync(dto);
+                return CreatedAtAction(nameof(BuscarPorId), new{id=update.MarcaID},update);
+
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
+
+        [HttpDelete("id/{id}")]
+        public async Task<ActionResult> BorrarMarca(int id)
+        {
+            if(await _service.GetByIdAsync(id) == null)
+            {
+                return BadRequest("Marca No Existe");
+            }
+            try
+            {
+                var eliminado = await _service.DeleteAsync(id);
+                return NoContent();
+            }catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
+        }
     }
 }

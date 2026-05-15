@@ -1,8 +1,8 @@
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\appsettings.Development.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\appsettings.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.exe
-C:\WorkSpace\ERP.System\ERP.System\erp.webapi\bin\Debug\net8.0\ERP.WEBAPI.deps.json
-C:\WorkSpace\ERP.System\ERP.System\erp.webapi\bin\Debug\net8.0\ERP.WEBAPI.runtimeconfig.json
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.deps.json
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.runtimeconfig.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\ERP.WEBAPI.pdb
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\bin\Debug\net8.0\AutoMapper.dll
@@ -138,9 +138,9 @@ C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\staticwebassets\m
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.ERP.WEBAPI.props
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\staticwebassets.pack.json
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\scopedcss\bundle\ERP.WEBAPI.styles.css
-C:\WorkSpace\ERP.System\ERP.System\erp.webapi\obj\Debug\net8.0\ERP.WEBAPI.csproj.Up2Date
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.csproj.Up2Date
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\refint\ERP.WEBAPI.dll
 C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.pdb
-C:\WorkSpace\ERP.System\ERP.System\erp.webapi\obj\Debug\net8.0\ERP.WEBAPI.genruntimeconfig.cache
-C:\WorkSpace\ERP.System\ERP.System\erp.webapi\obj\Debug\net8.0\ref\ERP.WEBAPI.dll
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ERP.WEBAPI.genruntimeconfig.cache
+C:\WorkSpace\ERP.System\ERP.System\ERP.WEBAPI\obj\Debug\net8.0\ref\ERP.WEBAPI.dll

@@ -57,15 +57,28 @@ export default function ConfMarcas() {
     setFormState("edicion");
   };
 
+  const handleCancel = () =>{
+    setMarcaSelected(emptyMarca)
+    setFormState("lectura")
+  }
+
+  const handleEdit = () =>{
+    if(marcaselected.marcaID === 0){
+      alert("Seleccione Marca")
+      return;
+    }
+    setFormState("edicion");
+  }
   const handledChanged = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
 
-    setMarcaSelected({
-      ...marcaselected,
-      [name]: name === "marcaNombre" ? Number(value) : value.toUpperCase(),
-    });
+    setMarcaSelected((prev)=>({
+      ...prev,
+        [name] :name === "estado" ?  Number(value) 
+        : value.toUpperCase()
+    }))
   };
 
   return (
@@ -80,6 +93,7 @@ export default function ConfMarcas() {
                 <label className={s.label}>Código</label>
 
                 <input
+                  name="codigoMarca"
                   className={s.input}
                   value={marcaselected.codigoMarca}
                   onChange={handledChanged}
@@ -87,6 +101,7 @@ export default function ConfMarcas() {
 
                 <label className={s.label}>Nombre Marca</label>
                 <input
+                  name="marcaNombre"
                   className={s.input}
                   value={marcaselected.marcaNombre}
                   onChange={handledChanged}
@@ -115,6 +130,7 @@ export default function ConfMarcas() {
             <button
               className={`${s.btn} ${s.btnEdit}`}
               disabled={formState !== "lectura"}
+              onClick={handleEdit}
             >
               <BtnEdit />
             </button>
@@ -122,6 +138,7 @@ export default function ConfMarcas() {
             <button
               className={`${s.btn} ${s.btnCancel}`}
               disabled={formState !== "edicion"}
+              onClick={handleCancel}
             >
               <BtnCancel />
             </button>
