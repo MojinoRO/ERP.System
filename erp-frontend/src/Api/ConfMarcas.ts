@@ -16,3 +16,43 @@ export const BuscadorMarcas = async(nombre:string) : Promise<responseMarcas[]>=>
         return []
     }
 }
+export const ValideCodigoBD = async(codigo : string ):Promise<boolean>=>{
+    try{
+        const existe = await api.get(`/ConfMarcas/codigo/${codigo}`);
+        return existe.status === 200 || existe.status < 300
+
+    }catch(error:any){
+        console.log(error.response.data);
+        return false;
+    }
+}
+
+export const CreateMarcas = async(data:responseMarcas) : Promise<boolean> =>{
+    try{
+        const Crear = await api.post(`/ConfMarcas`,data)
+        return Crear.status === 200 || Crear.status < 300
+    }catch(error:any){
+        console.log(error.response.data);
+        return false;
+    }
+}
+
+export const UpdateMarcas = async(data:responseMarcas) : Promise<boolean> =>{
+    try{
+        const update = await api.put(`/ConfMarcas/`,data);
+        return update.status === 200 || update.status < 300
+    }catch(error:any){
+        console.log(error.response.data);
+        return false;
+    }
+}
+
+export const DeleteMarcas = async(id:number):Promise<boolean> =>{
+    try{
+        const eliminar = await api.delete(`/ConfMarcas/id/${id}`)
+        return eliminar.status === 200 || eliminar.status < 300
+    }catch(error:any){
+        console.log(error.response.data);
+        return false;       
+    }
+}
