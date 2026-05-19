@@ -47,6 +47,7 @@ namespace ERP.WEBAPI.Controllers
             try
             {
                 var marca = await _service.GetByCodigoAsync(codigo);
+                if(marca == null) return NotFound("Codigo No Existe");
                 return Ok(marca);
             }catch(Exception ex)
             {

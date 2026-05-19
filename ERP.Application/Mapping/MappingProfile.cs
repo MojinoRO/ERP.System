@@ -19,12 +19,15 @@ namespace ERP.Application.Mapping
 
             //entity to dto sin fk
             CreateMap<ConfMarcas,ConfMarcasDto>();
+            CreateMap<ConfAlmacenes,ConfAlmacenDTO>();
 
             //DTO to entity
             CreateMap<CreateSubCategeriasDTOs,ConfSubCategorias>();
             CreateMap<UpdateSubCategeriasDTOs,ConfSubCategorias>();
             CreateMap<CreateConfMarcasDto,ConfMarcas>();
             CreateMap<UpdateConfMarcasDto,ConfMarcas>();
+            CreateMap<UpdateConfAlmacenDTO,ConfAlmacenes>();
+            CreateMap<CreateConfAlmacenDTO,ConfAlmacenes>();
         }
     }
 }

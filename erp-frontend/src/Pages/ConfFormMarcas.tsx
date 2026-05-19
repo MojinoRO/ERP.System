@@ -8,8 +8,14 @@ import {
 } from "../Components/component";
 import s from "./shared.module.css";
 import { type responseMarcas } from "../Types/ConfMarcas";
-import { BuscadorMarcas, ListarMarcas, ValideCodigoBD , CreateMarcas , UpdateMarcas , DeleteMarcas}
- from "../Api/ConfMarcas";
+import {
+  BuscadorMarcas,
+  ListarMarcas,
+  ValideCodigoBD,
+  CreateMarcas,
+  UpdateMarcas,
+  DeleteMarcas,
+} from "../Api/ConfMarcas";
 
 export default function ConfMarcas() {
   const emptyMarca: responseMarcas = {
@@ -58,95 +64,93 @@ export default function ConfMarcas() {
     setFormState("edicion");
   };
 
-  const handleCancel = () =>{
-    setMarcaSelected(emptyMarca)
-    setFormState("lectura")
-  }
+  const handleCancel = () => {
+    setMarcaSelected(emptyMarca);
+    setFormState("lectura");
+  };
 
-  const handleEdit = () =>{
-    if(marcaselected.marcaID === 0){
-      alert("Seleccione Marca")
+  const handleEdit = () => {
+    if (marcaselected.marcaID === 0) {
+      alert("Seleccione Marca");
       return;
     }
     setFormState("edicion");
-  }
+  };
 
-  const validate = (e:responseMarcas)=>{
-    if(!e.codigoMarca.trim()){
+  const validate = (e: responseMarcas) => {
+    if (!e.codigoMarca.trim()) {
       alert("Codigo Vacio");
-      return false
+      return false;
     }
-    if(!e.marcaNombre.trim()){
-      alert("Nombre Vacio")
-      return false
+    if (!e.marcaNombre.trim()) {
+      alert("Nombre Vacio");
+      return false;
     }
     return true;
-  }
+  };
 
-  const handleSave = async() =>{
-    if(!validate(marcaselected))return;
-    try{
-      const isNew = marcaselected.marcaID === 0
-      if(!isNew){
+  const handleSave = async () => {
+    if (!validate(marcaselected)) return;
+    try {
+      const isNew = marcaselected.marcaID === 0;
+      if (isNew) {
         const codigoOk = await ValideCodigoBD(marcaselected.codigoMarca);
-        if(codigoOk){
+        if (codigoOk) {
           alert("Codigo ya existe");
           return;
         }
       }
-      const Ok = isNew 
-      ? await CreateMarcas(marcaselected)
-      : await UpdateMarcas(marcaselected)
-      
-      const action = isNew ? "creada" : "actualizada"
-      
+
+      const Ok = isNew
+        ? await CreateMarcas(marcaselected)
+        : await UpdateMarcas(marcaselected);
+
+      const action = isNew ? "creada" : "actualizada";
+
       alert(
         Ok
-        ? `Marca ${action} correctamente`
-        : `Error al ${isNew ? "crear" : "actualizar"} la Marca`,
-      )
+          ? `Marca ${action} correctamente`
+          : `Error al ${isNew ? "crear" : "actualizar"} la Marca`,
+      );
       getMarcas();
       setFormState("lectura");
-
-    }catch(error:any){
+    } catch (error: any) {
       console.log(error.response.data);
     }
-  }
+  };
 
-  const HandledEliminar = async () =>{
-    if(marcaselected.marcaID == 0){
-      alert("Seleccione marca a eliminar")
-      return 
+  const HandledEliminar = async () => {
+    if (marcaselected.marcaID == 0) {
+      alert("Seleccione marca a eliminar");
+      return;
     }
-    try{
+    try {
       const query = window.confirm("¿Eliminar Marca?");
-      if(query){
+      if (query) {
         const eliminar = await DeleteMarcas(marcaselected.marcaID);
-        if(!eliminar){
-          alert("Error al eliminar Marca")
-        }else{
-          alert("Marca Eliminada correctamente")
+        if (!eliminar) {
+          alert("Error al eliminar Marca");
+        } else {
+          alert("Marca Eliminada correctamente");
         }
       }
       getMarcas();
-      setMarcaSelected(emptyMarca)
-      setFormState("lectura")
-    }catch(error:any){
-      console.log(error.response.data)
+      setMarcaSelected(emptyMarca);
+      setFormState("lectura");
+    } catch (error: any) {
+      console.log(error.response.data);
     }
-  }
-
+  };
 
   const handledChanged = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
 
-    setMarcaSelected((prev)=>({
+    setMarcaSelected((prev) => ({
       ...prev,
-        [name] :name === "estado" ?  Number(value) 
-        : value.toUpperCase()
-    }))
+      [name]: name === "estado" ? Number(value) : value.toUpperCase(),
+    }));
   };
 
   return (
@@ -258,7 +262,7 @@ export default function ConfMarcas() {
                 >
                   <td>{d.codigoMarca}</td>
                   <td>{d.marcaNombre}</td>
-                  <td>{d.estado}</td>
+                  <td>{d.estado === 0 ? "Activo" : "Inactivo"}</td>
                 </tr>
               ))}
             </tbody>
