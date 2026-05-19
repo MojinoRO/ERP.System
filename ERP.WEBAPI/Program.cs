@@ -32,6 +32,8 @@ builder.Services.AddScoped<IConfSubCategoriasRepository,ConfSubCategoriasReposit
 builder.Services.AddScoped<IConfSubCategoriasService,ConfSubCategoriasService>();
 builder.Services.AddScoped<IConfMarcasRepository,ConfMarcasRepository>();
 builder.Services.AddScoped<IConfMarcaservice,ConfMarcasService>();
+builder.Services.AddScoped<IConfAlmacenesRepository,ConfAlmacenesRepository>();
+builder.Services.AddScoped<IConfAlmacenesServices,ConfAlmacenesServices>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {
@@ -48,6 +50,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
+
+//uso del middleware
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

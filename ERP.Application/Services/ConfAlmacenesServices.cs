@@ -56,7 +56,7 @@ namespace ERP.Application.Services
                 throw new ArgumentException("Datos Incompletos");
             
             var CodigoOk = await _repo.GetByCodigoAsync(almacen.AlmacenCodigo);
-            if(CodigoOk != null)
+            if(CodigoOk == null)
                 throw new ArgumentException("codigo de almacen ya existe");
             
             var alma = _maper.Map<ConfAlmacenes>(almacen);

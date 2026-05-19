@@ -5,6 +5,7 @@ namespace ERP.Domain.Entities
 {
     public class ConfAlmacenes
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AlmacenID {get;set;}
         
