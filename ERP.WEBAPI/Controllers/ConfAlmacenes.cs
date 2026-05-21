@@ -9,7 +9,6 @@ namespace ERP.WEBAPI.Controllers
     public class ConfAlmacenesController : ControllerBase
     {
         private readonly IConfAlmacenesServices _service;
-
         public ConfAlmacenesController(IConfAlmacenesServices services)
         {
             _service = services;

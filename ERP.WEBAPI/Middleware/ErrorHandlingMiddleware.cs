@@ -20,6 +20,11 @@ public class ErrorHandlingMiddleware
         {
             await _next(context);
         }
+        catch (ArgumentException ex)
+        {
+            _logger.LogWarning(ex.Message);
+            await WriteResponse(context,HttpStatusCode.BadRequest,ex.Message);
+        }
         catch (InvalidOperationException ex)
         {
             _logger.LogWarning(ex.Message);
