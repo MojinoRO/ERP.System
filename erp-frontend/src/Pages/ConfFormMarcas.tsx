@@ -243,7 +243,9 @@ export default function ConfMarcas() {
               onChange={handleBuscar}
             ></input>
           </div>
-          <table className={s.table}>
+          <table
+            className={`${s.table} ${formState === "edicion" ? s.disabledTable : ""}`}
+          >
             <thead>
               <tr>
                 <th>Codigo</th>

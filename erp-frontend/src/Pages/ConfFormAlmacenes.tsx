@@ -7,7 +7,16 @@ import {
 } from "../Components/component";
 import s from "./shared.module.css";
 import { type ResponseAlmacenes } from "../Types/ConfAlmacenes";
-import { ListarAlmacenesBD, BuscadorAlmacen } from "../Api/ConfAlmacenes";
+
+import {
+  ListarAlmacenesBD,
+  BuscadorAlmacen,
+  ValidateCodigoBD,
+  CreateAlmacen,
+  UpdateAlmacen,
+  DeleteAlmacen,
+} from "../Api/ConfAlmacenes";
+
 import React, { useEffect, useState } from "react";
 
 export default function ConfAlmacenes() {
@@ -23,7 +32,7 @@ export default function ConfAlmacenes() {
   const [listadoAlmacen, setListadoAlmacen] = useState<ResponseAlmacenes[]>([]);
   const [nombrealmacen, setNombreAlmacen] = useState("");
 
-  const ListarAlmacen = async () => {
+  const ListarAlmacenes = async () => {
     try {
       const listado = await ListarAlmacenesBD();
       setListadoAlmacen(listado);
@@ -35,13 +44,25 @@ export default function ConfAlmacenes() {
   const HandelBuscador = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const dato = e.target.value;
     setNombreAlmacen(dato);
-    if (!dato.trim()) return await ListarAlmacenesBD();
+    if (!dato.trim()) return await ListarAlmacenes();
     try {
       const buscador = await BuscadorAlmacen(dato);
       setListadoAlmacen(buscador);
     } catch (error: any) {
       console.log(error?.response.data);
     }
+  };
+
+  const validateCampos = (e: ResponseAlmacenes) => {
+    if (!e.almacenCodigo.trim()) {
+      alert("Codigo Vacio");
+      return false;
+    }
+    if (!e.almacenNombre.trim()) {
+      alert("Nombre Almacen Obligatorio");
+      return false;
+    }
+    return true;
   };
 
   const handleCancel = () => {
@@ -54,8 +75,68 @@ export default function ConfAlmacenes() {
     setFormState("edicion");
   };
 
+  const handleEdit = () => {
+    if (almacenSelected.almacenID === 0)
+      return alert("Seleccione Almacen a Modificar");
+    setFormState("edicion");
+  };
+
+  const handledSave = async () => {
+    if (!validateCampos(almacenSelected)) return;
+    try {
+      const IsNew = almacenSelected.almacenID === 0;
+      if (IsNew) {
+        const CodigoExiste = await ValidateCodigoBD(
+          almacenSelected.almacenCodigo,
+        );
+        if (CodigoExiste) {
+          alert("Codigo Ya Existe");
+          return;
+        }
+      }
+
+      const Ok = IsNew
+        ? await CreateAlmacen(almacenSelected)
+        : await UpdateAlmacen(almacenSelected);
+
+      const action = IsNew ? "Creado" : "Actualizado";
+
+      alert(
+        Ok
+          ? `Almacen ${action} Correctamente`
+          : `Almacen ${action} Correctamente`,
+      );
+
+      setFormState("lectura");
+      setAlmacenSelected(emptyAlmacen);
+      ListarAlmacenes();
+    } catch (error: any) {
+      console.log(error?.response.data);
+    }
+  };
+
+  const handleEliminar = async () => {
+    if (almacenSelected.almacenID == 0)
+      return alert("Seleccione almacen a eliminar");
+    try {
+      const Query = window.confirm("¿Eliminar Almacen?");
+      if (Query) {
+        const Borrar = await DeleteAlmacen(almacenSelected.almacenID);
+        if (Borrar) {
+          alert("Almacen Eliminado Correctamente");
+        } else {
+          alert("Erro Al Eliminar Almacen");
+        }
+      }
+      setAlmacenSelected(emptyAlmacen);
+      setFormState("lectura");
+      ListarAlmacenes();
+    } catch (error: any) {
+      console.log(error?.response.data);
+    }
+  };
   useEffect(() => {
-    ListarAlmacen();
+    ListarAlmacenes();
   }, []);
 
   const handleChanged = (
@@ -82,11 +163,13 @@ export default function ConfAlmacenes() {
                   className={s.input}
                   value={almacenSelected.almacenCodigo}
                   onChange={handleChanged}
+                  name="almacenCodigo"
                 ></input>
 
                 <label className={s.label}>Nombre Almacen</label>
                 <input
                   className={s.input}
+                  name="almacenNombre"
                   value={almacenSelected.almacenNombre}
                   onChange={handleChanged}
                 ></input>
@@ -114,6 +197,7 @@ export default function ConfAlmacenes() {
             <button
               className={`${s.btn} ${s.btnEdit}`}
               disabled={formState === "edicion"}
+              onClick={handleEdit}
             >
               <BtnEdit />
             </button>
@@ -129,6 +213,7 @@ export default function ConfAlmacenes() {
             <button
               className={`${s.btn} ${s.btnSuccess}`}
               disabled={formState === "lectura"}
+              onClick={handledSave}
             >
               <BtnSave />
             </button>
@@ -136,6 +221,7 @@ export default function ConfAlmacenes() {
             <button
               className={`${s.btn} ${s.btnDanger}`}
               disabled={formState === "edicion"}
+              onClick={handleEliminar}
             >
               <BtnEliminar />
             </button>
