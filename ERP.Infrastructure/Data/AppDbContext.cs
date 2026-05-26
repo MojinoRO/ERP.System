@@ -2,7 +2,8 @@ using System.Data.Common;
 using System.Runtime.CompilerServices;
 using ERP.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
- 
+using Microsoft.EntityFrameworkCore.Internal;
+
 namespace ERP.Infrastructure.Data;
 
 public class AppDbContext : DbContext
@@ -20,6 +21,9 @@ public class AppDbContext : DbContext
     public DbSet<ConfMarcas>ConfMarcas{get; set;}
     public DbSet<ConfAlmacenes>ConfAlmacenes{get;set;}
     public DbSet<ConfPais>ConfPais{get;set;}
+    public DbSet<ConfDepartamentos>ConfDepartamentos{get;set;}
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,5 +34,10 @@ public class AppDbContext : DbContext
             .WithMany(c => c.SubCategorias) // Categoria tiene muchas SubCategorias
             .HasForeignKey(sc =>sc.CategoriaID)  // FK
             .OnDelete(DeleteBehavior.Cascade);  // opcional (borra hijas si borras padre)
+
+        modelBuilder.Entity<ConfDepartamentos>()
+        .HasOne(dp => dp.ConfPais)
+        .WithMany(c =>c.Departamentos)
+        .HasForeignKey(dp=>dp.PaisID);
     }
 }   

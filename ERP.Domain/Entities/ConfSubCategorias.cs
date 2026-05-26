@@ -7,7 +7,6 @@ namespace ERP.Domain.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SubCategoriaID {get;set;}
-
         //fk
         public int CategoriaID { get;set;}
 

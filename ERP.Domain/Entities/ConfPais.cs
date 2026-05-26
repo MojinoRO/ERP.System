@@ -19,6 +19,8 @@ namespace ERP.Domain.Entities
         public string NombrePais {get;set;}=string.Empty;
 
         [MaxLength(4)]
-            public string? CodigoAlfa{get;set;}
+        public string? CodigoAlfa{get;set;}
+
+        public ICollection<ConfDepartamentos>Departamentos{get;set;}= new List<ConfDepartamentos>();
     }
 }
