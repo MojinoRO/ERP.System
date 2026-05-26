@@ -34,6 +34,8 @@ builder.Services.AddScoped<IConfMarcasRepository,ConfMarcasRepository>();
 builder.Services.AddScoped<IConfMarcaservice,ConfMarcasService>();
 builder.Services.AddScoped<IConfAlmacenesRepository,ConfAlmacenesRepository>();
 builder.Services.AddScoped<IConfAlmacenesServices,ConfAlmacenesServices>();
+builder.Services.AddScoped<IConfPaisRepository,ConfPaisRepository>();
+builder.Services.AddScoped<IConfPaisServices,ConfPaisService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {

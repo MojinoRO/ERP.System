@@ -5,9 +5,10 @@ namespace ERP.Domain.Interfaces
     {
         Task<IEnumerable<ConfPais>>GetAllAsync();
         Task<IEnumerable<ConfPais?>>GetByNameAsync(string name);
+        Task<ConfPais?>GetByIDAsync(int id);
         Task<ConfPais?>GetByCodigoAsync(string codigo);
         Task<ConfPais>CreateAsync(ConfPais pais);
         Task<ConfPais>UpdateAsync(ConfPais pais);
-        Task<bool>Delete(int id);
+        Task<bool>DeleteAsync(int id);
     }
 }

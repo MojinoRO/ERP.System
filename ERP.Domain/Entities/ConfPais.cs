@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.CompilerServices;
+
 
 namespace ERP.Domain.Entities
 {
@@ -19,7 +19,7 @@ namespace ERP.Domain.Entities
         public string NombrePais {get;set;}=string.Empty;
 
         [MaxLength(3)]
-        public string CodigoAlfa{get;set;}=string.Empty;
+        public string? CodigoAlfa{get;set;}=string.Empty;
 
     }
 }
