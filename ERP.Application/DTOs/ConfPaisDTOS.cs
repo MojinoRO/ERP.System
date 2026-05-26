@@ -20,9 +20,8 @@ namespace ERP.Application.DTOs
         [MaxLength(150,ErrorMessage ="Nombre Muy largo")]
         public string NombrePais {get;set;}=string.Empty;
 
-        [Required]
-        [MaxLength(3,ErrorMessage ="Codigo No puede ser Mayor a 4 digitos")]
-        public string CodigoAlfa{get;set;}=string.Empty;
+        [MaxLength(4,ErrorMessage ="Codigo No puede ser Mayor a 4 digitos")]
+        public string? CodigoAlfa{get;set;}
     }
 
     public class UpdateConfPaisDtos
@@ -38,9 +37,8 @@ namespace ERP.Application.DTOs
         [MaxLength(150,ErrorMessage ="Nombre Muy largo")]
         public string NombrePais {get;set;}=string.Empty;
 
-        [Required]
-        [MaxLength(3,ErrorMessage ="Codigo No puede ser Mayor a 4 digitos")]
-        public string CodigoAlfa{get;set;}=string.Empty;
+        [MaxLength(4,ErrorMessage ="Codigo No puede ser Mayor a 4 digitos")]
+        public string? CodigoAlfa {get;set;}
     }
 
 }

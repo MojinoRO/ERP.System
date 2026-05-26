@@ -29,7 +29,8 @@ namespace ERP.Application.Mapping
             CreateMap<UpdateConfMarcasDto,ConfMarcas>();
             CreateMap<UpdateConfAlmacenDTO,ConfAlmacenes>();
             CreateMap<CreateConfAlmacenDTO,ConfAlmacenes>();
-            CreateMap<ConfPaisDto,ConfPais>();
+            CreateMap<CreateConfPaisDtos,ConfPais>();
+            CreateMap<UpdateConfPaisDtos,ConfPais>();
         }
     }
 }

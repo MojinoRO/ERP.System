@@ -38,8 +38,8 @@ namespace ERP.Application.Services
         public async Task<ServiceResponse<ConfPaisDto?>>GetByCodigo(string codigo)
         {
             if(string.IsNullOrWhiteSpace(codigo)) return ServiceResponse<ConfPaisDto?>.Error("Codigo Vacio");
-
             var Pais = await _repo.GetByCodigoAsync(codigo);
+            if(Pais == null)return ServiceResponse<ConfPaisDto?>.Error("Codigo de pais no Encontrado");
             var dto = _mapping.Map<ConfPaisDto>(Pais);
             return ServiceResponse<ConfPaisDto?>.Ok(dto , "Codigo Encontrado");
         }
@@ -56,9 +56,10 @@ namespace ERP.Application.Services
             if(pais == null) return ServiceResponse<ConfPaisDto>.Error("Pais En Blanco");
 
             if (string.IsNullOrWhiteSpace(pais.CodigoPais) ||
-            string.IsNullOrWhiteSpace(pais.NombrePais) ||
-            string.IsNullOrWhiteSpace(pais.CodigoAlfa)) 
+            string.IsNullOrWhiteSpace(pais.NombrePais))
                 return ServiceResponse<ConfPaisDto>.Error("Revisa Campos en Blanco");
+            
+            pais.CodigoAlfa =string.IsNullOrWhiteSpace(pais.CodigoAlfa) ? null : pais.CodigoAlfa;
 
             var CodigoOk = await _repo.GetByCodigoAsync(pais.CodigoPais);
             if(CodigoOk != null) return ServiceResponse<ConfPaisDto>.Error("Codigo De Pais Ya Existe");
@@ -73,10 +74,10 @@ namespace ERP.Application.Services
         {
             if(pais == null) return ServiceResponse<ConfPaisDto>.Error("Pais En Blanco");
             if (string.IsNullOrWhiteSpace(pais.CodigoPais) ||
-            string.IsNullOrWhiteSpace(pais.NombrePais) ||
-            string.IsNullOrWhiteSpace(pais.CodigoAlfa)) return ServiceResponse<ConfPaisDto>.Error("Revisa Campos En Blanco");
+            string.IsNullOrWhiteSpace(pais.NombrePais)) return ServiceResponse<ConfPaisDto>.Error("Revisa Campos En Blanco");
             var CodigoOk = await _repo.GetByCodigoAsync(pais.CodigoPais);
             if(CodigoOk != null && CodigoOk.PaisID != pais.PaisID) return ServiceResponse<ConfPaisDto>.Error("Codigo De Pais Ya creado");
+            pais.CodigoAlfa = string.IsNullOrWhiteSpace(pais.CodigoAlfa) ? null : pais.CodigoAlfa;
             var entity = await _repo.GetByIDAsync(pais.PaisID);
             if(entity == null) return ServiceResponse<ConfPaisDto>.Error("Pais No Existe");
             _mapping.Map(pais,entity);

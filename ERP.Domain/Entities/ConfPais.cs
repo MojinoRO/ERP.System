@@ -18,8 +18,7 @@ namespace ERP.Domain.Entities
         [MaxLength(150)]
         public string NombrePais {get;set;}=string.Empty;
 
-        [MaxLength(3)]
-        public string? CodigoAlfa{get;set;}=string.Empty;
-
+        [MaxLength(4)]
+            public string? CodigoAlfa{get;set;}
     }
 }
