@@ -33,11 +33,12 @@ public class AppDbContext : DbContext
             .HasOne(sc => sc.ConfCategorias) // SubCategoria tiene una Categoria
             .WithMany(c => c.SubCategorias) // Categoria tiene muchas SubCategorias
             .HasForeignKey(sc =>sc.CategoriaID)  // FK
-            .OnDelete(DeleteBehavior.Cascade);  // opcional (borra hijas si borras padre)
+            .OnDelete(DeleteBehavior.Restrict);  // opcional (borra hijas si borras padre)
 
         modelBuilder.Entity<ConfDepartamentos>()
-        .HasOne(dp => dp.ConfPais)
-        .WithMany(c =>c.Departamentos)
-        .HasForeignKey(dp=>dp.PaisID);
+            .HasOne(dp => dp.ConfPais)
+            .WithMany(c =>c.Departamentos)
+            .HasForeignKey(dp=>dp.PaisID)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }   

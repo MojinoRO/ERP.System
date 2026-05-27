@@ -17,11 +17,17 @@ namespace ERP.Application.Mapping
                 opt => opt.MapFrom(src =>src.ConfCategorias.CategoriaNombre)
             );
 
+            CreateMap<ConfDepartamentos,ConfDepartamentosDTO>().ForMember(
+                desk => desk.PaisCodigo,
+                opt =>opt.MapFrom(src => src.ConfPais.CodigoPais)
+            ).ForMember(
+                desk => desk.PaisNombre,
+                opt => opt.MapFrom(src => src.ConfPais.NombrePais)
+            );
             //entity to dto sin fk
             CreateMap<ConfMarcas,ConfMarcasDto>();
             CreateMap<ConfAlmacenes,ConfAlmacenDTO>();
             CreateMap<ConfPais,ConfPaisDto>();
-
             //DTO to entity
             CreateMap<CreateSubCategeriasDTOs,ConfSubCategorias>();
             CreateMap<UpdateSubCategeriasDTOs,ConfSubCategorias>();
@@ -31,6 +37,8 @@ namespace ERP.Application.Mapping
             CreateMap<CreateConfAlmacenDTO,ConfAlmacenes>();
             CreateMap<CreateConfPaisDtos,ConfPais>();
             CreateMap<UpdateConfPaisDtos,ConfPais>();
+            CreateMap<CreateConfDepartamentosDTO,ConfDepartamentos>();
+            CreateMap<UpdateConfDepartamentosDTO,ConfDepartamentos>();
         }
     }
 }
