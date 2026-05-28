@@ -24,6 +24,15 @@ namespace ERP.Application.Mapping
                 desk => desk.PaisNombre,
                 opt => opt.MapFrom(src => src.ConfPais.NombrePais)
             );
+
+            CreateMap<ConfCiudades,ConfCiudadesDTO>().ForMember(
+                dest =>dest.DepartamentoCodigo,
+                opt =>opt.MapFrom(src =>src.ConfDepartamento.DepartamentoCodigo)
+            ).ForMember(
+                dest => dest.DepartamentoNombre,
+                opt=> opt.MapFrom(src =>src.ConfDepartamento.DepartamentoNombre)
+            );
+            
             //entity to dto sin fk
             CreateMap<ConfMarcas,ConfMarcasDto>();
             CreateMap<ConfAlmacenes,ConfAlmacenDTO>();
@@ -39,6 +48,8 @@ namespace ERP.Application.Mapping
             CreateMap<UpdateConfPaisDtos,ConfPais>();
             CreateMap<CreateConfDepartamentosDTO,ConfDepartamentos>();
             CreateMap<UpdateConfDepartamentosDTO,ConfDepartamentos>();
+            CreateMap<UpdateConfCiudadesDTO,ConfCiudades>();
+            CreateMap<CreateConfCiudadesDTO,ConfCiudades>();
         }
     }
 }

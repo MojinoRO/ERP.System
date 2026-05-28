@@ -25,5 +25,6 @@ namespace ERP.Domain.Entities
         [MaxLength(4)]
         public string? CodigoISO{get;set;}
 
+        public ICollection<ConfCiudades>ConfCiudades = new List<ConfCiudades>();
     }
 }

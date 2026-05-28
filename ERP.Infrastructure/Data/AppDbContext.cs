@@ -22,7 +22,7 @@ public class AppDbContext : DbContext
     public DbSet<ConfAlmacenes>ConfAlmacenes{get;set;}
     public DbSet<ConfPais>ConfPais{get;set;}
     public DbSet<ConfDepartamentos>ConfDepartamentos{get;set;}
-
+    public DbSet<ConfCiudades>ConfCiudades{get;set;}
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +39,12 @@ public class AppDbContext : DbContext
             .HasOne(dp => dp.ConfPais)
             .WithMany(c =>c.Departamentos)
             .HasForeignKey(dp=>dp.PaisID)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ConfCiudades>()
+            .HasOne(cu => cu.ConfDepartamento)
+            .WithMany(c => c.ConfCiudades)
+            .HasForeignKey(sc =>sc.DepartamentoID)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }   
