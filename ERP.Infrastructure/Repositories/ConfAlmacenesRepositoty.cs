@@ -19,7 +19,7 @@ namespace ERP.Infrastructure.Repositories
         public async Task<IEnumerable<ConfAlmacenes>> GetAllAsync()
         {
             return await _context.ConfAlmacenes
-                .AsNoTracking()
+                .AsNoTracking().Where(a=>a.Estado==0).OrderBy(a=>a.AlmacenID)
                 .ToListAsync();
         }
 

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using ERP.WEBAPI.Middleware;
 using ERP.Application.Interfaces;
 using ERP.Application.Services;
-using ERP.Domain.Entities;
 using ERP.Infrastructure.Repositories;
 using ERP.Domain.Interfaces;
 using ERP.Application.Mapping;
@@ -36,6 +35,8 @@ builder.Services.AddScoped<IConfAlmacenesRepository,ConfAlmacenesRepository>();
 builder.Services.AddScoped<IConfAlmacenesServices,ConfAlmacenesServices>();
 builder.Services.AddScoped<IConfPaisRepository,ConfPaisRepository>();
 builder.Services.AddScoped<IConfPaisServices,ConfPaisService>();
+builder.Services.AddScoped<IConfDepartamentoService,ConfDepartamentosServices>();
+builder.Services.AddScoped<IConfDepartamentosRepository,ConfDepartamentosRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {

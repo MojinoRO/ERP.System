@@ -24,9 +24,9 @@ namespace ERP.Application.DTOs
         [Required]
         [MaxLength(150,ErrorMessage ="Nombre muy largo")]
         public string DepartamentoNombre{get;set;}=string.Empty;
-        [Required]
+
         [MaxLength(4,ErrorMessage ="Codigo debe ser de 4 digitos")]
-        public string CodigoISO{get;set;}=string.Empty;
+        public string? CodigoISO{get;set;}
     }
 
     public class UpdateConfDepartamentosDTO
@@ -44,9 +44,8 @@ namespace ERP.Application.DTOs
         [Required]
         [MaxLength(150,ErrorMessage ="Nombre muy largo")]
         public string DepartamentoNombre{get;set;}=string.Empty;
-        
-        [Required]
+
         [MaxLength(4,ErrorMessage ="Codigo debe ser de 4 digitos")]
-        public string CodigoISO{get;set;}=string.Empty;
+        public string? CodigoISO{get;set;}
     }
 }

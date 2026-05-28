@@ -178,6 +178,7 @@ export default function ConfAlmacenes() {
                   className={s.select}
                   value={almacenSelected.estado}
                   onChange={handleChanged}
+                  name="estado"
                 >
                   <option value="0">Activo</option>
                   <option value="1">Inactivo</option>
