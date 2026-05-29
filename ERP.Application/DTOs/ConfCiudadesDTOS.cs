@@ -27,14 +27,15 @@ namespace ERP.Application.DTOs
         [MaxLength(150,ErrorMessage ="Nombre Muy Largo")]
         public string CiudadNombre{get;set;}=string.Empty;
 
-        [Required]
         [MaxLength(5,ErrorMessage ="Codigo Debe ser menor a 5 digitos")]
         public string? CodigoDian {get;set;}
 
     }
 
-        public class UpdateConfCiudadesDTO
+    public class UpdateConfCiudadesDTO
     {
+        [Required]
+        public int CiudadID{get;set;}
         [Required]
         public int DepartamentoID{get;set;}
         
@@ -46,7 +47,6 @@ namespace ERP.Application.DTOs
         [MaxLength(150,ErrorMessage ="Nombre Muy Largo")]
         public string CiudadNombre{get;set;}=string.Empty;
 
-        [Required]
         [MaxLength(5,ErrorMessage ="Codigo Debe ser menor a 5 digitos")]
         public string? CodigoDian {get;set;}
 
