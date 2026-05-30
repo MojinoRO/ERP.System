@@ -37,6 +37,8 @@ builder.Services.AddScoped<IConfPaisRepository,ConfPaisRepository>();
 builder.Services.AddScoped<IConfPaisServices,ConfPaisService>();
 builder.Services.AddScoped<IConfDepartamentoService,ConfDepartamentosServices>();
 builder.Services.AddScoped<IConfDepartamentosRepository,ConfDepartamentosRepository>();
+builder.Services.AddScoped<IConfCiudadesRepository,ConfCiudadesRepository>();
+builder.Services.AddScoped<IConfCiudadesService,ConfCiudadesServices>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {
