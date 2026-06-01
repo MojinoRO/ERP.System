@@ -20,7 +20,7 @@ namespace ERP.WEBAPI.Controllers
             return Ok(listado);
         }
 
-        [HttpGet("{codigo}")]
+        [HttpGet("{name}")]
         public async Task<ActionResult<IEnumerable<ConfCiudadesDTO>>>BuscarPorNombre(string name)
         {
             var listado = await _service.GetByNameAsync(name);

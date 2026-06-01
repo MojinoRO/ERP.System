@@ -31,7 +31,7 @@ namespace ERP.Application.Services
         {
             if(string.IsNullOrWhiteSpace(name)) return ServiceResponse<IEnumerable<ConfCiudadesDTO?>>.Error("Parametro Invalido");
             var listado = await _repo.GetByName(name);
-            var dto = _Mapper.Map<IEnumerable<ConfCiudadesDTO?>>(listado);
+            var dto = _Mapper.Map<IEnumerable<ConfCiudadesDTO>>(listado);
             return ServiceResponse<IEnumerable<ConfCiudadesDTO?>>.Ok(dto,"Listado Generado Correctamente");
         }
 
