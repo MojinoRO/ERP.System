@@ -9,7 +9,12 @@ import {
   deleteVendedores,
 } from "../Api/ConfVendedores";
 
-import {BtonCrear,BtnEdit,BtnEliminar,BtnSave} from "../Components/component"
+import {
+  BtonCrear,
+  BtnEdit,
+  BtnEliminar,
+  BtnSave,
+} from "../Components/component";
 
 export default function ConfFormDigitadores() {
   const [lista, setLista] = useState<responseVendedores[]>([]);
@@ -228,28 +233,28 @@ export default function ConfFormDigitadores() {
               disabled={!btnCreate}
               onClick={handledCreate}
             >
-              <BtonCrear/>
+              <BtonCrear />
             </button>
             <button
               className={`${gs.btn} ${gs.btnEdit}`}
               disabled={!btnEdit}
               onClick={handledEdit}
             >
-              <BtnEdit/>
+              <BtnEdit />
             </button>
             <button
               className={`${gs.btn} ${gs.btnSuccess}`}
               disabled={!btnSave}
               onClick={handledSave}
             >
-              <BtnSave/>
+              <BtnSave />
             </button>
             <button
               className={`${gs.btn} ${gs.btnDanger}`}
               disabled={!btnDelete}
               onClick={handledDelete}
             >
-              <BtnEliminar/>
+              <BtnEliminar />
             </button>
           </div>
         </div>

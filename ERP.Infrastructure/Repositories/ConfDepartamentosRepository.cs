@@ -17,19 +17,19 @@ namespace ERP.Infrastructure.Repositories
         
         public async Task<IEnumerable<ConfDepartamentos?>>GetByNameAsync(string name)
         {
-            return await _context.ConfDepartamentos.AsNoTracking()
+            return await _context.ConfDepartamentos.AsNoTracking().Include(d =>d.ConfPais)
             .Where(d=> EF.Functions.Like(d.DepartamentoNombre, $"%{name}%")).ToListAsync();
         } 
 
         public async Task<ConfDepartamentos?>GetByCodigoAsync(string codigo)
         {
-            return await _context.ConfDepartamentos.AsNoTracking()
+            return await _context.ConfDepartamentos.AsNoTracking().Include(d =>d.ConfPais)
             .FirstOrDefaultAsync(d=>d.DepartamentoCodigo == codigo);
         }
 
         public async Task<ConfDepartamentos?>GetByIDAsync(int id)
         {
-            return await _context.ConfDepartamentos.AsNoTracking()
+            return await _context.ConfDepartamentos.AsNoTracking().Include(d =>d.ConfPais)
             .FirstOrDefaultAsync(d=>d.DepartamentoID == id);
         }
 

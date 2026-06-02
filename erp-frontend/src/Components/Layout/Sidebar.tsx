@@ -7,11 +7,11 @@ import { useState } from "react";
 import type React from "react";
 import ConfFormDigitadores from "../../Pages/ConfFormDigitadores";
 import ConfFormCategorias from "../../Pages/ConfFormCategorias";
-import {ChevronDown} from "lucide-react"
+import { ChevronDown } from "lucide-react";
 import ConfFormSubCategorias from "../../Pages/ConfFormSubCategorias";
-import ConfFormMarcas from "../../Pages/ConfFormMarcas"
+import ConfFormMarcas from "../../Pages/ConfFormMarcas";
 import ConfAlmacenes from "../../Pages/ConfFormAlmacenes";
-
+import ConfCiudades from "../../Pages/ConfFormCiudades";
 
 interface NavChild {
   id: string;
@@ -66,6 +66,11 @@ const NAV_ITEMS: NavItems[] = [
             component: <ConfFormEmpresa />,
           },
           {
+            id: "ConfCiudades",
+            label: "Ciudades",
+            component: <ConfCiudades />,
+          },
+          {
             id: "ConfVendedores",
             label: "Digitadores",
             component: <ConfFormDigitadores />,
@@ -77,9 +82,9 @@ const NAV_ITEMS: NavItems[] = [
         label: "Inventarios ",
         children: [
           {
-            id:"ConfAlmacenes",
-            label:"Almacenes",
-            component:<ConfAlmacenes/>
+            id: "ConfAlmacenes",
+            label: "Almacenes",
+            component: <ConfAlmacenes />,
           },
           {
             id: "ConfCategorias",
@@ -88,14 +93,14 @@ const NAV_ITEMS: NavItems[] = [
           },
           {
             id: "ConfSubCategorias",
-            label:"Subcategorías Artículos",
-            component:<ConfFormSubCategorias/>
+            label: "Subcategorías Artículos",
+            component: <ConfFormSubCategorias />,
           },
           {
-            id:"ConfMarcas",
-            label:"Marcas",
-            component:<ConfFormMarcas/>
-          }
+            id: "ConfMarcas",
+            label: "Marcas",
+            component: <ConfFormMarcas />,
+          },
         ],
       },
     ],
@@ -140,12 +145,13 @@ export default function Sidebar() {
                     {item.icon} {item.label}
                   </span>
                   <span className={isOpen ? styles.arrowOpen : styles.arrow}>
-                    <ChevronDown 
-                    size={12}
-                    style={{
-                      transition:'transform 0.2s ease',
-                      transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    }}/>
+                    <ChevronDown
+                      size={12}
+                      style={{
+                        transition: "transform 0.2s ease",
+                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      }}
+                    />
                   </span>
                 </button>
 
@@ -169,11 +175,14 @@ export default function Sidebar() {
                               }
                             >
                               <ChevronDown
-                              size={12}
-                              style={{
-                                transition:'transform 0.2s ease',
-                                transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                              }}/>
+                                size={12}
+                                style={{
+                                  transition: "transform 0.2s ease",
+                                  transform: isOpen
+                                    ? "rotate(180deg)"
+                                    : "rotate(0deg)",
+                                }}
+                              />
                             </span>
                           </button>
 

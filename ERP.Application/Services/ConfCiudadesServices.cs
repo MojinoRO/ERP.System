@@ -1,11 +1,9 @@
 using ERP.Application.DTOs;
 using ERP.Application.common;
 using ERP.Application.Interfaces;
-using System.Runtime.CompilerServices;
 using ERP.Domain.Interfaces;
 using AutoMapper;
 using ERP.Domain.Entities;
-using System.Reflection.Metadata;
 
 namespace ERP.Application.Services
 {

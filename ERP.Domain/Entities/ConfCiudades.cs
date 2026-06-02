@@ -11,14 +11,14 @@ namespace ERP.Domain.Entities
 
         [Required]
         public int DepartamentoID{get;set;}
-
+        
         [Required]
         [MaxLength(3)]
-        public string CiudadNombre{get;set;}=string.Empty;
+        public string CiudadCodigo{get;set;}=string.Empty;
 
         [Required]
         [MaxLength(150)]
-        public string CiudadCodigo{get;set;}=string.Empty;
+        public string CiudadNombre{get;set;}=string.Empty;
 
         [MaxLength(5)]
         public string? CodigoDian{get;set;}=string.Empty;

@@ -12,9 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-    
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());    
 // ─── REGISTRAR REPOSITORIOS (Infrastructure) ─────────────────
 // Cuando alguien pida IProductoRepository, dale ProductoRepository
 builder.Services.AddScoped<IConfUsuariosRepository,ConfUsuariosRepository>();
@@ -56,10 +56,25 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var pendingMigrations = context.Database.GetPendingMigrations();
+        if (pendingMigrations.Any())
+        {
+            context.Database.Migrate();
+        }
+    }catch(Exception ex)
+    {
+        Console.WriteLine($"Error aplicando migraciones: {ex}");
+        throw;
+    }
+}
+
 //uso del middleware
-
 app.UseMiddleware<ErrorHandlingMiddleware>();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

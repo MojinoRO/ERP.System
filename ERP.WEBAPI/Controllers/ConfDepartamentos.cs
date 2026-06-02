@@ -1,7 +1,6 @@
 using ERP.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using ERP.Application.Interfaces;
-using ERP.Infrastructure.Migrations;
 
 namespace ERP.WEBAPI.Controllers
 {

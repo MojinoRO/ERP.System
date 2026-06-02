@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERP.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260523211607_ConfAlmacenV2")]
-    partial class ConfAlmacenV2
+    [Migration("20260602023930_CampoConfCiudad")]
+    partial class CampoConfCiudad
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,70 @@ namespace ERP.Infrastructure.Migrations
                     b.ToTable("ConfCategorias");
                 });
 
+            modelBuilder.Entity("ERP.Domain.Entities.ConfCiudades", b =>
+                {
+                    b.Property<int>("CiudadID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CiudadID"));
+
+                    b.Property<string>("CiudadCodigo")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("CiudadNombre")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("CodigoDian")
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<int>("DepartamentoID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CiudadID");
+
+                    b.HasIndex("DepartamentoID");
+
+                    b.ToTable("ConfCiudades");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.ConfDepartamentos", b =>
+                {
+                    b.Property<int>("DepartamentoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartamentoID"));
+
+                    b.Property<string>("CodigoISO")
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
+
+                    b.Property<string>("DepartamentoCodigo")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<string>("DepartamentoNombre")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("PaisID")
+                        .HasColumnType("int");
+
+                    b.HasKey("DepartamentoID");
+
+                    b.HasIndex("PaisID");
+
+                    b.ToTable("ConfDepartamentos");
+                });
+
             modelBuilder.Entity("ERP.Domain.Entities.ConfMarcas", b =>
                 {
                     b.Property<int>("MarcaID")
@@ -164,6 +228,33 @@ namespace ERP.Infrastructure.Migrations
                     b.HasKey("MarcaID");
 
                     b.ToTable("ConfMarcas");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.ConfPais", b =>
+                {
+                    b.Property<int>("PaisID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaisID"));
+
+                    b.Property<string>("CodigoAlfa")
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
+
+                    b.Property<string>("CodigoPais")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
+
+                    b.Property<string>("NombrePais")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("PaisID");
+
+                    b.ToTable("ConfPais");
                 });
 
             modelBuilder.Entity("ERP.Domain.Entities.ConfSubCategorias", b =>
@@ -252,12 +343,34 @@ namespace ERP.Infrastructure.Migrations
                     b.ToTable("ConfVendedores");
                 });
 
+            modelBuilder.Entity("ERP.Domain.Entities.ConfCiudades", b =>
+                {
+                    b.HasOne("ERP.Domain.Entities.ConfDepartamentos", "ConfDepartamento")
+                        .WithMany("ConfCiudades")
+                        .HasForeignKey("DepartamentoID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ConfDepartamento");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.ConfDepartamentos", b =>
+                {
+                    b.HasOne("ERP.Domain.Entities.ConfPais", "ConfPais")
+                        .WithMany("Departamentos")
+                        .HasForeignKey("PaisID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ConfPais");
+                });
+
             modelBuilder.Entity("ERP.Domain.Entities.ConfSubCategorias", b =>
                 {
                     b.HasOne("ERP.Domain.Entities.ConfCategorias", "ConfCategorias")
                         .WithMany("SubCategorias")
                         .HasForeignKey("CategoriaID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ConfCategorias");
@@ -266,6 +379,16 @@ namespace ERP.Infrastructure.Migrations
             modelBuilder.Entity("ERP.Domain.Entities.ConfCategorias", b =>
                 {
                     b.Navigation("SubCategorias");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.ConfDepartamentos", b =>
+                {
+                    b.Navigation("ConfCiudades");
+                });
+
+            modelBuilder.Entity("ERP.Domain.Entities.ConfPais", b =>
+                {
+                    b.Navigation("Departamentos");
                 });
 #pragma warning restore 612, 618
         }

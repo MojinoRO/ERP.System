@@ -1,6 +1,6 @@
 /* ── Base del sidebar ── */
 .sidebar {
-  width: 240px;
+  width: 300px;
   height: 100vh;
   background-color: #1e1e2d;
   display: flex;
