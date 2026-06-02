@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import s from "../Style/FormVendedores.module.css";
 import gs from "./shared.module.css";
 import { type responseVendedores } from "../Types/ConfVendedores";
 import {
@@ -152,16 +151,16 @@ export default function ConfFormDigitadores() {
   };
 
   return (
-    <div className={s.container}>
-      <h2 className={s.cardHeader}>Configuración de Digitadores</h2>
+    <div className={gs.container}>
+      <h2 className={gs.cardHeader}>Configuración de Digitadores</h2>
 
-      <div className={s.grid}>
-        <div className={s.formulario}>
-          <div className={s.formRow}>
-            <div className={s.formGroup}>
+      <div className={gs.grid}>
+        <div className={gs.formulario}>
+          <div className={gs.formRow}>
+            <div className={gs.formGroup}>
               <label>Código</label>
               <input
-                className={`${s.input} ${s.codigo}`}
+                className={`${gs.input} ${gs.codigo}`}
                 placeholder="Código"
                 value={vendedorSelected?.vendedorCodigo}
                 onChange={(e) => {
@@ -174,10 +173,10 @@ export default function ConfFormDigitadores() {
               />
             </div>
 
-            <div className={s.formGroup}>
+            <div className={gs.formGroup}>
               <label>Nombre</label>
               <input
-                className={s.input}
+                className={gs.input}
                 placeholder="Ingrese Nombre"
                 value={vendedorSelected?.vendedorNombre}
                 disabled={!formActive}
@@ -190,10 +189,10 @@ export default function ConfFormDigitadores() {
               />
             </div>
 
-            <div className={s.formGroup}>
+            <div className={gs.formGroup}>
               <label>Identificación</label>
               <input
-                className={s.input}
+                className={gs.input}
                 placeholder="Identificación"
                 value={vendedorSelected?.vendedorIdentificacion}
                 disabled={!formActive}
@@ -206,10 +205,10 @@ export default function ConfFormDigitadores() {
               />
             </div>
 
-            <div className={s.formGroup}>
+            <div className={gs.formGroup}>
               <label>Estado</label>
               <select
-                className={s.select}
+                className={gs.select}
                 value={vendedorSelected?.vendedorEstado}
                 disabled={!formActive}
                 onChange={(e) => {
@@ -227,7 +226,7 @@ export default function ConfFormDigitadores() {
 
           {/**BOTONES */}
 
-          <div className={s.buttonGroup} style={{ margin: "10px" }}>
+          <div className={gs.buttonGroup} style={{ margin: "10px" }}>
             <button
               className={`${gs.btn} ${gs.btnPrimary}`}
               disabled={!btnCreate}
@@ -259,13 +258,13 @@ export default function ConfFormDigitadores() {
           </div>
         </div>
 
-        <div className={s.list}>
-          <div className={s.listHeader}>
+        <div className={gs.list}>
+          <div className={gs.listHeader}>
             <h3>Listado Digitadores</h3>
-            <input className={s.search} placeholder="Buscar..." />
+            <input className={gs.search} placeholder="Buscar..." />
           </div>
 
-          <table className={s.table}>
+          <table className={gs.table}>
             <thead>
               <tr>
                 <th>Código</th>

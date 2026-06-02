@@ -1,5 +1,5 @@
 import api from "../Api/AxiosConfig";
-import type { requestVendedores, responseVendedores } from "../Types/ConfVendedores";
+import type { responseVendedores } from "../Types/ConfVendedores";
 
 export const GetVendedores = async (): Promise<responseVendedores[]> => {
   const response = await api.get("/ConfVendedores");

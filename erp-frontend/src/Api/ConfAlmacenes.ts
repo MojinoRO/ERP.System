@@ -1,4 +1,3 @@
-import { FaSleigh } from "react-icons/fa";
 import api from "../Api/AxiosConfig";
 import { type ResponseAlmacenes } from "../Types/ConfAlmacenes";
 

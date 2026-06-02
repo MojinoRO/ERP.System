@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
-import TabBar from "./TapBar"; // ← agregar este import
+import TabBar from "./TapBar";
 import TabContent from "./TabContent";
 import styles from "./DashboardLayout.module.css";
 import { TabsProvider } from "../../Context/TabContext";
