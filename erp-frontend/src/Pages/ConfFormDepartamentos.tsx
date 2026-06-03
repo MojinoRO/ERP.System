@@ -6,17 +6,17 @@ import {
   BtnSave,
   BtnEliminar,
 } from "../Components/component";
-export default function ConfCiudades() {
+
+export default function ConfDepartamentos() {
   return (
     <div className={s.container}>
-      <h2 className={s.pageTitle}>Configuración de Ciudades</h2>
+      <h2 className={s.pageTitle}>Configuración de Departamentos</h2>
 
       <div className={s.grid}>
         {/* FORMULARIO */}
         <div className={s.formulario}>
           <fieldset className={s.fieldset}>
             <h3 className={s.sectionTitle}>Información General</h3>
-
             <div className={s.formRow}>{/* Controles */}</div>
 
             <div className={s.formRow}>{/* Controles */}</div>

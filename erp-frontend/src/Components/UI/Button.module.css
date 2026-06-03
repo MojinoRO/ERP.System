@@ -53,13 +53,13 @@
 
 /* ── SECONDARY VARIANT ── */
 .btn-secondary {
-  background: var(--color-bg-secondary);
+  background: var(--color-bg-secondary, #dab53f);
   color: var(--color-text-primary);
   border: 2px solid var(--color-border);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: var(--color-bg-tertiary);
+  background: var(--color-bg-tertiary, #dab53f);
   border-color: var(--color-border-dark);
   transform: translateY(-2px);
 }

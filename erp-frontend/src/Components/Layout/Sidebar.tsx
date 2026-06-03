@@ -11,7 +11,7 @@ import { ChevronDown } from "lucide-react";
 import ConfFormSubCategorias from "../../Pages/ConfFormSubCategorias";
 import ConfFormMarcas from "../../Pages/ConfFormMarcas";
 import ConfAlmacenes from "../../Pages/ConfFormAlmacenes";
-import ConfCiudades from "../../Pages/ConfFormCiudades";
+import ConfCiudades from "../../Pages/ConfFormPaisDepCiu";
 
 interface NavChild {
   id: string;
