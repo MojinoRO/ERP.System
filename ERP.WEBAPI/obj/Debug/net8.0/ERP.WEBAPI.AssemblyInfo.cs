@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ERP.WEBAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f7e4d21e5d8d5164699e723372f9c3b32434b70")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+273071a5e557325941aaae4c1b0624d40e3899e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("ERP.WEBAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ERP.WEBAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
