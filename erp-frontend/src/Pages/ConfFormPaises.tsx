@@ -7,9 +7,11 @@ import {
   BtnEliminar,
 } from "../Components/component";
 import { Input } from "../Components/UI/Input";
-import { useEffect, useState } from "react";
-import { ListarPaises } from "../Api/ConfPaisDepCiu";
+import React, { useEffect, useState } from "react";
+import { ListarPaises, BuscarPaisBD } from "../Api/ConfPaisDepCiu";
 import { type ConfPaisResponse } from "../Types/ConfPaisDepCiu";
+import { ErrorAlert } from "../Components/UI/ErrorAlert";
+import { ConfirmDialog } from "../Components/UI/ConfirmDialog";
 
 export default function ConfPaises() {
   const emptyPais: ConfPaisResponse = {
@@ -22,8 +24,29 @@ export default function ConfPaises() {
   const [formState, setFormState] = useState<"edicion" | "lectura">("lectura");
   const [listadoPaises, setListadoPaises] = useState<ConfPaisResponse[]>([]);
   const [paisSelected, setPaisSelected] = useState(emptyPais);
+  const [textBuscador, settextBuscador] = useState("");
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "error" | "success";
+  } | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [error, SetError] = useState<{
+    codigoPais?: string;
+    nombrePais?: string;
+    codigoAlfa?: string;
+  }>({});
 
   //functions
+  const handleEdit = () => {
+    if (paisSelected.paisID == 0) {
+      setAlert({
+        message: "Seleccione Pais a modificar",
+        type: "error",
+      });
+    }
+    setFormState("edicion");
+  };
+
   const ChangedPaises = async () => {
     try {
       const paises = await ListarPaises();
@@ -36,13 +59,44 @@ export default function ConfPaises() {
     }
   };
 
+  const HanbledBuscador = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const text = e.target.value;
+    settextBuscador(text);
+    if (!text.trim()) return await ChangedPaises();
+    try {
+      const data = await BuscarPaisBD(text);
+      setListadoPaises(data);
+    } catch (error: any) {
+      console.log(
+        "Error al cargar países:",
+        error?.response?.data || error.message || error,
+      );
+    }
+  };
+
+  const HandleChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+
+    setPaisSelected({
+      ...paisSelected,
+      [name]: value.toUpperCase(),
+    });
+  };
+
   useEffect(() => {
     ChangedPaises();
   }, []);
+
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración de Paises</h2>
-
+      {alert && (
+        <ErrorAlert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        ></ErrorAlert>
+      )}
       <div className={s.grid}>
         {/* FORMULARIO */}
         <div className={s.formulario}>
@@ -51,17 +105,26 @@ export default function ConfPaises() {
 
             <div className={s.formRow}>
               <label className={s.label}>Pais Codigo</label>
-              <Input></Input>
+              <Input
+                value={paisSelected.codigoPais}
+                onChange={HandleChanged}
+              ></Input>
             </div>
 
             <div className={s.formRow}>
               <label className={s.label}>Pais Nombre</label>
-              <Input></Input>
+              <Input
+                value={paisSelected.nombrePais}
+                onChange={HandleChanged}
+              ></Input>
             </div>
 
             <div className={s.formRow}>
               <label className={s.label}>Codigo Alfa</label>
-              <Input></Input>
+              <Input
+                value={paisSelected.codigoAlfa}
+                onChange={HandleChanged}
+              ></Input>
             </div>
           </fieldset>
 
@@ -69,8 +132,11 @@ export default function ConfPaises() {
             <button className={`${s.btn} ${s.btnPrimary}`}>
               <BtonCrear />
             </button>
-            <button className={`${s.btn} ${s.btnEdit}`}>
+            <button className={`${s.btn} ${s.btnEdit}`} onClick={handleEdit}>
               <BtnEdit />
+            </button>
+            <button className={`${s.btn} ${s.BtnCancel}`}>
+              <BtnCancel />
             </button>
             <button className={`${s.btn} ${s.btnSuccess}`}>
               <BtnSave />
@@ -85,7 +151,12 @@ export default function ConfPaises() {
         <div className={s.list}>
           <div className={s.listHeader}>
             <h3>Listado de Paises</h3>
-            <input className={s.search} placeholder="Buscar..." />
+            <input
+              className={s.search}
+              placeholder="Buscar..."
+              value={textBuscador}
+              onChange={HanbledBuscador}
+            />
           </div>
 
           <div className={s.tableWrapper}>
