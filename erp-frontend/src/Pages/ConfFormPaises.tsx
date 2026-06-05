@@ -8,7 +8,14 @@ import {
 } from "../Components/component";
 import { Input } from "../Components/UI/Input";
 import React, { useEffect, useState } from "react";
-import { ListarPaises, BuscarPaisBD } from "../Api/ConfPaisDepCiu";
+import {
+  ListarPaises,
+  BuscarPaisBD,
+  ValidaCodigoBD,
+  CrearPais,
+  UpdatePais,
+  DeletePais,
+} from "../Api/ConfPaisDepCiu";
 import { type ConfPaisResponse } from "../Types/ConfPaisDepCiu";
 import { ErrorAlert } from "../Components/UI/ErrorAlert";
 import { ConfirmDialog } from "../Components/UI/ConfirmDialog";
@@ -30,21 +37,83 @@ export default function ConfPaises() {
     type: "error" | "success";
   } | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [error, SetError] = useState<{
+  const [errors, SetErrors] = useState<{
     codigoPais?: string;
     nombrePais?: string;
     codigoAlfa?: string;
   }>({});
 
   //functions
+
+  const handleCreate = () => {
+    setPaisSelected(emptyPais);
+    setFormState("edicion");
+    SetErrors({});
+  };
+
   const handleEdit = () => {
     if (paisSelected.paisID == 0) {
-      setAlert({
+      return setAlert({
         message: "Seleccione Pais a modificar",
         type: "error",
       });
     }
     setFormState("edicion");
+    console.log(paisSelected.paisID);
+  };
+
+  const handleCancel = () => {
+    setPaisSelected(emptyPais);
+    setFormState("lectura");
+    SetErrors({});
+  };
+
+  const handleSave = async () => {
+    if (!ValidateForm(paisSelected)) return;
+    try {
+      const IsNew = paisSelected.paisID == 0;
+      if (IsNew) {
+        const query = await ValidaCodigoBD(paisSelected.codigoPais);
+        if (query) {
+          setAlert({
+            message: "Codigo De Pais Ya Existe",
+            type: "error",
+          });
+          return;
+        }
+      }
+      const Ok = IsNew
+        ? await CrearPais(paisSelected)
+        : await UpdatePais(paisSelected);
+
+      const action = IsNew ? "Creado" : "Actualizado";
+      console.log(action);
+      setAlert({
+        message: `Pais ${action} Correctamente`,
+        type: Ok ? "success" : "error",
+      });
+
+      setFormState("lectura");
+      ChangedPaises();
+      setPaisSelected(emptyPais);
+      SetErrors({});
+    } catch (error: any) {
+      setAlert({
+        message: "Error Al Guardar Pais",
+        type: "error",
+      });
+      console.log(error.response?.data);
+    }
+  };
+
+  const handleDelete = () => {
+    if (paisSelected.paisID === 0) {
+      return setAlert({
+        message: "Debe Seleccionar Pais Para Eliminar",
+        type: "error",
+      });
+    }
+    setConfirmDelete(true);
   };
 
   const ChangedPaises = async () => {
@@ -57,6 +126,47 @@ export default function ConfPaises() {
         error?.response?.data || error.message || error,
       );
     }
+  };
+
+  const ConfirmDeletePais = async () => {
+    try {
+      const Borrar = await DeletePais(paisSelected.paisID);
+      if (!Borrar)
+        return setAlert({
+          message: "No Se Ha Podido Eliminar Pais",
+          type: "error",
+        });
+      setAlert({ message: "Pais Eliminado Correctamente", type: "success" });
+      setPaisSelected(emptyPais);
+      ChangedPaises();
+      setConfirmDelete(false);
+    } catch (error: any) {
+      setAlert({
+        message: "Error Al Eliminar Pais",
+        type: "error",
+      });
+      console.log(error.response?.data);
+    }
+  };
+
+  const ValidateForm = (e: ConfPaisResponse) => {
+    const newErrors: typeof errors = {};
+    if (!e.codigoPais.trim()) {
+      newErrors.codigoPais = "Codigo Vacio";
+      setAlert({
+        message: "Codigo Vacio",
+        type: "error",
+      });
+    }
+    if (!e.nombrePais.trim()) {
+      newErrors.nombrePais = "Nombre Vacio";
+      setAlert({
+        message: "Nombre  Vacio",
+        type: "error",
+      });
+    }
+    SetErrors(newErrors);
+    return Object.keys(newErrors).length == 0;
   };
 
   const HanbledBuscador = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,9 +204,11 @@ export default function ConfPaises() {
         <ErrorAlert
           message={alert.message}
           type={alert.type}
+          autoClose={3000}
           onClose={() => setAlert(null)}
         ></ErrorAlert>
       )}
+
       <div className={s.grid}>
         {/* FORMULARIO */}
         <div className={s.formulario}>
@@ -108,6 +220,7 @@ export default function ConfPaises() {
               <Input
                 value={paisSelected.codigoPais}
                 onChange={HandleChanged}
+                name="codigoPais"
               ></Input>
             </div>
 
@@ -116,6 +229,7 @@ export default function ConfPaises() {
               <Input
                 value={paisSelected.nombrePais}
                 onChange={HandleChanged}
+                name="nombrePais"
               ></Input>
             </div>
 
@@ -124,24 +238,45 @@ export default function ConfPaises() {
               <Input
                 value={paisSelected.codigoAlfa}
                 onChange={HandleChanged}
+                name="codigoAlfa"
               ></Input>
             </div>
           </fieldset>
 
           <div className={s.buttonGroup} style={{ margin: "10px" }}>
-            <button className={`${s.btn} ${s.btnPrimary}`}>
+            <button
+              className={`${s.btn} ${s.btnPrimary}`}
+              onClick={handleCreate}
+              disabled={formState === "edicion"}
+            >
               <BtonCrear />
             </button>
-            <button className={`${s.btn} ${s.btnEdit}`} onClick={handleEdit}>
+            <button
+              className={`${s.btn} ${s.btnEdit}`}
+              onClick={handleEdit}
+              disabled={formState === "edicion"}
+            >
               <BtnEdit />
             </button>
-            <button className={`${s.btn} ${s.BtnCancel}`}>
+            <button
+              className={`${s.btn} ${s.BtnCancel}`}
+              onClick={handleCancel}
+              disabled={formState === "lectura"}
+            >
               <BtnCancel />
             </button>
-            <button className={`${s.btn} ${s.btnSuccess}`}>
+            <button
+              className={`${s.btn} ${s.btnSuccess}`}
+              onClick={handleSave}
+              disabled={formState === "lectura"}
+            >
               <BtnSave />
             </button>
-            <button className={`${s.btn} ${s.btnDanger}`}>
+            <button
+              className={`${s.btn} ${s.btnDanger}`}
+              onClick={handleDelete}
+              disabled={formState === "edicion"}
+            >
               <BtnEliminar />
             </button>
           </div>
@@ -187,6 +322,15 @@ export default function ConfPaises() {
           </div>
         </div>
       </div>
+      <ConfirmDialog
+        open={confirmDelete}
+        title="Eliminar Pais"
+        message={`¿Estás seguro de que deseas eliminar el pais "${paisSelected.nombrePais}"? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        onConfirm={ConfirmDeletePais}
+        onCancel={() => setConfirmDelete(false)}
+      ></ConfirmDialog>
     </div>
   );
 }

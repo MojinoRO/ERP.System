@@ -107,7 +107,6 @@ export default function ConfFormMarcas() {
     if (!e.marcaNombre.trim()) {
       newErrors.marcaNombre = "Nombre requerido";
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -211,6 +210,7 @@ export default function ConfFormMarcas() {
         <ErrorAlert
           message={alert.message}
           type={alert.type}
+          autoClose={3000}
           onClose={() => setAlert(null)}
         />
       )}

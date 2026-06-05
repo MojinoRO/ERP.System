@@ -7,8 +7,18 @@
   border-radius: var(--radius-md);
   border-left: 4px solid;
   animation: slideIn 300ms ease-out;
+  position: relative;
+  overflow: hidden;
 }
+@keyframes countdown {
+  from {
+    width: 100%;
+  }
 
+  to {
+    width: 0%;
+  }
+}
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -75,4 +85,17 @@
   background: #eff6ff;
   color: #0c4a6e;
   border-left-color: var(--color-info);
+}
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: currentColor;
+  opacity: 0.3;
+
+  animation-name: countdown;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
 }
