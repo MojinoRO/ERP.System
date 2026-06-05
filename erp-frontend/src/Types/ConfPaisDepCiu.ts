@@ -1,5 +1,5 @@
 export interface ConfPaisResponse {
-  paisID: Number;
+  paisID: number;
   codigoPais: string;
   nombrePais: string;
   codigoAlfa: string;

@@ -9,10 +9,14 @@ import {
 import {
   BuscarDepartamentoPorNombre,
   ListarDepartamentos,
+  ListarPaises,
 } from "../Api/ConfPaisDepCiu";
-import { type ConfDepartamentosResponse } from "../Types/ConfPaisDepCiu";
+import {
+  type ConfDepartamentosResponse,
+  type ConfPaisResponse,
+} from "../Types/ConfPaisDepCiu";
 import React, { useEffect, useState } from "react";
-import { Edit } from "lucide-react";
+import { ErrorAlert } from "../Components/UI/ErrorAlert";
 
 export default function ConfDepartamentos() {
   const emptyDepartamentos: ConfDepartamentosResponse = {
@@ -28,16 +32,57 @@ export default function ConfDepartamentos() {
   const [listaDepartamentos, setListaDepartamentos] = useState<
     ConfDepartamentosResponse[]
   >([]);
+  const [listaPaises, setListaPaises] = useState<ConfPaisResponse[]>([]);
+
   const [departamentoSelected, setDepartamentoSelected] =
     useState(emptyDepartamentos);
   const [textBuscador, setTextBuscador] = useState("");
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "error" | "success" | "warning";
+  } | null>(null);
+
+  //funtions
+  const handleCreate = () => {
+    setDepartamentoSelected(emptyDepartamentos);
+    setFormState("edicion");
+  };
+
+  const handleEdit = () => {
+    if (departamentoSelected.departamentoID === 0) {
+      return setAlert({
+        message: "Debe seleccionar pais a modificar",
+        type: "error",
+      });
+    }
+    setFormState("edicion");
+  };
+
+  const handleCancel = () => {
+    setDepartamentoSelected(emptyDepartamentos);
+    setFormState("lectura");
+    setAlert({
+      message: "Proceso Cancelado",
+      type: "warning",
+    });
+  };
+
+  //Event
+  const ChangedPais = async () => {
+    try {
+      const paises = await ListarPaises();
+      setListaPaises(paises);
+    } catch (error: any) {
+      console.log(error.response?.data);
+    }
+  };
 
   const handleBuscar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const dato = e.target.value;
     setTextBuscador(dato);
     if (!dato.trim()) return ChangeDepartamentos();
     try {
-      const lista = await BuscarDepartamentoPorNombre(textBuscador);
+      const lista = await BuscarDepartamentoPorNombre(dato);
       setListaDepartamentos(lista);
     } catch (error: any) {
       console.log(error.response?.data);
@@ -48,16 +93,22 @@ export default function ConfDepartamentos() {
     try {
       const departamentos = await ListarDepartamentos();
       setListaDepartamentos(departamentos);
+      setAlert({
+        message: "Listado Cargado Correctamente",
+        type: "success",
+      });
     } catch (error: any) {
       console.log(error.response?.data);
     }
   };
 
-  const handleChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChanged = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { value, name } = e.target;
     setDepartamentoSelected({
       ...departamentoSelected,
-      [name]: value.toUpperCase(),
+      [name]: name === "paisID" ? Number(value) : value.toUpperCase(),
     });
   };
 
@@ -65,10 +116,21 @@ export default function ConfDepartamentos() {
     ChangeDepartamentos();
   }, []);
 
+  useEffect(() => {
+    ChangedPais();
+  }, []);
+
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración de Departamentos</h2>
-
+      {alert && (
+        <ErrorAlert
+          message={alert.message}
+          type={alert.type}
+          autoClose={3000}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <div className={s.grid}>
         {/* FORMULARIO */}
         <div className={s.formulario}>
@@ -79,9 +141,22 @@ export default function ConfDepartamentos() {
                 <input
                   className={s.input}
                   value={`${departamentoSelected.paisCodigo} ${departamentoSelected.paisNombre}`}
+                  onChange={handleChanged}
                 ></input>
               ) : (
-                <select></select>
+                <select
+                  name="paisID"
+                  className={s.select}
+                  value={departamentoSelected.paisID}
+                  onChange={handleChanged}
+                >
+                  <option value={0}>Seleccione Pais</option>
+                  {listaPaises.map((e) => (
+                    <option key={e.paisID} value={e.paisID}>
+                      {e.codigoPais} -{"  "} {e.nombrePais}
+                    </option>
+                  ))}
+                </select>
               )}
             </div>
             <div className={s.formRow}>
@@ -90,6 +165,7 @@ export default function ConfDepartamentos() {
                 className={s.input}
                 value={departamentoSelected.departamentoCodigo}
                 onChange={handleChanged}
+                name="departamentoCodigo"
               ></input>
             </div>
 
@@ -99,6 +175,7 @@ export default function ConfDepartamentos() {
                 className={s.input}
                 value={departamentoSelected.departamentoNombre}
                 onChange={handleChanged}
+                name="departamentoNombre"
               ></input>
             </div>
 
@@ -108,24 +185,43 @@ export default function ConfDepartamentos() {
                 value={departamentoSelected.codigoISO}
                 onChange={handleChanged}
                 className={s.input}
+                name="codigoISO"
               ></input>
             </div>
           </fieldset>
 
           <div className={s.buttonGroup} style={{ margin: "10px" }}>
-            <button className={`${s.btn} ${s.btnPrimary}`}>
+            <button
+              className={`${s.btn} ${s.btnPrimary}`}
+              onClick={handleCreate}
+              disabled={formState === "edicion"}
+            >
               <BtonCrear />
             </button>
-            <button className={`${s.btn} ${s.btnEdit}`}>
+            <button
+              className={`${s.btn} ${s.btnEdit}`}
+              disabled={formState === "edicion"}
+              onClick={handleEdit}
+            >
               <BtnEdit />
             </button>
-            <button className={`${s.btn} ${s.BtnCancel}`}>
+            <button
+              className={`${s.btn} ${s.BtnCancel}`}
+              disabled={formState === "lectura"}
+              onClick={handleCancel}
+            >
               <BtnCancel />
             </button>
-            <button className={`${s.btn} ${s.btnSuccess}`}>
+            <button
+              className={`${s.btn} ${s.btnSuccess}`}
+              disabled={formState === "lectura"}
+            >
               <BtnSave />
             </button>
-            <button className={`${s.btn} ${s.btnDanger}`}>
+            <button
+              className={`${s.btn} ${s.btnDanger}`}
+              disabled={formState === "edicion"}
+            >
               <BtnEliminar />
             </button>
           </div>
@@ -145,7 +241,9 @@ export default function ConfDepartamentos() {
           </div>
 
           <div className={s.tableWrapper}>
-            <table className={s.table}>
+            <table
+              className={`${s.table} ${formState === "edicion" ? s.disabledTable : ""}`}
+            >
               <thead>
                 <tr>
                   <th>Código</th>

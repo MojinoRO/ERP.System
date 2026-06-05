@@ -75,3 +75,14 @@ export const BuscarDepartamentoPorNombre = async (
   const Lista = await api.get(`/ConfDepartamento/name/${nombre}`);
   return Lista.data.data;
 };
+
+export const ValidarCodigoDepartamentoBD = async (
+  codigo: string,
+): Promise<boolean> => {
+  try {
+  } catch (error: any) {
+    if (error.response?.status === 400) return false;
+    console.log(error.response?.data);
+    return false;
+  }
+};

@@ -295,7 +295,9 @@ export default function ConfPaises() {
           </div>
 
           <div className={s.tableWrapper}>
-            <table className={s.table}>
+            <table
+              className={`${s.table} ${formState === "edicion" ? s.disabledTable : ""}`}
+            >
               <thead>
                 <tr>
                   <th>Código</th>
