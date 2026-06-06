@@ -80,8 +80,47 @@ export const ValidarCodigoDepartamentoBD = async (
   codigo: string,
 ): Promise<boolean> => {
   try {
+    const data = await api.get(`/ConfDepartamento/codigo/${codigo}`);
+    return data.status === 200 || data.status < 300;
   } catch (error: any) {
     if (error.response?.status === 400) return false;
+    console.log(error.response?.data);
+    return false;
+  }
+};
+
+export const CreateDepartamentos = async (
+  data: ConfDepartamentosResponse,
+): Promise<boolean> => {
+  try {
+    const create = await api.post("/ConfDepartamento", data);
+    return create.status === 200 || create.status < 300;
+  } catch (error: any) {
+    if (error.response?.status === 400) return false;
+    console.log(error.response?.data);
+    return false;
+  }
+};
+
+export const UpdateDepartamentos = async (
+  data: ConfDepartamentosResponse,
+): Promise<Boolean> => {
+  try {
+    const update = await api.put("/ConfDepartamentos", data);
+    return update.status === 200 || update.status < 300;
+  } catch (error: any) {
+    if (error.response === 400) return false;
+    console.log(error.response?.data);
+    return false;
+  }
+};
+
+export const DeleteDepartamentos = async (id: number): Promise<boolean> => {
+  try {
+    const Borrar = await api.delete(`/ConfDepartamento/${id}`);
+    return Borrar.status === 200 || Borrar.status < 300;
+  } catch (error: any) {
+    if (error.status === 400) return false;
     console.log(error.response?.data);
     return false;
   }

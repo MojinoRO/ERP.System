@@ -41,7 +41,20 @@ export default function ConfDepartamentos() {
     message: string;
     type: "error" | "success" | "warning";
   } | null>(null);
+  const [errors, SetErrors] = useState<{
+    codigoPais?: string;
+    nombrePais?: string;
+    codigoAlfa?: string;
+  }>({});
 
+  //validate
+  const ValidarCampos = (e: ConfDepartamentosResponse) => {
+    if (e.paisID === 0) {
+      setAlert({ message: "Debe seleccionar Pais", type: "error" });
+      return false;
+    }
+    return true;
+  };
   //funtions
   const handleCreate = () => {
     setDepartamentoSelected(emptyDepartamentos);
@@ -67,6 +80,10 @@ export default function ConfDepartamentos() {
     });
   };
 
+  const handleSave = () => {
+    if (!ValidarCampos(departamentoSelected))
+      return setAlert({ message: "Esta mal", type: "error" });
+  };
   //Event
   const ChangedPais = async () => {
     try {
@@ -215,6 +232,7 @@ export default function ConfDepartamentos() {
             <button
               className={`${s.btn} ${s.btnSuccess}`}
               disabled={formState === "lectura"}
+              onClick={handleSave}
             >
               <BtnSave />
             </button>
