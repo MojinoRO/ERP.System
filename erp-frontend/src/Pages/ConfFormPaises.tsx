@@ -34,7 +34,7 @@ export default function ConfPaises() {
   const [textBuscador, settextBuscador] = useState("");
   const [alert, setAlert] = useState<{
     message: string;
-    type: "error" | "success";
+    type: "error" | "success" | "warning";
   } | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [errors, SetErrors] = useState<{
@@ -65,6 +65,10 @@ export default function ConfPaises() {
   const handleCancel = () => {
     setPaisSelected(emptyPais);
     setFormState("lectura");
+    setAlert({
+      message: "Proceso Cancelado",
+      type: "warning",
+    });
     SetErrors({});
   };
 

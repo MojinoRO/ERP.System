@@ -38,7 +38,7 @@ namespace ERP.WEBAPI.Controllers
             return Ok(search);
         }
 
-        [HttpGet("codigo{codigo}")]
+        [HttpGet("codigo/{codigo}")]
         public async Task<ActionResult<ConfDepartamentosDTO>>BuscarPorCodigo(string codigo)
         {
             var search = await _service.GetByCodigoAsync(codigo);

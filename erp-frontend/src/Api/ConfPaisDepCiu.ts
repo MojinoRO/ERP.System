@@ -106,7 +106,10 @@ export const UpdateDepartamentos = async (
   data: ConfDepartamentosResponse,
 ): Promise<Boolean> => {
   try {
-    const update = await api.put("/ConfDepartamentos", data);
+    const update = await api.put(
+      `/ConfDepartamentos/${data.departamentoID}`,
+      data,
+    );
     return update.status === 200 || update.status < 300;
   } catch (error: any) {
     if (error.response === 400) return false;

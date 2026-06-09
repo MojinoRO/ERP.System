@@ -44,6 +44,7 @@ namespace ERP.Application.Services
         {
             if(string.IsNullOrWhiteSpace(codigo)) return ServiceResponse<ConfDepartamentosDTO?>.Error("Parametro Invalido");
             var depa = await _repo.GetByCodigoAsync(codigo);
+            if(depa == null) return ServiceResponse<ConfDepartamentosDTO?>.Error("Codigo No Existe");
             var dto = _mapper.Map<ConfDepartamentosDTO>(depa);
             return ServiceResponse<ConfDepartamentosDTO?>.Ok(dto,"Departamento Cargado Correctamente");
         }

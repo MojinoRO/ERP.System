@@ -10,6 +10,10 @@ import {
   BuscarDepartamentoPorNombre,
   ListarDepartamentos,
   ListarPaises,
+  ValidarCodigoDepartamentoBD,
+  CreateDepartamentos,
+  UpdateDepartamentos,
+  DeleteDepartamentos,
 } from "../Api/ConfPaisDepCiu";
 import {
   type ConfDepartamentosResponse,
@@ -17,6 +21,7 @@ import {
 } from "../Types/ConfPaisDepCiu";
 import React, { useEffect, useState } from "react";
 import { ErrorAlert } from "../Components/UI/ErrorAlert";
+import { ConfirmDialog } from "../Components/UI/ConfirmDialog";
 
 export default function ConfDepartamentos() {
   const emptyDepartamentos: ConfDepartamentosResponse = {
@@ -42,18 +47,37 @@ export default function ConfDepartamentos() {
     type: "error" | "success" | "warning";
   } | null>(null);
   const [errors, SetErrors] = useState<{
-    codigoPais?: string;
-    nombrePais?: string;
-    codigoAlfa?: string;
+    paisID?: string;
+    departamentoCodigo?: string;
+    departamentoNombre?: string;
+    codigoISO?: string;
   }>({});
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   //validate
   const ValidarCampos = (e: ConfDepartamentosResponse) => {
+    const NewError: typeof errors = {};
+
     if (e.paisID === 0) {
-      setAlert({ message: "Debe seleccionar Pais", type: "error" });
-      return false;
+      NewError.paisID = "Debe seleccionar un país";
     }
-    return true;
+
+    if (!e.departamentoCodigo.trim()) {
+      NewError.departamentoCodigo = "Código vacío";
+    }
+
+    if (!e.departamentoNombre.trim()) {
+      NewError.departamentoNombre = "Nombre vacío";
+    }
+
+    if (!e.codigoISO.trim()) {
+      NewError.codigoISO = "Código ISO vacío";
+    }
+
+    SetErrors(NewError);
+
+    return Object.keys(NewError).length === 0;
   };
   //funtions
   const handleCreate = () => {
@@ -80,9 +104,69 @@ export default function ConfDepartamentos() {
     });
   };
 
-  const handleSave = () => {
-    if (!ValidarCampos(departamentoSelected))
-      return setAlert({ message: "Esta mal", type: "error" });
+  const handleSave = async () => {
+    if (!ValidarCampos(departamentoSelected)) {
+      return setAlert({
+        message: "Verifique los campos obligatorios",
+        type: "error",
+      });
+    }
+
+    try {
+      const IsNew = departamentoSelected.departamentoID === 0;
+
+      if (IsNew) {
+        const query = await ValidarCodigoDepartamentoBD(
+          departamentoSelected.departamentoCodigo,
+        );
+
+        if (query) {
+          return setAlert({
+            message: "Código de departamento ya existe",
+            type: "error",
+          });
+        }
+      }
+
+      const ok = IsNew
+        ? await CreateDepartamentos(departamentoSelected)
+        : await UpdateDepartamentos(departamentoSelected);
+
+      if (!ok) {
+        return setAlert({
+          message: `Error al ${IsNew ? "crear" : "actualizar"} departamento`,
+          type: "error",
+        });
+      }
+
+      setAlert({
+        message: `Departamento ${
+          IsNew ? "creado" : "actualizado"
+        } correctamente`,
+        type: "success",
+      });
+
+      setFormState("lectura");
+      setDepartamentoSelected(emptyDepartamentos);
+
+      await ChangeDepartamentos();
+    } catch (error: any) {
+      console.log(error?.response?.data);
+
+      setAlert({
+        message: "Error al guardar departamento",
+        type: "error",
+      });
+    }
+  };
+
+  const handleDelete = () => {
+    if (departamentoSelected.departamentoID === 0)
+      return setAlert({
+        message: "Debe seleccionar Departamento a eliminar",
+        type: "error",
+      });
+    setConfirmDelete(true);
   };
   //Event
   const ChangedPais = async () => {
@@ -110,10 +194,6 @@ export default function ConfDepartamentos() {
     try {
       const departamentos = await ListarDepartamentos();
       setListaDepartamentos(departamentos);
-      setAlert({
-        message: "Listado Cargado Correctamente",
-        type: "success",
-      });
     } catch (error: any) {
       console.log(error.response?.data);
     }
@@ -123,10 +203,53 @@ export default function ConfDepartamentos() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { value, name } = e.target;
-    setDepartamentoSelected({
-      ...departamentoSelected,
+
+    setDepartamentoSelected((prev) => ({
+      ...prev,
       [name]: name === "paisID" ? Number(value) : value.toUpperCase(),
-    });
+    }));
+
+    SetErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const ConfirmDelete = async () => {
+    try {
+      const borrar = await DeleteDepartamentos(
+        departamentoSelected.departamentoID,
+      );
+
+      if (!borrar) {
+        setConfirmDelete(false);
+
+        return setAlert({
+          message: `Error al eliminar departamento ${departamentoSelected.departamentoNombre}`,
+          type: "error",
+        });
+      }
+
+      setAlert({
+        message: "Departamento eliminado correctamente",
+        type: "success",
+      });
+
+      setFormState("lectura");
+      setDepartamentoSelected(emptyDepartamentos);
+      setConfirmDelete(false);
+
+      await ChangeDepartamentos();
+    } catch (error: any) {
+      setConfirmDelete(false);
+
+      setAlert({
+        message: `Error al eliminar departamento ${departamentoSelected.departamentoNombre}`,
+        type: "error",
+      });
+
+      console.log(error?.response?.data);
+    }
   };
 
   useEffect(() => {
@@ -159,6 +282,7 @@ export default function ConfDepartamentos() {
                   className={s.input}
                   value={`${departamentoSelected.paisCodigo} ${departamentoSelected.paisNombre}`}
                   onChange={handleChanged}
+                  name="paisCodigo"
                 ></input>
               ) : (
                 <select
@@ -239,6 +363,7 @@ export default function ConfDepartamentos() {
             <button
               className={`${s.btn} ${s.btnDanger}`}
               disabled={formState === "edicion"}
+              onClick={handleDelete}
             >
               <BtnEliminar />
             </button>
@@ -291,6 +416,15 @@ export default function ConfDepartamentos() {
           </div>
         </div>
       </div>
+      <ConfirmDialog
+        open={confirmDelete}
+        title="Eliminar Departamento"
+        message={`¿Estás seguro de eliminar el departamento ${departamentoSelected.departamentoNombre}? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        onConfirm={ConfirmDelete}
+        onCancel={() => setConfirmDelete(false)}
+      />
     </div>
   );
 }

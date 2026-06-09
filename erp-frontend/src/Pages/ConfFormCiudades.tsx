@@ -29,6 +29,9 @@ export default function ConfCiudades() {
             <button className={`${s.btn} ${s.btnEdit}`}>
               <BtnEdit />
             </button>
+            <button className={`${s.btn} ${s.BtnCancel}`}>
+              <BtnCancel />
+            </button>
             <button className={`${s.btn} ${s.btnSuccess}`}>
               <BtnSave />
             </button>
