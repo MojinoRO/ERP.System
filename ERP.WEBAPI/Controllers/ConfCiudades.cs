@@ -13,7 +13,7 @@ namespace ERP.WEBAPI.Controllers
         public ConfCiudadesController(IConfCiudadesService service) => _service=service;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ConfEmpresaDTO>>>ListarCiudades()
+        public async Task<ActionResult<IEnumerable<ConfCiudadesDTO>>>ListarCiudades()
         {
             var listado = await _service.GetAllAsync();
             if(!listado.Success) return BadRequest(listado.Message);

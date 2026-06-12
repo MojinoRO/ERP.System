@@ -14,3 +14,13 @@ export interface ConfDepartamentosResponse {
   paisNombre: string;
   paisCodigo: string;
 }
+
+export interface ConfCiudadesRespose {
+  ciudadID: number;
+  departamentoID: number;
+  ciudadNombre: string;
+  ciudadCodigo: string;
+  codigoDian: string;
+  departamentoCodigo: string;
+  departamentoNombre: string;
+}

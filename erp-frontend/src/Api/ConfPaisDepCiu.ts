@@ -2,6 +2,7 @@ import api from "../Api/AxiosConfig";
 import {
   type ConfPaisResponse,
   type ConfDepartamentosResponse,
+  type ConfCiudadesRespose,
 } from "../Types/ConfPaisDepCiu";
 
 //PAISES
@@ -126,5 +127,28 @@ export const DeleteDepartamentos = async (id: number): Promise<boolean> => {
     if (error.status === 400) return false;
     console.log(error.response?.data);
     return false;
+  }
+};
+
+//ConfCiudades
+export const ListarCiudadesBD = async (): Promise<ConfCiudadesRespose[]> => {
+  try {
+    const data = await api.get("/ConfCiudades");
+    return data.data.data;
+  } catch (error: any) {
+    console.log(error.response?.data);
+    return [];
+  }
+};
+
+export const BuscadorCiudades = async (
+  texto: string,
+): Promise<ConfCiudadesRespose[]> => {
+  try {
+    const data = await api.get(`/ConfCiudades/${texto}`);
+    return data.data.data;
+  } catch (error: any) {
+    console.log(error.response?.data);
+    return [];
   }
 };
