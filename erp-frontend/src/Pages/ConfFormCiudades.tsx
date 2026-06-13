@@ -60,11 +60,8 @@ export default function ConfCiudades() {
   //handle
 
   const handleCreate = async () => {
-    try {
-      setFormState("edicion");
-    } catch (error: any) {
-      console.log(error.response?.data);
-    }
+    setCiudadSelected(emptyCiudades);
+    setFormState("edicion");
   };
 
   const handleEdit = async () => {
@@ -106,14 +103,15 @@ export default function ConfCiudades() {
           });
         }
       }
-      const action = IsNew
+      const Ok = IsNew
         ? await CreateCiudad(ciudadesSelected)
         : await UpdateCiudad(ciudadesSelected);
 
-      const ok = IsNew ? "Creada" : "Actualizada";
+      const action = IsNew ? "Creada" : "Actualizada";
+
       setAlert({
-        message: `Ciudad ${ok} Correctamente`,
-        type: action ? "success" : "error",
+        message: `Marca ${action} correctamente`,
+        type: Ok ? "success" : "error",
       });
 
       setCiudadSelected(emptyCiudades);
@@ -204,6 +202,7 @@ export default function ConfCiudades() {
             <h3 className={s.sectionTitle}>Información General</h3>
             {formState === "lectura" ? (
               <input
+                name="departamentoCodigo"
                 className={s.input}
                 value={`${ciudadesSelected.departamentoCodigo} ${ciudadesSelected.departamentoNombre}`}
                 onChange={handleChanged}
@@ -249,7 +248,7 @@ export default function ConfCiudades() {
               <input
                 name="codigoDian"
                 className={s.input}
-                value={ciudadesSelected.codigoDian}
+                value={ciudadesSelected.codigoDian ?? ""}
                 onChange={handleChanged}
               ></input>
             </div>
@@ -280,6 +279,7 @@ export default function ConfCiudades() {
             <button
               className={`${s.btn} ${s.btnSuccess}`}
               disabled={formState === "lectura"}
+              onClick={handleSave}
             >
               <BtnSave />
             </button>

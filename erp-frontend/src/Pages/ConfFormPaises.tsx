@@ -96,7 +96,6 @@ export default function ConfPaises() {
         message: `Pais ${action} Correctamente`,
         type: Ok ? "success" : "error",
       });
-
       setFormState("lectura");
       ChangedPaises();
       setPaisSelected(emptyPais);

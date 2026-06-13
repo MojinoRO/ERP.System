@@ -108,13 +108,13 @@ export const UpdateDepartamentos = async (
 ): Promise<Boolean> => {
   try {
     const update = await api.put(
-      `/ConfDepartamentos/${data.departamentoID}`,
+      `/ConfDepartamento/${data.departamentoID}`,
       data,
     );
     return update.status === 200 || update.status < 300;
   } catch (error: any) {
     if (error.response === 400) return false;
-    console.log(error.response?.data);
+    console.log(error.response?.erros);
     return false;
   }
 };
@@ -169,7 +169,7 @@ export const CreateCiudad = async (
   data: ConfCiudadesRespose,
 ): Promise<boolean> => {
   try {
-    const create = await api.post("/ConfDepartamento", data);
+    const create = await api.post("/ConfCiudades", data);
     return create.status === 200 || create.status < 300;
   } catch (error: any) {
     if (error.response?.status === 400) return false;
@@ -182,10 +182,7 @@ export const UpdateCiudad = async (
   data: ConfCiudadesRespose,
 ): Promise<Boolean> => {
   try {
-    const update = await api.put(
-      `/ConfDepartamentos/${data.departamentoID}`,
-      data,
-    );
+    const update = await api.put(`/ConfCiudades/${data.departamentoID}`, data);
     return update.status === 200 || update.status < 300;
   } catch (error: any) {
     if (error.response === 400) return false;
@@ -196,7 +193,7 @@ export const UpdateCiudad = async (
 
 export const DeleteCiudad = async (id: number): Promise<boolean> => {
   try {
-    const Borrar = await api.delete(`/ConfDepartamento/${id}`);
+    const Borrar = await api.delete(`/ConfCiudades/${id}`);
     return Borrar.status === 200 || Borrar.status < 300;
   } catch (error: any) {
     if (error.status === 400) return false;
