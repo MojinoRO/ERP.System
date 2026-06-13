@@ -7,8 +7,20 @@ import {
   BtnEliminar,
 } from "../Components/component";
 import React, { useEffect, useState } from "react";
-import { ListarCiudadesBD, BuscadorCiudades } from "../Api/ConfPaisDepCiu";
-import { type ConfCiudadesRespose } from "../Types/ConfPaisDepCiu";
+import {
+  ListarCiudadesBD,
+  BuscadorCiudades,
+  ListarDepartamentos,
+  CreateCiudad,
+  UpdateCiudad,
+  DeleteCiudad,
+  ValidarCodigoCiudadBD,
+} from "../Api/ConfPaisDepCiu";
+import {
+  type ConfCiudadesRespose,
+  type ConfDepartamentosResponse,
+} from "../Types/ConfPaisDepCiu";
+import { ErrorAlert } from "../Components/UI/ErrorAlert";
 
 export default function ConfCiudades() {
   const emptyCiudades: ConfCiudadesRespose = {
@@ -22,20 +34,58 @@ export default function ConfCiudades() {
   };
 
   //estados IU
-  const [formState, setFormState] = useState<"lectura" | "edicion">("edicion");
+  const [formState, setFormState] = useState<"lectura" | "edicion">("lectura");
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "error" | "success" | "warning";
+  } | null>(null);
 
   //data
   const [textoBuscador, setTextBuscador] = useState("");
   const [listadoCiudades, setListadoCiudades] = useState<ConfCiudadesRespose[]>(
     [],
   );
+  const [departamentos, setDepartamento] = useState<
+    ConfDepartamentosResponse[]
+  >([]);
   const [ciudadesSelected, setCiudadSelected] = useState(emptyCiudades);
 
-  //Events
+  //handle
+
+  const handleCreate = async () => {
+    try {
+      setFormState("edicion");
+    } catch (error: any) {
+      console.log(error.response?.data);
+    }
+  };
+
+  const handleEdit = async () => {
+    if (ciudadesSelected.ciudadID === 0) {
+      return setAlert({
+        message: "Debe Seleccionar Ciudad A Modificar",
+        type: "error",
+      });
+    }
+    setFormState("edicion");
+  };
+
+  const handleCancel = async () => {
+    setCiudadSelected(emptyCiudades);
+    setFormState("lectura");
+    setAlert({
+      message: "Proceso Cancelado Por el Usuario",
+      type: "warning",
+    });
+  };
+
+  //changed
   const ChangedCiudadesBD = async () => {
     try {
       const data = await ListarCiudadesBD();
       setListadoCiudades(Array.isArray(data) ? data : []);
+      const departamento = await ListarDepartamentos();
+      setDepartamento(Array.isArray(departamento) ? departamento : []);
     } catch (error: any) {
       console.log(error.response?.data);
     }
@@ -63,20 +113,51 @@ export default function ConfCiudades() {
     const { name, value } = e.target;
     setCiudadSelected((prev) => ({
       ...prev,
-      [name]: name === "departamentoID" ? Number(value) : value.toUpperCase(),
+      [name]:
+        name === "departamentoID" || name === "ciudadID"
+          ? Number(value)
+          : value.toUpperCase(),
     }));
   };
 
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración de Ciudades</h2>
-
+      {alert && (
+        <ErrorAlert
+          message={alert.message}
+          type={alert.type}
+          autoClose={3000}
+          onClose={() => setAlert(null)}
+        ></ErrorAlert>
+      )}
       <div className={s.grid}>
         {/* FORMULARIO */}
         <div className={s.formulario}>
-          <fieldset className={s.fieldset}>
+          <fieldset className={s.fieldset} disabled={formState === "lectura"}>
             <h3 className={s.sectionTitle}>Información General</h3>
-            {formState === "lectura" ? <input></input> : <select></select>}
+            {formState === "lectura" ? (
+              <input
+                className={s.input}
+                value={`${ciudadesSelected.departamentoCodigo} ${ciudadesSelected.departamentoNombre}`}
+                onChange={handleChanged}
+              ></input>
+            ) : (
+              <select
+                name="departamentoID"
+                className={s.select}
+                value={ciudadesSelected.departamentoID}
+                onChange={handleChanged}
+              >
+                <option value={0}>Seleccione Departamento</option>
+                {departamentos.map((e) => (
+                  <option key={e.departamentoID} value={e.departamentoID}>
+                    {e.departamentoCodigo}
+                    {"-"} {e.departamentoNombre}
+                  </option>
+                ))}
+              </select>
+            )}
             <div className={s.formRow}>
               <label className={s.label}>Codigo Ciudad</label>
               <input
@@ -109,19 +190,37 @@ export default function ConfCiudades() {
           </fieldset>
 
           <div className={s.buttonGroup} style={{ margin: "10px" }}>
-            <button className={`${s.btn} ${s.btnPrimary}`}>
+            <button
+              className={`${s.btn} ${s.btnPrimary}`}
+              disabled={formState === "edicion"}
+              onClick={handleCreate}
+            >
               <BtonCrear />
             </button>
-            <button className={`${s.btn} ${s.btnEdit}`}>
+            <button
+              className={`${s.btn} ${s.btnEdit}`}
+              disabled={formState === "edicion"}
+              onClick={handleEdit}
+            >
               <BtnEdit />
             </button>
-            <button className={`${s.btn} ${s.BtnCancel}`}>
+            <button
+              className={`${s.btn} ${s.BtnCancel}`}
+              disabled={formState === "lectura"}
+              onClick={handleCancel}
+            >
               <BtnCancel />
             </button>
-            <button className={`${s.btn} ${s.btnSuccess}`}>
+            <button
+              className={`${s.btn} ${s.btnSuccess}`}
+              disabled={formState === "lectura"}
+            >
               <BtnSave />
             </button>
-            <button className={`${s.btn} ${s.btnDanger}`}>
+            <button
+              className={`${s.btn} ${s.btnDanger}`}
+              disabled={formState === "edicion"}
+            >
               <BtnEliminar />
             </button>
           </div>
