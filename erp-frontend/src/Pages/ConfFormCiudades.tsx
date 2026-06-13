@@ -40,6 +40,13 @@ export default function ConfCiudades() {
     type: "error" | "success" | "warning";
   } | null>(null);
 
+  const [errors, setErrors] = useState<{
+    ciudadID?: string;
+    departamentoID?: string;
+    ciudadCodigo?: string;
+    ciudadNombre?: string;
+  }>({});
+
   //data
   const [textoBuscador, setTextBuscador] = useState("");
   const [listadoCiudades, setListadoCiudades] = useState<ConfCiudadesRespose[]>(
@@ -79,7 +86,66 @@ export default function ConfCiudades() {
     });
   };
 
+  const handleSave = async () => {
+    if (!ValidateForm(ciudadesSelected)) {
+      return setAlert({
+        message: "Error Campo en Blancos",
+        type: "error",
+      });
+    }
+    try {
+      const IsNew = ciudadesSelected.ciudadID == 0;
+      if (IsNew) {
+        const CodigoOK = await ValidarCodigoCiudadBD(
+          ciudadesSelected.ciudadCodigo,
+        );
+        if (CodigoOK) {
+          return setAlert({
+            message: "Codigo Ya Existe Para Otra Ciudad",
+            type: "error",
+          });
+        }
+      }
+      const action = IsNew
+        ? await CreateCiudad(ciudadesSelected)
+        : await UpdateCiudad(ciudadesSelected);
+
+      const ok = IsNew ? "Creada" : "Actualizada";
+      setAlert({
+        message: `Ciudad ${ok} Correctamente`,
+        type: action ? "success" : "error",
+      });
+
+      setCiudadSelected(emptyCiudades);
+      setFormState("lectura");
+      ChangedCiudadesBD();
+    } catch (error: any) {
+      setAlert({
+        message: "Error Al Guardar Cambios",
+        type: "error",
+      });
+      console.log(error.response?.data);
+    }
+  };
+
   //changed
+  const ValidateForm = (e: ConfCiudadesRespose) => {
+    const NewError: typeof errors = {};
+    if (e.departamentoID === 0) {
+      NewError.departamentoID = "Departamento en blanco";
+    }
+    if (!e.ciudadCodigo.trim()) {
+      NewError.ciudadCodigo = "Ciudad en blanco";
+    }
+    if (!e.ciudadNombre.trim()) {
+      NewError.ciudadNombre = "Nombre Invalido";
+    }
+
+    setErrors(NewError);
+
+    return Object.keys(NewError).length === 0;
+  };
+
   const ChangedCiudadesBD = async () => {
     try {
       const data = await ListarCiudadesBD();

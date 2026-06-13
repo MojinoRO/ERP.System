@@ -166,7 +166,7 @@ export const ValidarCodigoCiudadBD = async (
 };
 
 export const CreateCiudad = async (
-  data: ConfDepartamentosResponse,
+  data: ConfCiudadesRespose,
 ): Promise<boolean> => {
   try {
     const create = await api.post("/ConfDepartamento", data);
@@ -179,7 +179,7 @@ export const CreateCiudad = async (
 };
 
 export const UpdateCiudad = async (
-  data: ConfDepartamentosResponse,
+  data: ConfCiudadesRespose,
 ): Promise<Boolean> => {
   try {
     const update = await api.put(

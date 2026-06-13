@@ -71,10 +71,6 @@ export default function ConfDepartamentos() {
       NewError.departamentoNombre = "Nombre vacío";
     }
 
-    if (!e.codigoISO.trim()) {
-      NewError.codigoISO = "Código ISO vacío";
-    }
-
     SetErrors(NewError);
 
     return Object.keys(NewError).length === 0;
@@ -127,28 +123,20 @@ export default function ConfDepartamentos() {
           });
         }
       }
+      console.log(departamentoSelected);
+      console.log(IsNew ? "crea" : "actualiza");
 
       const ok = IsNew
         ? await CreateDepartamentos(departamentoSelected)
         : await UpdateDepartamentos(departamentoSelected);
 
-      if (!ok) {
-        return setAlert({
-          message: `Error al ${IsNew ? "crear" : "actualizar"} departamento`,
-          type: "error",
-        });
-      }
-
+      const action = IsNew ? "Creado" : "Actualizado";
       setAlert({
-        message: `Departamento ${
-          IsNew ? "creado" : "actualizado"
-        } correctamente`,
-        type: "success",
+        message: `Departamento ${action} Correctamente`,
+        type: ok ? "success" : "error",
       });
-
       setFormState("lectura");
       setDepartamentoSelected(emptyDepartamentos);
-
       await ChangeDepartamentos();
     } catch (error: any) {
       console.log(error?.response?.data);
