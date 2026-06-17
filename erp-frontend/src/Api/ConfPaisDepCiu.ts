@@ -156,7 +156,7 @@ export const ValidarCodigoCiudadBD = async (
   codigo: string,
 ): Promise<boolean> => {
   try {
-    const data = await api.get(`/ConfDepartamento/codigo/${codigo}`);
+    const data = await api.get(`/ConfCiudades/codigo/${codigo}`);
     return data.status === 200 || data.status < 300;
   } catch (error: any) {
     if (error.response?.status === 400) return false;

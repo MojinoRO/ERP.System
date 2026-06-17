@@ -53,7 +53,7 @@ namespace ERP.Application.Services
         {
             if(!ServiceValidate.ValidateRequired(ciudad))return ServiceResponse<ConfCiudadesDTO>.Error("Campos Obligatorios En Blanco");
             var CodigoOk = await _repo.GetByCodigoAsyc(ciudad.CiudadCodigo);
-            if(CodigoOk != null)return ServiceResponse<ConfCiudadesDTO>.Error($"Codigo Ya Existe en {CodigoOk.CiudadNombre}");
+            if(CodigoOk != null && CodigoOk.DepartamentoID == ciudad.DepartamentoID)return ServiceResponse<ConfCiudadesDTO>.Error($"Codigo Ya Existe en {CodigoOk.CiudadNombre}");
             if(ciudad.DepartamentoID <=0 )return ServiceResponse<ConfCiudadesDTO>.Error("Departamento No seleccionado");
             ciudad.CodigoDian = string.IsNullOrWhiteSpace(ciudad.CodigoDian) ? null : ciudad.CodigoDian;
             var entyty = _Mapper.Map<ConfCiudades>(ciudad);
@@ -66,7 +66,7 @@ namespace ERP.Application.Services
         {
             if(!ServiceValidate.ValidateRequired(ciudad))return ServiceResponse<ConfCiudadesDTO>.Error("Campos Obligatorios En Blanco");
             var CodigoOk = await _repo.GetByCodigoAsyc(ciudad.CiudadCodigo);
-            if(CodigoOk != null && CodigoOk.CiudadID != ciudad.CiudadID)return ServiceResponse<ConfCiudadesDTO>.Error($"Codigo Ya Existe en {CodigoOk.CiudadNombre}");
+            if(CodigoOk != null && CodigoOk.DepartamentoID == ciudad.DepartamentoID)return ServiceResponse<ConfCiudadesDTO>.Error($"Codigo Ya Existe en {CodigoOk.CiudadNombre}");
             if(ciudad.DepartamentoID <=0 )return ServiceResponse<ConfCiudadesDTO>.Error("Departamento No seleccionado");
             ciudad.CodigoDian = string.IsNullOrWhiteSpace(ciudad.CodigoDian) ? null : ciudad.CodigoDian;
             var entyty = await _repo.GetByIDAsync(ciudad.CiudadID);

@@ -21,6 +21,7 @@ import {
   type ConfDepartamentosResponse,
 } from "../Types/ConfPaisDepCiu";
 import { ErrorAlert } from "../Components/UI/ErrorAlert";
+import { ConfirmDialog } from "../Components/UI/ConfirmDialog";
 
 export default function ConfCiudades() {
   const emptyCiudades: ConfCiudadesRespose = {
@@ -39,6 +40,8 @@ export default function ConfCiudades() {
     message: string;
     type: "error" | "success" | "warning";
   } | null>(null);
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const [errors, setErrors] = useState<{
     ciudadID?: string;
@@ -110,7 +113,7 @@ export default function ConfCiudades() {
       const action = IsNew ? "Creada" : "Actualizada";
 
       setAlert({
-        message: `Marca ${action} correctamente`,
+        message: `Ciudad ${action} correctamente`,
         type: Ok ? "success" : "error",
       });
 
@@ -126,6 +129,39 @@ export default function ConfCiudades() {
     }
   };
 
+  const handleDelete = () => {
+    if (ciudadesSelected.ciudadID == 0) {
+      return setAlert({
+        message: "Debe Seleccionar Ciudad A Eliminar",
+        type: "error",
+      });
+    }
+    setConfirmDelete(true);
+  };
+
+  const DeleteCiudadConfirm = async () => {
+    try {
+      const eliminar = await DeleteCiudad(ciudadesSelected.ciudadID);
+      if (!eliminar) {
+        return setAlert({
+          message: `error al eliminar Ciudad`,
+          type: "error",
+        });
+      }
+      setAlert({
+        message: "Ciudad Eliminada Correctamente",
+        type: "success",
+      });
+      setCiudadSelected(emptyCiudades);
+      ChangedCiudadesBD();
+      setConfirmDelete(false);
+    } catch (error: any) {
+      return setAlert({
+        message: `error al eliminar Ciudad ${error.response?.data}`,
+        type: "error",
+      });
+    }
+  };
   //changed
   const ValidateForm = (e: ConfCiudadesRespose) => {
     const NewError: typeof errors = {};
@@ -200,29 +236,31 @@ export default function ConfCiudades() {
         <div className={s.formulario}>
           <fieldset className={s.fieldset} disabled={formState === "lectura"}>
             <h3 className={s.sectionTitle}>Información General</h3>
-            {formState === "lectura" ? (
-              <input
-                name="departamentoCodigo"
-                className={s.input}
-                value={`${ciudadesSelected.departamentoCodigo} ${ciudadesSelected.departamentoNombre}`}
-                onChange={handleChanged}
-              ></input>
-            ) : (
-              <select
-                name="departamentoID"
-                className={s.select}
-                value={ciudadesSelected.departamentoID}
-                onChange={handleChanged}
-              >
-                <option value={0}>Seleccione Departamento</option>
-                {departamentos.map((e) => (
-                  <option key={e.departamentoID} value={e.departamentoID}>
-                    {e.departamentoCodigo}
-                    {"-"} {e.departamentoNombre}
-                  </option>
-                ))}
-              </select>
-            )}
+            <div className={s.formRow}>
+              {formState === "lectura" ? (
+                <input
+                  name="departamentoCodigo"
+                  className={s.input}
+                  value={`${ciudadesSelected.departamentoCodigo} ${ciudadesSelected.departamentoNombre}`}
+                  onChange={handleChanged}
+                ></input>
+              ) : (
+                <select
+                  name="departamentoID"
+                  className={s.select}
+                  value={ciudadesSelected.departamentoID}
+                  onChange={handleChanged}
+                >
+                  <option value={0}>Seleccione Departamento</option>
+                  {departamentos.map((e) => (
+                    <option key={e.departamentoID} value={e.departamentoID}>
+                      {e.departamentoCodigo}
+                      {"-"} {e.departamentoNombre}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
             <div className={s.formRow}>
               <label className={s.label}>Codigo Ciudad</label>
               <input
@@ -286,6 +324,7 @@ export default function ConfCiudades() {
             <button
               className={`${s.btn} ${s.btnDanger}`}
               disabled={formState === "edicion"}
+              onClick={handleDelete}
             >
               <BtnEliminar />
             </button>
@@ -336,6 +375,15 @@ export default function ConfCiudades() {
           </div>
         </div>
       </div>
+      <ConfirmDialog
+        open={confirmDelete}
+        title="Eliminar Ciudad"
+        message={`¿Estás seguro de eliminar el Ciudad ${ciudadesSelected.ciudadNombre}? Esta acción no se puede deshacer.`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        onCancel={() => setConfirmDelete(false)}
+        onConfirm={DeleteCiudadConfirm}
+      />
     </div>
   );
 }

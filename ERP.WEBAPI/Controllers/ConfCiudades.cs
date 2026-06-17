@@ -60,7 +60,7 @@ namespace ERP.WEBAPI.Controllers
             return Ok(objecto);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<bool>>DeleteAsync(int id)
         {
             var objecto = await _service.DeleteAsync(id);

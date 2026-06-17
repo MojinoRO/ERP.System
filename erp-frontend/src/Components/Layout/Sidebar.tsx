@@ -12,6 +12,7 @@ import ConfFormSubCategorias from "../../Pages/ConfFormSubCategorias";
 import ConfFormMarcas from "../../Pages/ConfFormMarcas";
 import ConfAlmacenes from "../../Pages/ConfFormAlmacenes";
 import ConfCiudades from "../../Pages/ConfFormPaisDepCiu";
+import ConfCuentasPuc from "../../Pages/ConfCuentasPuc";
 
 interface NavChild {
   id: string;
@@ -100,6 +101,17 @@ const NAV_ITEMS: NavItems[] = [
             id: "ConfMarcas",
             label: "Marcas",
             component: <ConfFormMarcas />,
+          },
+        ],
+      },
+      {
+        id: "Contabilidad",
+        label: "Contabilidad",
+        children: [
+          {
+            id: "ConfCuentasPuc",
+            label: "Cuentas Puc",
+            component: <ConfCuentasPuc />,
           },
         ],
       },
