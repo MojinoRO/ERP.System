@@ -87,11 +87,11 @@
 }
 
 .input:disabled {
-  background: #edf2f7;
-  color: #a0aec0;
+  background: #e2e8f0;
+  color: #718096;
   cursor: not-allowed;
-  opacity: 0.7;
-  border-color: #e2e8f0;
+  opacity: 0.85;
+  border-color: #cbd5e0;
 }
 
 .input.error {
@@ -143,11 +143,11 @@
 }
 
 .select:disabled {
-  background-color: #edf2f7;
-  color: #a0aec0;
+  background-color: #e2e8f0;
+  color: #718096;
   cursor: not-allowed;
-  opacity: 0.7;
-  border-color: #e2e8f0;
+  opacity: 0.85;
+  border-color: #cbd5e0;
 }
 
 .select.error {
@@ -512,10 +512,11 @@
 }
 
 .input:disabled {
-  background: var(--color-bg-tertiary);
-  color: var(--color-text-tertiary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.8;
+  border-color: var(--color-border);
 }
 
 .input.error {
@@ -563,10 +564,11 @@
 }
 
 .select:disabled {
-  background: var(--color-bg-tertiary);
-  color: var(--color-text-tertiary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.8;
+  border-color: var(--color-border);
 }
 
 .select.error {
