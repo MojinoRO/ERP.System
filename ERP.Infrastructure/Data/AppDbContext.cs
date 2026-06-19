@@ -23,7 +23,7 @@ public class AppDbContext : DbContext
     public DbSet<ConfPais>ConfPais{get;set;}
     public DbSet<ConfDepartamentos>ConfDepartamentos{get;set;}
     public DbSet<ConfCiudades>ConfCiudades{get;set;}
-
+    public DbSet<ConfCuentasPuc>ConfCuentasPuc{get;set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

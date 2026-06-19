@@ -39,6 +39,8 @@ builder.Services.AddScoped<IConfDepartamentoService,ConfDepartamentosServices>()
 builder.Services.AddScoped<IConfDepartamentosRepository,ConfDepartamentosRepository>();
 builder.Services.AddScoped<IConfCiudadesRepository,ConfCiudadesRepository>();
 builder.Services.AddScoped<IConfCiudadesService,ConfCiudadesServices>();
+builder.Services.AddScoped<IConfCuentasPucRepository,ConfCuentasPucReposiroty>();
+builder.Services.AddScoped<IConfCuentasPucService,ConfCuentasPucService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {

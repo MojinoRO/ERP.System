@@ -8,9 +8,9 @@ namespace ERP.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CuentasPucID {get;set;}
 
-        
+        [Required]
         [MaxLength(14)]
-        public string CuentasucCodigo{get;set;}=string.Empty;
+        public string CuentasPucCodigo{get;set;}=string.Empty;
 
         [MaxLength(100)]
         [Required]

@@ -37,6 +37,9 @@ namespace ERP.Application.Mapping
             CreateMap<ConfMarcas,ConfMarcasDto>();
             CreateMap<ConfAlmacenes,ConfAlmacenDTO>();
             CreateMap<ConfPais,ConfPaisDto>();
+            CreateMap<ConfCuentasPuc,ConfCuentasPucDto>();
+
+            
             //DTO to entity
             CreateMap<CreateSubCategeriasDTOs,ConfSubCategorias>();
             CreateMap<UpdateSubCategeriasDTOs,ConfSubCategorias>();
@@ -50,6 +53,7 @@ namespace ERP.Application.Mapping
             CreateMap<UpdateConfDepartamentosDTO,ConfDepartamentos>();
             CreateMap<UpdateConfCiudadesDTO,ConfCiudades>();
             CreateMap<CreateConfCiudadesDTO,ConfCiudades>();
+            CreateMap<ConfCuentasPucDto,ConfCuentasPuc>();
         }
     }
 }
