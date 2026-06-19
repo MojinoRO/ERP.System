@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "../Pages/shared.module.css";
 import {
   BtnCancel,
@@ -8,6 +8,8 @@ import {
   BtonCrear,
 } from "../Components/component";
 import { ErrorAlert } from "../Components/UI/ErrorAlert";
+import { ListarCuentasPuc } from "../Api/ConfCuentasPuc";
+import { type ConfCuentasPucResponse } from "../Types/ConfType";
 
 export default function ConfCuentasPuc() {
   const [formState, setFormState] = useState<"edicion" | "lectura">("edicion");
@@ -15,6 +17,21 @@ export default function ConfCuentasPuc() {
     message: string;
     type: "error" | "success" | "warning";
   } | null>(null);
+  const [listaCuenta, setListaCuenta] = useState<ConfCuentasPucResponse[]>([]);
+
+  const changedCuentasPuc = async () => {
+    try {
+      const CuentasPuc = await ListarCuentasPuc();
+      setListaCuenta(CuentasPuc);
+      console.log(CuentasPuc);
+    } catch (error: any) {
+      console.log(error.response?.data);
+    }
+  };
+
+  useEffect(() => {
+    changedCuentasPuc();
+  }, []);
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración Cuentas PUC</h2>
@@ -111,7 +128,14 @@ export default function ConfCuentasPuc() {
                   <th>Nombre</th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                {listaCuenta.map((d, i) => (
+                  <tr key={i}>
+                    <td>{d.cuentasPucCodigo}</td>
+                    <td>{d.cuentaPucNombre}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>
