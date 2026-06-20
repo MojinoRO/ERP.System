@@ -12,7 +12,14 @@ namespace ERP.Infrastructure.Repositories
 
         public async Task<IEnumerable<ConfCuentasPuc>> GetAllAsync()
         {
-            return await _context.ConfCuentasPuc.AsNoTracking().ToListAsync();
+            return await _context.ConfCuentasPuc.AsNoTracking()
+                .OrderBy(x =>x.CuentasPucID).Take(100).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ConfCuentasPuc>>GetByCodigo(string codigo)
+        {
+            return await _context.ConfCuentasPuc.AsNoTracking()
+            .Where(x=>EF.Functions.Like(x.CuentasPucCodigo, $"{codigo}%")).ToListAsync();
         }
 
     }

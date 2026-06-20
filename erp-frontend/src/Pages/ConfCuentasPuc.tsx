@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from "../Pages/shared.module.css";
 import {
   BtnCancel,
@@ -12,18 +12,27 @@ import { ListarCuentasPuc } from "../Api/ConfCuentasPuc";
 import { type ConfCuentasPucResponse } from "../Types/ConfType";
 
 export default function ConfCuentasPuc() {
-  const [formState, setFormState] = useState<"edicion" | "lectura">("edicion");
+  const emptyCuentaPuc: ConfCuentasPucResponse = {
+    cuentasPucID: 0,
+    cuentasPucCodigo: "",
+    cuentaPucNombre: "",
+    cuentaPucNaturaleza: "",
+    cuentaPucMovimiento: 0,
+    cuentaPucTercero: 0,
+    cuentaPucTipo: 0,
+  };
+  const [formState, setFormState] = useState<"edicion" | "lectura">("lectura");
   const [alert, setAlert] = useState<{
     message: string;
     type: "error" | "success" | "warning";
   } | null>(null);
   const [listaCuenta, setListaCuenta] = useState<ConfCuentasPucResponse[]>([]);
+  const [cuentaSelected, setCuentaSelected] = useState(emptyCuentaPuc);
 
   const changedCuentasPuc = async () => {
     try {
       const CuentasPuc = await ListarCuentasPuc();
       setListaCuenta(CuentasPuc);
-      console.log(CuentasPuc);
     } catch (error: any) {
       console.log(error.response?.data);
     }
@@ -32,6 +41,22 @@ export default function ConfCuentasPuc() {
   useEffect(() => {
     changedCuentasPuc();
   }, []);
+
+  const HandleChanged = async (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+    setCuentaSelected((prev) => ({
+      ...prev,
+      [name]:
+        name === "cuentaPucMovimiento" ||
+        name === "cuentaPucTercero" ||
+        name === "cuentasPucID" ||
+        name === "cuentaPucTipo"
+          ? Number(value)
+          : value.toUpperCase(),
+    }));
+  };
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración Cuentas PUC</h2>
@@ -52,25 +77,48 @@ export default function ConfCuentasPuc() {
 
             <div className={s.formRow}>
               <label className={s.label}>Codigo Cuenta</label>
-              <input></input>
+              <input
+                className={s.input}
+                value={cuentaSelected.cuentasPucCodigo}
+                onChange={HandleChanged}
+              ></input>
             </div>
 
             <div className={s.formRow}>
               <label className={s.label}>Nombre cuenta</label>
-              <input></input>
+              <input
+                className={s.input}
+                value={cuentaSelected.cuentaPucNombre}
+                onChange={HandleChanged}
+              ></input>
               <label className={s.label}>Naturalesza</label>
-              <input style={{ width: "40px" }}></input>
+              <input
+                style={{ width: "40px" }}
+                className={s.input}
+                value={cuentaSelected.cuentaPucNaturaleza}
+                onChange={HandleChanged}
+              ></input>
             </div>
 
             <div className={s.formRow}>
               <label className={s.label}>¿Permite Movimiento?</label>
-              <select className={s.select}>
+              <select
+                className={s.select}
+                value={cuentaSelected.cuentaPucMovimiento}
+                onChange={HandleChanged}
+                name="cuentaPucMovimiento"
+              >
                 <option value={0}>NO</option>
                 <option value={1}>SI</option>
               </select>
 
               <label className={s.label}>¿Guarda Tercero?</label>
-              <select className={s.select}>
+              <select
+                className={s.select}
+                value={cuentaSelected.cuentaPucTercero}
+                onChange={HandleChanged}
+                name="cuentaPucTercero"
+              >
                 <option value={0}>NO</option>
                 <option value={1}>SI</option>
               </select>
@@ -124,15 +172,23 @@ export default function ConfCuentasPuc() {
             >
               <thead>
                 <tr>
-                  <th>Código</th>
-                  <th>Nombre</th>
+                  <th className={s.alignRight}>Código</th>
+                  <th className={s.alignLeft}>Nombre</th>
                 </tr>
               </thead>
               <tbody>
                 {listaCuenta.map((d, i) => (
-                  <tr key={i}>
-                    <td>{d.cuentasPucCodigo}</td>
-                    <td>{d.cuentaPucNombre}</td>
+                  <tr
+                    key={i}
+                    onDoubleClick={() => setCuentaSelected(d)}
+                    className={
+                      cuentaSelected.cuentasPucID == d.cuentasPucID
+                        ? s.selectedRow
+                        : ""
+                    }
+                  >
+                    <td className={s.alignLeft}>{d.cuentasPucCodigo}</td>
+                    <td className={s.alignLeft}>{d.cuentaPucNombre}</td>
                   </tr>
                 ))}
               </tbody>

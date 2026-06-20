@@ -25,5 +25,13 @@ namespace ERP.Application.Services
             var dto = _mapper.Map<IEnumerable<ConfCuentasPucDto>>(cuentasPuc);
             return ServiceResponse<IEnumerable<ConfCuentasPucDto>>.Ok(dto,"Listado Cargado Correctamete");
         }
+
+        public async Task<ServiceResponse<IEnumerable<ConfCuentasPucDto>>>GetByCodigo(string codigo)
+        {
+            if(string.IsNullOrWhiteSpace(codigo))return ServiceResponse<IEnumerable<ConfCuentasPucDto>>.Error("Parametro Invalido");
+            var cuentasFiltradas = await _repo.GetByCodigo(codigo);
+            var dto = _mapper.Map<IEnumerable<ConfCuentasPucDto>>(cuentasFiltradas);
+            return ServiceResponse<IEnumerable<ConfCuentasPucDto>>.Ok(dto, "Listado generado con exito ");
+        }
     }
 }
