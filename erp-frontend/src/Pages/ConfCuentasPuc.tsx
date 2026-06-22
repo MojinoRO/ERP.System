@@ -73,8 +73,6 @@ export default function ConfCuentasPuc() {
         {/* FORMULARIO */}
         <div className={s.formulario}>
           <fieldset className={s.fieldset} disabled={formState !== "edicion"}>
-            <h3 className={s.pageTitle}>Información General</h3>
-
             <div className={s.formRow}>
               <label className={s.label}>Codigo Cuenta</label>
               <input

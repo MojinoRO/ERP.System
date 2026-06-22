@@ -20,5 +20,13 @@ namespace ERP.WEBAPI.Controllers
             if(!lista.Success) return BadRequest(lista.Message);
             return Ok(lista);
         }
+
+        [HttpGet("/codigo/{codigo}")]
+        public async Task<ActionResult<IEnumerable<ConfCuentasPucDto>>>BuscarPorCodigo(string codigo)
+        {
+            var cuentas = await _service.GetByCodigo(codigo);
+            if(!cuentas.Success) return BadRequest(cuentas.Message);
+            return Ok(cuentas);
+        }
     }
 }

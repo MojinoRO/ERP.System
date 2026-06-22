@@ -16,8 +16,9 @@ namespace ERP.Infrastructure.Repositories
                 .OrderBy(x =>x.CuentasPucID).Take(100).ToListAsync();
         }
 
-        public async Task<IEnumerable<ConfCuentasPuc>>GetByCodigo(string codigo)
+        public async Task<IEnumerable<ConfCuentasPuc?>>GetByCodigoAsync(string codigo)
         {
+            codigo = codigo.Trim();
             return await _context.ConfCuentasPuc.AsNoTracking()
             .Where(x=>EF.Functions.Like(x.CuentasPucCodigo, $"{codigo}%")).ToListAsync();
         }
