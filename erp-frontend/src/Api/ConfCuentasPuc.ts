@@ -11,7 +11,7 @@ export const ListarCuentasPuc = async (): Promise<ConfCuentasPucResponse[]> => {
   }
 };
 
-export const BuscadorCuentas = async (
+export const BuscadorCuentasPuc = async (
   filtro: string,
 ): Promise<ConfCuentasPucResponse[]> => {
   try {

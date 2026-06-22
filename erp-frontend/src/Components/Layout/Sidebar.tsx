@@ -12,7 +12,7 @@ import ConfFormSubCategorias from "../../Pages/ConfFormSubCategorias";
 import ConfFormMarcas from "../../Pages/ConfFormMarcas";
 import ConfAlmacenes from "../../Pages/ConfFormAlmacenes";
 import ConfCiudades from "../../Pages/ConfFormPaisDepCiu";
-import ConfCuentasPuc from "../../Pages/ConfCuentasPuc";
+import ConfCuentasPuc from "../../Pages/ConfFormCuentasPuc";
 
 interface NavChild {
   id: string;

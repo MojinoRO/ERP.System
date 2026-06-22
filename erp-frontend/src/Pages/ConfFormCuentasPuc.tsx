@@ -8,7 +8,7 @@ import {
   BtonCrear,
 } from "../Components/component";
 import { ErrorAlert } from "../Components/UI/ErrorAlert";
-import { ListarCuentasPuc, BuscadorCuentas } from "../Api/ConfCuentasPuc";
+import { ListarCuentasPuc, BuscadorCuentasPuc } from "../Api/ConfCuentasPuc";
 import { type ConfCuentasPucResponse } from "../Types/ConfType";
 import { useDebounce } from "../Hook/UseDebounce";
 
@@ -50,7 +50,7 @@ export default function ConfCuentasPuc() {
       if (filtroDebounced.trim() === "") {
         await changedCuentasPuc();
       } else {
-        const data = await BuscadorCuentas(filtroDebounced);
+        const data = await BuscadorCuentasPuc(filtroDebounced);
         setListaCuenta(data);
       }
     };
@@ -71,6 +71,16 @@ export default function ConfCuentasPuc() {
           ? Number(value)
           : value.toUpperCase(),
     }));
+  };
+
+  //handled
+  const handleCreate = () => {
+    setCuentaSelected(emptyCuentaPuc);
+    setFormState("edicion");
+  };
+
+  const handleEdit = () => {
+    setFormState("edicion");
   };
   return (
     <div className={s.container}>
@@ -94,6 +104,7 @@ export default function ConfCuentasPuc() {
                 className={s.input}
                 value={cuentaSelected.cuentasPucCodigo}
                 onChange={HandleChanged}
+                name="cuentasPucCodigo"
               ></input>
             </div>
 
@@ -103,6 +114,7 @@ export default function ConfCuentasPuc() {
                 className={s.input}
                 value={cuentaSelected.cuentaPucNombre}
                 onChange={HandleChanged}
+                name="cuentaPucNombre"
               ></input>
               <label className={s.label}>Naturalesza</label>
               <input
@@ -110,6 +122,7 @@ export default function ConfCuentasPuc() {
                 className={s.input}
                 value={cuentaSelected.cuentaPucNaturaleza}
                 onChange={HandleChanged}
+                name="cuentaPucNaturaleza"
               ></input>
             </div>
 
@@ -142,12 +155,14 @@ export default function ConfCuentasPuc() {
             <button
               className={`${s.btn} ${s.btnPrimary}`}
               disabled={formState === "edicion"}
+              onClick={handleCreate}
             >
               <BtonCrear />
             </button>
             <button
               className={`${s.btn} ${s.btnEdit}`}
               disabled={formState === "edicion"}
+              onClick={handleEdit}
             >
               <BtnEdit />
             </button>
@@ -190,7 +205,7 @@ export default function ConfCuentasPuc() {
             >
               <thead>
                 <tr>
-                  <th className={s.alignRight}>Código</th>
+                  <th>Código</th>
                   <th className={s.alignLeft}>Nombre</th>
                 </tr>
               </thead>
