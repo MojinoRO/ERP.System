@@ -8,8 +8,9 @@ import {
   BtonCrear,
 } from "../Components/component";
 import { ErrorAlert } from "../Components/UI/ErrorAlert";
-import { ListarCuentasPuc } from "../Api/ConfCuentasPuc";
+import { ListarCuentasPuc, BuscadorCuentas } from "../Api/ConfCuentasPuc";
 import { type ConfCuentasPucResponse } from "../Types/ConfType";
+import { useDebounce } from "../Hook/UseDebounce";
 
 export default function ConfCuentasPuc() {
   const emptyCuentaPuc: ConfCuentasPucResponse = {
@@ -28,6 +29,8 @@ export default function ConfCuentasPuc() {
   } | null>(null);
   const [listaCuenta, setListaCuenta] = useState<ConfCuentasPucResponse[]>([]);
   const [cuentaSelected, setCuentaSelected] = useState(emptyCuentaPuc);
+  const [filtro, setFiltro] = useState<string>("");
+  const filtroDebounced = useDebounce<string>(filtro, 400);
 
   const changedCuentasPuc = async () => {
     try {
@@ -41,6 +44,18 @@ export default function ConfCuentasPuc() {
   useEffect(() => {
     changedCuentasPuc();
   }, []);
+
+  useEffect(() => {
+    const ejecutarBusqueda = async () => {
+      if (filtroDebounced.trim() === "") {
+        await changedCuentasPuc();
+      } else {
+        const data = await BuscadorCuentas(filtroDebounced);
+        setListaCuenta(data);
+      }
+    };
+    ejecutarBusqueda();
+  }, [filtroDebounced]);
 
   const HandleChanged = async (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -161,7 +176,12 @@ export default function ConfCuentasPuc() {
         <div className={s.list}>
           <div className={s.listHeader}>
             <h3>Listado de Cuentas PUC</h3>
-            <input className={s.search} placeholder="Buscar..." />
+            <input
+              className={s.search}
+              placeholder="Buscar..."
+              value={filtro}
+              onChange={(e) => setFiltro(e.target.value)}
+            />
           </div>
 
           <div className={s.tableWrapper}>
