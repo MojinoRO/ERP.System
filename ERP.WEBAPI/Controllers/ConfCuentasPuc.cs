@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using ERP.Application.DTOs;
 using ERP.Application.Interfaces;
 using ERP.Application.Services;
@@ -28,5 +29,14 @@ namespace ERP.WEBAPI.Controllers
             if(!cuentas.Success) return BadRequest(cuentas.Message);
             return Ok(cuentas);
         }
+
+        [HttpGet("validate/{codigo}")]
+        public async Task<ActionResult<bool>>ValidarCodigoEnBD(string codigo)
+        {
+            var CodigoOk = await _service.ValidateCodigoAsync(codigo);
+            if(!CodigoOk.Success) return BadRequest(CodigoOk.Message);
+            return Ok(CodigoOk.Message);
+        }
+        
     }
 }

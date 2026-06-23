@@ -8,11 +8,24 @@ import {
   BtonCrear,
 } from "../Components/component";
 import { ErrorAlert } from "../Components/UI/ErrorAlert";
-import { ListarCuentasPuc, BuscadorCuentasPuc } from "../Api/ConfCuentasPuc";
+import {
+  ListarCuentasPuc,
+  BuscadorCuentasPuc,
+  ValidarCodigo,
+} from "../Api/ConfCuentasPuc";
 import { type ConfCuentasPucResponse } from "../Types/ConfType";
 import { useDebounce } from "../Hook/UseDebounce";
+import { useValidateCodigo } from "../Hook/UseValidateCodigo";
 
 export default function ConfCuentasPuc() {
+  const {
+    codigoExiste,
+    validando: validandoCodigo,
+    validar: validarCodigo,
+    setCodigoOriginal,
+    reset: resetValidation,
+  } = useValidateCodigo(ValidarCodigo);
+
   const emptyCuentaPuc: ConfCuentasPucResponse = {
     cuentasPucID: 0,
     cuentasPucCodigo: "",
@@ -76,10 +89,20 @@ export default function ConfCuentasPuc() {
   //handled
   const handleCreate = () => {
     setCuentaSelected(emptyCuentaPuc);
+    setCodigoOriginal("");
+    resetValidation();
     setFormState("edicion");
   };
 
   const handleEdit = () => {
+    if (cuentaSelected.cuentasPucID == 0) {
+      return setAlert({
+        message: "Debe Seleccionar Cuenta Modificar",
+        type: "success",
+      });
+    }
+    setCodigoOriginal(cuentaSelected.cuentasPucCodigo);
+    resetValidation();
     setFormState("edicion");
   };
   return (
@@ -104,8 +127,24 @@ export default function ConfCuentasPuc() {
                 className={s.input}
                 value={cuentaSelected.cuentasPucCodigo}
                 onChange={HandleChanged}
+                onBlur={(e) => validarCodigo(e.target.value)}
                 name="cuentasPucCodigo"
               ></input>
+              {validandoCodigo && (
+                <span style={{ fontSize: "12px" }}> Validando...</span>
+              )}
+              {codigoExiste === true && (
+                <span style={{ fontSize: "12px", color: "red" }}>
+                  {" "}
+                  ⚠ Ya existe
+                </span>
+              )}
+              {codigoExiste === false && (
+                <span style={{ fontSize: "12px", color: "green" }}>
+                  {" "}
+                  ✓ Disponible
+                </span>
+              )}
             </div>
 
             <div className={s.formRow}>

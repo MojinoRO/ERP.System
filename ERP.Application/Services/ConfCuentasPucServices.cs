@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using AutoMapper;
 using ERP.Application.common;
 using ERP.Application.DTOs;
@@ -32,6 +33,16 @@ namespace ERP.Application.Services
             var cuentasFiltradas = await _repo.GetByCodigoAsync(codigo);
             var dto = _mapper.Map<IEnumerable<ConfCuentasPucDto?>>(cuentasFiltradas);
             return ServiceResponse<IEnumerable<ConfCuentasPucDto?>>.Ok(dto, "Listado generado con exito");
+        }
+
+        public async Task<ServiceResponse<bool>>ValidateCodigoAsync(string codigo)
+        {
+            if(string.IsNullOrWhiteSpace(codigo))return ServiceResponse<bool>.Error("Parametro Invalido");
+            var existe = await _repo.ValidateCodigoAsync(codigo);
+            if(!existe)
+                return ServiceResponse<bool>.Error("Codigo No existe");
+            return ServiceResponse<bool>.Ok(existe,"Codigo Existe");
+            
         }
     }
 }

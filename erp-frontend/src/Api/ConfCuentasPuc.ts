@@ -23,3 +23,14 @@ export const BuscadorCuentasPuc = async (
     return [];
   }
 };
+
+export const ValidarCodigo = async (codigo: string): Promise<boolean> => {
+  try {
+    const Existe = await api.get(`/ConfCuentasPuc/validate/${codigo}`);
+    return Existe.status === 200 || Existe.status < 300;
+  } catch (exception: any) {
+    if (exception.response?.status === 400) return false;
+    console.log(exception.response?.data);
+    return false;
+  }
+};
