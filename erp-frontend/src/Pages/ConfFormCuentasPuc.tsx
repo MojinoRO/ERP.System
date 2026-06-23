@@ -105,6 +105,31 @@ export default function ConfCuentasPuc() {
     resetValidation();
     setFormState("edicion");
   };
+
+  const handleCancel = () => {
+    setCuentaSelected(emptyCuentaPuc);
+    setCodigoOriginal("");
+    resetValidation();
+    setFormState("lectura");
+  };
+
+  //funtions
+
+  const definirNaturaleza = () => {
+    const value = cuentaSelected.cuentasPucCodigo;
+    let Naturaleza = "";
+
+    if (value.startsWith("1")) {
+      Naturaleza = "D";
+    } else if (value.startsWith("2")) {
+      Naturaleza = "C";
+    }
+    setCuentaSelected({
+      ...cuentaSelected,
+      cuentaPucNaturaleza: Naturaleza,
+    });
+  };
+
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración Cuentas PUC</h2>
@@ -127,7 +152,10 @@ export default function ConfCuentasPuc() {
                 className={s.input}
                 value={cuentaSelected.cuentasPucCodigo}
                 onChange={HandleChanged}
-                onBlur={(e) => validarCodigo(e.target.value)}
+                onBlur={(e) => {
+                  validarCodigo(e.target.value);
+                  definirNaturaleza();
+                }}
                 name="cuentasPucCodigo"
               ></input>
               {validandoCodigo && (
@@ -208,6 +236,7 @@ export default function ConfCuentasPuc() {
             <button
               className={`${s.btn} ${s.BtnCancel}`}
               disabled={formState === "lectura"}
+              onClick={handleCancel}
             >
               <BtnCancel />
             </button>
