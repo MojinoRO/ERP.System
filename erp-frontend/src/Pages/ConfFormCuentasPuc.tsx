@@ -29,10 +29,10 @@ export default function ConfCuentasPuc() {
   const {
     codigoExiste: cuentaMayorExiste,
     validando: validandoCuentaMayor,
-    validar: cuentaMayorValidado,
+    validar: validarCuentaMayor,
     setCodigoOriginal: setCuentaMayorOriginal,
     reset: resetValidateMayor,
-  } = useValidateCodigo(validarCodigo);
+  } = useValidateCodigo(ValidarCodigo);
 
   const emptyCuentaPuc: ConfCuentasPucResponse = {
     cuentasPucID: 0,
@@ -82,6 +82,79 @@ export default function ConfCuentasPuc() {
     ejecutarBusqueda();
   }, [filtroDebounced]);
 
+  useEffect(() => {
+    if (cuentaMayorExiste == null) return;
+    if (cuentaMayorExiste === false) {
+      setCuentaSelected((prev) => ({
+        ...prev,
+        cuentasPucCodigo: "",
+      }));
+      setAlert({
+        message: `Cuenta Mayor ${cuentaMayorActual} no existe`,
+        type: "error",
+      });
+    }
+    // si cuentaMayorExiste === true, no hacemos nada aquí;
+    // la naturaleza ya se calculó en definirNaturaleza
+  }, [cuentaMayorExiste, cuentaMayorActual]);
+
+  //definirNaturaleza: valida longitud, dispara validación de padre (si aplica),
+  // y calcula la naturaleza contable
+  const definirNaturaleza = () => {
+    const value = cuentaSelected.cuentasPucCodigo.trim();
+    if (value.length % 2 !== 0) {
+      setCuentaSelected((prev) => ({
+        ...prev,
+        cuentasPucCodigo: "",
+      }));
+      return setAlert({
+        message: "El código no cumple con la longitud requerida",
+        type: "error",
+      });
+    }
+    // Caso raíz: códigos de 2 dígitos no tienen padre, se salta la validación
+    if (value.length > 2) {
+      const CuentaMayor = value.slice(0, -2);
+      setCuentaMayorActual(CuentaMayor);
+      validarCuentaMayor(CuentaMayor);
+    } else {
+      resetValidateMayor();
+    }
+
+    let naturaleza = "";
+    let tipo = 0;
+    if (value.startsWith("1")) {
+      naturaleza = "D";
+      tipo = 1;
+    } else if (value.startsWith("2")) {
+      naturaleza = "C";
+      tipo = 2;
+    } else if (value.startsWith("3")) {
+      naturaleza = "C";
+      tipo = 3;
+    } else if (value.startsWith("4")) {
+      naturaleza = "C";
+      tipo = 4;
+    } else if (value.startsWith("5")) {
+      naturaleza = "D";
+      tipo = 5;
+    } else if (value.startsWith("6")) {
+      naturaleza = "D";
+      tipo = 6;
+    } else {
+      return setAlert({
+        message: "Código no corresponde a ninguna clase válida (1-6)",
+        type: "error",
+      });
+    }
+    setCuentaSelected((prev) => ({
+      ...prev,
+      cuentaPucNaturaleza: naturaleza,
+      cuentaPucTipo: tipo,
+    }));
+  };
+
+  //handled
   const HandleChanged = async (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -98,7 +171,6 @@ export default function ConfCuentasPuc() {
     }));
   };
 
-  //handled
   const handleCreate = () => {
     setCuentaSelected(emptyCuentaPuc);
     setCodigoOriginal("");
@@ -125,55 +197,9 @@ export default function ConfCuentasPuc() {
     setFormState("lectura");
   };
 
-  //funtions
-
-  const definirNaturaleza = async () => {
-    const value = cuentaSelected.cuentasPucCodigo.trim();
-    if (value.length % 2 != 0) {
-      setCuentaSelected({
-        ...cuentaSelected,
-        cuentasPucCodigo: "",
-      });
-      return setAlert({
-        message: "El código no cumple con la longitud requerida",
-        type: "error",
-      });
-    }
-
-    const CuentaMayor = value.slice(0, -2);
-    const CuentaMayorOk = await ValidarCodigo(CuentaMayor);
-    if (!CuentaMayorOk) {
-      setCuentaSelected({
-        ...cuentaSelected,
-        cuentasPucCodigo: "",
-      });
-      return setAlert({
-        message: `Cuenta ${CuentaMayor} No existe `,
-        type: "error",
-      });
-    }
-
-    let Naturaleza = "";
-    if (value.startsWith("1")) {
-      Naturaleza = "D";
-    } else if (value.startsWith("2")) {
-      Naturaleza = "C";
-    } else if (value.startsWith("3")) {
-      Naturaleza = "C";
-    } else if (value.startsWith("4")) {
-      Naturaleza = "C";
-    } else if (value.startsWith("5")) {
-      Naturaleza = "D";
-    } else if (value.startsWith("6")) {
-      Naturaleza = "D";
-    }
-
-    setCuentaSelected({
-      ...cuentaSelected,
-      cuentaPucNaturaleza: Naturaleza,
-    });
+  const handlesave = () => {
+    console.log(cuentaSelected);
   };
-
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración Cuentas PUC</h2>
@@ -286,7 +312,12 @@ export default function ConfCuentasPuc() {
             </button>
             <button
               className={`${s.btn} ${s.btnSuccess}`}
-              disabled={formState === "lectura" || codigoExiste == true}
+              disabled={
+                formState === "lectura" ||
+                codigoExiste == true ||
+                cuentaMayorExiste == false
+              }
+              onClick={handlesave}
             >
               <BtnSave />
             </button>
