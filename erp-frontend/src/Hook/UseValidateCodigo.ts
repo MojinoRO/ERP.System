@@ -37,6 +37,8 @@ export function useValidateCodigo(
         return;
       }
 
+      setEstado("validando");
+
       const idPeticion = ++ultimaPeticion.current;
 
       try {

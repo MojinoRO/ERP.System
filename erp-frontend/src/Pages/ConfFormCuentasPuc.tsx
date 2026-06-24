@@ -26,6 +26,14 @@ export default function ConfCuentasPuc() {
     reset: resetValidation,
   } = useValidateCodigo(ValidarCodigo);
 
+  const {
+    codigoExiste: cuentaMayorExiste,
+    validando: validandoCuentaMayor,
+    validar: cuentaMayorValidado,
+    setCodigoOriginal: setCuentaMayorOriginal,
+    reset: resetValidateMayor,
+  } = useValidateCodigo(validarCodigo);
+
   const emptyCuentaPuc: ConfCuentasPucResponse = {
     cuentasPucID: 0,
     cuentasPucCodigo: "",
@@ -44,6 +52,10 @@ export default function ConfCuentasPuc() {
   const [cuentaSelected, setCuentaSelected] = useState(emptyCuentaPuc);
   const [filtro, setFiltro] = useState<string>("");
   const filtroDebounced = useDebounce<string>(filtro, 400);
+
+  // Guardamos cuál fue el código de la cuenta mayor que se está validando,
+  // para poder mostrarlo en el mensaje de error cuando el hook responda
+  const [cuentaMayorActual, setCuentaMayorActual] = useState<string>("");
 
   const changedCuentasPuc = async () => {
     try {
@@ -115,15 +127,47 @@ export default function ConfCuentasPuc() {
 
   //funtions
 
-  const definirNaturaleza = () => {
-    const value = cuentaSelected.cuentasPucCodigo;
-    let Naturaleza = "";
+  const definirNaturaleza = async () => {
+    const value = cuentaSelected.cuentasPucCodigo.trim();
+    if (value.length % 2 != 0) {
+      setCuentaSelected({
+        ...cuentaSelected,
+        cuentasPucCodigo: "",
+      });
+      return setAlert({
+        message: "El código no cumple con la longitud requerida",
+        type: "error",
+      });
+    }
 
+    const CuentaMayor = value.slice(0, -2);
+    const CuentaMayorOk = await ValidarCodigo(CuentaMayor);
+    if (!CuentaMayorOk) {
+      setCuentaSelected({
+        ...cuentaSelected,
+        cuentasPucCodigo: "",
+      });
+      return setAlert({
+        message: `Cuenta ${CuentaMayor} No existe `,
+        type: "error",
+      });
+    }
+
+    let Naturaleza = "";
     if (value.startsWith("1")) {
       Naturaleza = "D";
     } else if (value.startsWith("2")) {
       Naturaleza = "C";
+    } else if (value.startsWith("3")) {
+      Naturaleza = "C";
+    } else if (value.startsWith("4")) {
+      Naturaleza = "C";
+    } else if (value.startsWith("5")) {
+      Naturaleza = "D";
+    } else if (value.startsWith("6")) {
+      Naturaleza = "D";
     }
+
     setCuentaSelected({
       ...cuentaSelected,
       cuentaPucNaturaleza: Naturaleza,
@@ -242,7 +286,7 @@ export default function ConfCuentasPuc() {
             </button>
             <button
               className={`${s.btn} ${s.btnSuccess}`}
-              disabled={formState === "lectura"}
+              disabled={formState === "lectura" || codigoExiste == true}
             >
               <BtnSave />
             </button>
