@@ -6,7 +6,8 @@ namespace ERP.Domain.Interfaces
     {
         Task<IEnumerable<ConfCuentasPuc>>GetAllAsync();
         Task<IEnumerable<ConfCuentasPuc?>>GetByCodigoAsync(string codigo);
+        Task<ConfCuentasPuc?>GetByIdAsync(int id);
         Task<bool>ValidateCodigoAsync(string codigo);
-        Task<ConfCuentasPuc>UpdateAsync(ConfCuentasPuc cuenta , int id);
+        Task<ConfCuentasPuc>UpdateMovimientoTercero(ConfCuentasPuc cuenta);
     }
 }

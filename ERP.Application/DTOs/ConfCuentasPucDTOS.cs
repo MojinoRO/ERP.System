@@ -43,6 +43,9 @@ namespace ERP.Application.DTOs
     public class UpdateConfCuentasPucDto
     {
         [Required]
+        public int CuentasPucID {get;set;}
+        
+        [Required]
         [MaxLength(15,ErrorMessage ="Error codigo muy largo")]
         public string CuentasPucCodigo{get;set;}=string.Empty;
         

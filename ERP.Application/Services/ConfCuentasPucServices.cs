@@ -44,5 +44,28 @@ namespace ERP.Application.Services
             return ServiceResponse<bool>.Ok(existe,"Codigo Existe");
             
         }
+
+        public async Task<ServiceResponse<ConfCuentasPucDto?>>GetByIdAsync(int id)
+        {
+           if (id <= 0) 
+                return ServiceResponse<ConfCuentasPucDto?>.Error("Id Cuenta Puc Invalido");
+            var existe = await _repo.GetByIdAsync(id);
+            if (existe == null)
+                return ServiceResponse<ConfCuentasPucDto?>.Error("Id no existe");
+            var dto = _mapper.Map<ConfCuentasPucDto>(existe);
+            return ServiceResponse<ConfCuentasPucDto?>.Ok(dto, "Id encontrado");
+        }
+
+        public async Task<ServiceResponse<ConfCuentasPucDto>>UpdateMovimientoTercero(UpdateConfCuentasPucDto dto)
+        {
+            if (!ServiceValidate.ValidateRequired(dto))return ServiceResponse<ConfCuentasPucDto>.Error("Parámetros inválidos");
+            var entity = await _repo.GetByIdAsync(dto.CuentasPucID);
+            if (entity == null)return ServiceResponse<ConfCuentasPucDto>.Error("Cuenta no encontrada");
+            _mapper.Map(dto, entity);
+            var updated = await _repo.UpdateMovimientoTercero(entity);
+            var response = _mapper.Map<ConfCuentasPucDto>(updated);
+             return ServiceResponse<ConfCuentasPucDto>
+                .Ok(response, "Cuenta actualizada correctamente");
+        }
     }
 }

@@ -29,5 +29,19 @@ namespace ERP.Infrastructure.Repositories
             codigo = codigo.Trim();
             return await _context.ConfCuentasPuc.AsNoTracking().AnyAsync(x=>x.CuentasPucCodigo == codigo);
         }
+
+        public async Task<ConfCuentasPuc?>GetByIdAsync(int id)
+        {
+            return await _context.ConfCuentasPuc.AsNoTracking().FirstOrDefaultAsync(x=>x.CuentasPucID == id);
+        }
+        
+        public async Task<ConfCuentasPuc>UpdateMovimientoTercero(ConfCuentasPuc cuenta)
+        {
+            _context.Attach(cuenta);
+            _context.Entry(cuenta).Property(x=>x.CuentaPucMovimiento).IsModified=true;
+            _context.Entry(cuenta).Property(x=>x.CuentaPucTercero).IsModified=true;
+            await _context.SaveChangesAsync();
+            return cuenta;
+        }
     }
 }

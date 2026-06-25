@@ -7,7 +7,8 @@ namespace ERP.Application.Interfaces
     {
         Task<ServiceResponse<IEnumerable<ConfCuentasPucDto>>>GetAllAsync();
         Task<ServiceResponse<IEnumerable<ConfCuentasPucDto?>>>GetByCodigo(string codigo);
+        Task<ServiceResponse<ConfCuentasPucDto?>>GetByIdAsync(int id);
         Task<ServiceResponse<bool>>ValidateCodigoAsync(string codigo);
-        
+        Task<ServiceResponse<ConfCuentasPucDto>>UpdateMovimientoTercero(UpdateConfCuentasPucDto dto);
     }
 }
