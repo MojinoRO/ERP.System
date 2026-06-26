@@ -3,6 +3,7 @@ using AutoMapper;
 using ERP.Application.common;
 using ERP.Application.DTOs;
 using ERP.Application.Interfaces;
+using ERP.Domain.Entities;
 using ERP.Domain.Interfaces;
 
 namespace ERP.Application.Services
@@ -56,7 +57,7 @@ namespace ERP.Application.Services
             return ServiceResponse<ConfCuentasPucDto?>.Ok(dto, "Id encontrado");
         }
 
-        public async Task<ServiceResponse<ConfCuentasPucDto>>UpdateMovimientoTercero(UpdateConfCuentasPucDto dto)
+        public async Task<ServiceResponse<ConfCuentasPucDto>>UpdateMovimientoTercero(UpdateMovTerceroCuentaPuc dto)
         {
             if (!ServiceValidate.ValidateRequired(dto))return ServiceResponse<ConfCuentasPucDto>.Error("Parámetros inválidos");
             var entity = await _repo.GetByIdAsync(dto.CuentasPucID);
@@ -66,6 +67,40 @@ namespace ERP.Application.Services
             var response = _mapper.Map<ConfCuentasPucDto>(updated);
              return ServiceResponse<ConfCuentasPucDto>
                 .Ok(response, "Cuenta actualizada correctamente");
+        }
+
+        public async Task<ServiceResponse<ConfCuentasPucDto>>UpdateGeneralAsync(UpdateConfCuentasPucDto dto)
+        {
+            if (!ServiceValidate.ValidateRequired(dto))
+             return ServiceResponse<ConfCuentasPucDto>.Error("Campos vacíos.");
+            var entity = await _repo.GetByIdAsync(dto.CuentasPucID);
+             if (entity == null)
+            return ServiceResponse<ConfCuentasPucDto>.Error("La cuenta no existe.");
+            _mapper.Map(dto, entity);
+            var updated = await _repo.UpdateGeneralAsync(entity);
+            return ServiceResponse<ConfCuentasPucDto>.Ok(
+            _mapper.Map<ConfCuentasPucDto>(updated),
+            "Cuenta actualizada correctamente.");
+        }
+
+        public async Task<ServiceResponse<ConfCuentasPucDto>>CreateAsync(CreateConfCuentasPucDto dto)
+        {
+            if(!ServiceValidate.ValidateRequired(dto))return ServiceResponse<ConfCuentasPucDto>.Error(Messages.RequiredFields);
+            var CodigoExiste = await _repo.ValidateCodigoAsync(dto.CuentasPucCodigo);
+            if(CodigoExiste) return ServiceResponse<ConfCuentasPucDto>.Error(Messages.AlreadyExists);
+            var entity = _mapper.Map<ConfCuentasPuc>(dto);
+            await _repo.CreateConfCuentasPuc(entity);
+            var respose = _mapper.Map<ConfCuentasPucDto>(entity);
+            return ServiceResponse<ConfCuentasPucDto>.Ok(respose,Messages.Created);
+        }
+
+        public async Task<ServiceResponse<bool>>DeleteAsync(int id)
+        {
+            if(id<=0)return ServiceResponse<bool>.Error("Parametro Invalido");
+            bool eliminado = await _repo.DeleteAsync(id);
+            if(!eliminado)
+                return ServiceResponse<bool>.Error("La cuenta no Existe");
+            return ServiceResponse<bool>.Ok(true,"Cuenta eliminada correctamente");
         }
     }
 }

@@ -55,6 +55,7 @@ namespace ERP.Application.Mapping
             CreateMap<CreateConfCiudadesDTO,ConfCiudades>();
             CreateMap<CreateConfCuentasPucDto,ConfCuentasPuc>();
             CreateMap<UpdateConfCuentasPucDto,ConfCuentasPuc>();
+            CreateMap<UpdateMovTerceroCuentaPuc,ConfCuentasPuc>();
         }
     }
 }

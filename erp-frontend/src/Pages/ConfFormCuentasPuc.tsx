@@ -74,6 +74,7 @@ export default function ConfCuentasPuc() {
     const ejecutarBusqueda = async () => {
       if (filtroDebounced.trim() === "") {
         await changedCuentasPuc();
+        setCuentaSelected(emptyCuentaPuc);
       } else {
         const data = await BuscadorCuentasPuc(filtroDebounced);
         setListaCuenta(data);

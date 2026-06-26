@@ -9,5 +9,8 @@ namespace ERP.Domain.Interfaces
         Task<ConfCuentasPuc?>GetByIdAsync(int id);
         Task<bool>ValidateCodigoAsync(string codigo);
         Task<ConfCuentasPuc>UpdateMovimientoTercero(ConfCuentasPuc cuenta);
+        Task<ConfCuentasPuc>UpdateGeneralAsync(ConfCuentasPuc cuenta);
+        Task<ConfCuentasPuc>CreateConfCuentasPuc(ConfCuentasPuc cuenta);
+        Task<bool>DeleteAsync(int id);
     }
 }

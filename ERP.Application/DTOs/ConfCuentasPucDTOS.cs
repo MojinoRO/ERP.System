@@ -36,7 +36,6 @@ namespace ERP.Application.DTOs
         public string CuentaPucTercero{get;set;}=string.Empty;
 
         [Required]
-        [MaxLength(1)]
         public int CuentaPucTipo{get;set;}
     }
 
@@ -66,7 +65,20 @@ namespace ERP.Application.DTOs
         public string CuentaPucTercero{get;set;}=string.Empty;
 
         [Required]
-        [MaxLength(1)]
         public int CuentaPucTipo{get;set;}
+    }
+
+    public class UpdateMovTerceroCuentaPuc
+    {
+        [Required]
+        public int CuentasPucID {get;set;}
+        [Required]
+        [MaxLength(1)]
+        public string CuentaPucMovimiento{get;set;}=string.Empty;
+
+        [Required]
+        [MaxLength(1)]
+        public string CuentaPucTercero{get;set;}=string.Empty;
+
     }
 }

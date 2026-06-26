@@ -43,5 +43,30 @@ namespace ERP.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return cuenta;
         }
+
+        public async Task<ConfCuentasPuc>UpdateGeneralAsync(ConfCuentasPuc cuenta)
+        {
+            _context.Entry(cuenta).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return cuenta;
+        }
+
+        public async Task<ConfCuentasPuc>CreateConfCuentasPuc(ConfCuentasPuc cuenta)
+        {
+            await _context.AddAsync(cuenta);
+            await _context.SaveChangesAsync();
+            return cuenta;
+        }
+        
+        public async Task<bool>DeleteAsync(int id)
+        {
+            var entity = await _context.ConfCuentasPuc.FindAsync(id);
+            if (entity == null)
+                return false;
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
     }
 }

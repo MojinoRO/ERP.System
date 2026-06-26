@@ -37,6 +37,37 @@ namespace ERP.WEBAPI.Controllers
             if(!CodigoOk.Success) return BadRequest(CodigoOk.Message);
             return Ok(CodigoOk.Message);
         }
-        
+
+        [HttpPost]
+        public async Task<ActionResult<ConfCuentasPucDto>>CrearCuenta(CreateConfCuentasPucDto cuenta)
+        {
+            var creado = await _service.CreateAsync(cuenta);
+            if(!creado.Success)return BadRequest(creado.Message);
+            return Ok(cuenta);
+        }
+
+        [HttpPut("actm&t/{id}")]
+        public async Task<ActionResult<ConfCuentasPucDto>>ActMovimientoTerceroCuenta(UpdateMovTerceroCuentaPuc cuenta)
+        {
+            var update = await _service.UpdateMovimientoTercero(cuenta);
+            if(!update.Success)return BadRequest(update.Message);
+            return Ok(update);
+        }
+
+        [HttpPut("actcuen/{id}")]
+        public async Task<ActionResult<ConfCuentasPucDto>>Actualizardatoscuenta(UpdateConfCuentasPucDto cuenta)
+        {
+            var update = await _service.UpdateGeneralAsync(cuenta);
+            if(!update.Success)return BadRequest(update.Message);
+            return Ok(update);
+        }
+
+        [HttpDelete("del/{id}")]
+        public async Task<ActionResult<bool>>BorrarCuentaPuc(int id)
+        {
+            var delete = await _service.DeleteAsync(id);
+            if(!delete.Success)return BadRequest(delete);
+            return Ok(delete.Success);
+        }
     }
 }
