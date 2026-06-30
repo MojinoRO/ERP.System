@@ -12,10 +12,16 @@ import {
   ListarCuentasPuc,
   BuscadorCuentasPuc,
   ValidarCodigo,
+  LlamarIDCuentaMayor,
+  UpdateMovimientoTerceroCuenta,
+  createCuentaPuc,
+  updateCuentasPuc,
+  deleteCuentasPuc,
 } from "../Api/ConfCuentasPuc";
 import { type ConfCuentasPucResponse } from "../Types/ConfType";
 import { useDebounce } from "../Hook/UseDebounce";
 import { useValidateCodigo } from "../Hook/UseValidateCodigo";
+import { ConfirmDialog } from "../Components/UI/ConfirmDialog";
 
 export default function ConfCuentasPuc() {
   const {
@@ -43,6 +49,17 @@ export default function ConfCuentasPuc() {
     cuentaPucTercero: 0,
     cuentaPucTipo: 0,
   };
+
+  const [errors, setErrors] = useState<{
+    cuentasPucID?: number;
+    cuentasPucCodigo?: string;
+    cuentaPucNombre?: string;
+    cuentaPucNaturaleza?: string;
+    cuentaPucMovimiento?: number;
+    cuentaPucTercero?: number;
+    cuentaPucTipo?: number;
+  }>({});
+
   const [formState, setFormState] = useState<"edicion" | "lectura">("lectura");
   const [alert, setAlert] = useState<{
     message: string;
@@ -52,6 +69,7 @@ export default function ConfCuentasPuc() {
   const [cuentaSelected, setCuentaSelected] = useState(emptyCuentaPuc);
   const [filtro, setFiltro] = useState<string>("");
   const filtroDebounced = useDebounce<string>(filtro, 400);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   // Guardamos cuál fue el código de la cuenta mayor que se está validando,
   // para poder mostrarlo en el mensaje de error cuando el hook responda
@@ -198,9 +216,85 @@ export default function ConfCuentasPuc() {
     setFormState("lectura");
   };
 
-  const handlesave = () => {
-    console.log(cuentaSelected);
+  const handlesave = async () => {
+    if (!ValidateUploadedDate(cuentaSelected))
+      return setAlert({ message: "Campos Obligatorios Vacios", type: "error" });
+    try {
+      const IsNew = cuentaSelected.cuentasPucID == 0;
+      if (IsNew) {
+        const create = await createCuentaPuc(cuentaSelected);
+        if (!create)
+          return setAlert({
+            message: "Error al crear cuenta puc",
+            type: "error",
+          });
+        UpdateCuentaMayor();
+      } else {
+        const update = await updateCuentasPuc(cuentaSelected);
+        if (!update) {
+          return setAlert({
+            message: "Error al actualizar cuenta puc",
+            type: "error",
+          });
+        }
+      }
+
+      const action = IsNew ? "Creada" : "Actualizada";
+
+      setAlert({
+        message: `Cuenta puc ${action} Correctamente`,
+        type: "success",
+      });
+      changedCuentasPuc();
+      setFormState("lectura");
+    } catch (error: any) {
+      setAlert({
+        message: "Error Al Guardar Cuenta Puc",
+        type: "error",
+      });
+      console.log(error.response?.data);
+    }
   };
+
+  const handleDelete = () => {
+    if (cuentaSelected.cuentasPucID == 0) {
+      setAlert({
+        message: "Debe seleccionar cuenta puc a eliminar",
+        type: "error",
+      });
+    }
+    setConfirmDelete(true);
+  };
+
+  //validate
+
+  const ValidateUploadedDate = (e: ConfCuentasPucResponse) => {
+    const newError: typeof errors = {};
+    if (!e.cuentasPucCodigo.trim()) newError.cuentasPucCodigo = "Codigo Vacio";
+    if (!e.cuentaPucNombre.trim()) newError.cuentasPucCodigo = "Nombre Vacio";
+    if (!e.cuentaPucNaturaleza.trim())
+      newError.cuentaPucNaturaleza = "Naturaleza Vacia";
+    setErrors(newError);
+    return Object.keys(newError).length == 0;
+  };
+
+  const UpdateCuentaMayor = async () => {
+    const cuentaPucId = await LlamarIDCuentaMayor(cuentaMayorActual);
+    if (cuentaPucId == 0)
+      return setAlert({
+        message: "Cuenta Puc Mayor No Existe en la base de datos",
+        type: "error",
+      });
+    const update = await UpdateMovimientoTerceroCuenta(cuentaPucId);
+    if (!update)
+      return setAlert({
+        message: "Error al actualizar Cuenta Puc Id",
+        type: "error",
+      });
+  };
+
+  const deleteCuentaConfirm = () => {};
+
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración Cuentas PUC</h2>
@@ -325,6 +419,7 @@ export default function ConfCuentasPuc() {
             <button
               className={`${s.btn} ${s.btnDanger}`}
               disabled={formState === "edicion"}
+              onClick={handleDelete}
             >
               <BtnEliminar />
             </button>
@@ -373,6 +468,15 @@ export default function ConfCuentasPuc() {
           </div>
         </div>
       </div>
+      <ConfirmDialog
+        open={confirmDelete}
+        title="Eliminar Cuenta Puc"
+        message={`¿Estas seguro de eliminar ${cuentaSelected.cuentasPucCodigo}? Esta acción no se puede deshacer`}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        onCancel={() => setConfirmDelete(false)}
+        onConfirm={deleteCuentaConfirm}
+      />
     </div>
   );
 }

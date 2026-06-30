@@ -24,6 +24,12 @@ namespace ERP.Infrastructure.Repositories
             .Where(x=>EF.Functions.Like(x.CuentasPucCodigo, $"{codigo}%")).ToListAsync();
         }
 
+        public async Task<ConfCuentasPuc?>GetCallCode(string codigo)
+        {
+            codigo = codigo.Trim();
+            return await _context.ConfCuentasPuc.AsNoTracking().FirstOrDefaultAsync(x=>x.CuentasPucCodigo == codigo);
+        }
+
         public async Task<bool>ValidateCodigoAsync(string codigo)
         {
             codigo = codigo.Trim();

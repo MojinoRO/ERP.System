@@ -11,6 +11,7 @@ public static class Messages
     public const string Deleted = "Registro eliminado correctamente.";
 
     // Búsquedass
+    public const string SuccessfulChanged = "Listado Cargado Correctamente";
     public const string NotFound = "El registro no existe.";
     public const string AlreadyExists = "El registro ya existe.";
 }

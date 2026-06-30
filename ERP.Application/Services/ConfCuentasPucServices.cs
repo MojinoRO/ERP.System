@@ -36,6 +36,14 @@ namespace ERP.Application.Services
             return ServiceResponse<IEnumerable<ConfCuentasPucDto?>>.Ok(dto, "Listado generado con exito");
         }
 
+        public async Task<ServiceResponse<ConfCuentasPucDto?>>GetCallCode(string codigo)
+        {
+            if(string.IsNullOrWhiteSpace(codigo)) return ServiceResponse<ConfCuentasPucDto?>.Error(Messages.InvalidParameter);
+            var cuenta = await _repo.GetCallCode(codigo);
+            var dto = _mapper.Map<ConfCuentasPucDto>(cuenta);
+            return ServiceResponse<ConfCuentasPucDto?>.Ok(dto,Messages.SuccessfulChanged);
+        }
+
         public async Task<ServiceResponse<bool>>ValidateCodigoAsync(string codigo)
         {
             if(string.IsNullOrWhiteSpace(codigo))return ServiceResponse<bool>.Error("Parametro Invalido");

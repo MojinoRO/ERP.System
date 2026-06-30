@@ -29,6 +29,14 @@ namespace ERP.WEBAPI.Controllers
             if(!cuentas.Success) return BadRequest(cuentas.Message);
             return Ok(cuentas);
         }
+        
+        [HttpGet("callcode/{codigo}")]
+        public async Task<ActionResult<ConfCuentasPucDto?>>BuscarCodigo(string codigo)
+        {
+            var cuenta = await _service.GetCallCode(codigo);
+            if(!cuenta.Success) return BadRequest(cuenta.Message);
+            return Ok(cuenta);
+        }
 
         [HttpGet("validate/{codigo}")]
         public async Task<ActionResult<bool>>ValidarCodigoEnBD(string codigo)
