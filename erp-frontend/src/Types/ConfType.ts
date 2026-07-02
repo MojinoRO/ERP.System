@@ -7,3 +7,8 @@ export interface ConfCuentasPucResponse {
   cuentaPucTercero: number;
   cuentaPucTipo: number;
 }
+
+interface responseValidate {
+  message: string;
+  confirm: boolean;
+}
