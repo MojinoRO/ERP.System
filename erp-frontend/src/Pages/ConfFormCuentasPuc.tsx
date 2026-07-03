@@ -22,6 +22,7 @@ import { type ConfCuentasPucResponse } from "../Types/ConfType";
 import { useDebounce } from "../Hook/UseDebounce";
 import { useValidateCodigo } from "../Hook/UseValidateCodigo";
 import { ConfirmDialog } from "../Components/UI/ConfirmDialog";
+import { validateCuentaPucForDelete } from "../Helper/PucHelper";
 
 export default function ConfCuentasPuc() {
   const {
@@ -256,12 +257,23 @@ export default function ConfCuentasPuc() {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (cuentaSelected.cuentasPucID == 0) {
-      setAlert({
+      return setAlert({
         message: "Debe seleccionar cuenta puc a eliminar",
         type: "error",
       });
+    }
+    const validateAuxiliar = await validateCuentaPucForDelete(
+      cuentaSelected.cuentasPucCodigo,
+    );
+
+    if (!validateAuxiliar.confirm) {
+      setAlert({
+        message: validateAuxiliar.message,
+        type: "error",
+      });
+      return;
     }
     setConfirmDelete(true);
   };
@@ -293,8 +305,12 @@ export default function ConfCuentasPuc() {
       });
   };
 
-  const deleteCuentaConfirm = () => {};
-
+  const deleteCuentaConfirm = () => {
+    setAlert({
+      message: "voy a eliminar",
+      type: "success",
+    });
+  };
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración Cuentas PUC</h2>

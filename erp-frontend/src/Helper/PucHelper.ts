@@ -11,11 +11,27 @@ export const validateCuentaPucForDelete = async (
   if (!codigo.trim()) return { message: "Parametro Invalido", confirm: false };
   try {
     const { data } = await api.get(`/ConfCuentasPuc/codigo/${codigo}`);
-    const cuenta = data.data;
-
-    const tienesubcuentas = 
+    const cuentas = data.data;
+    const tieneAuxiliar = cuentas.some(
+      (cuentas: ConfCuentasPucResponse) =>
+        cuentas.cuentasPucCodigo.startsWith(codigo) &&
+        cuentas.cuentasPucCodigo.length > codigo.length,
+    );
+    if (tieneAuxiliar) {
+      return {
+        confirm: false,
+        message: "La cuenta tiene subcuentas asociadas.",
+      };
+    }
+    return {
+      confirm: true,
+      message: "La cuenta puede eliminarse.",
+    };
   } catch (error: any) {
-    console.log(error.response?.message);
-    return { message: "Error al validar Cuenta", confirm: false };
+    console.error(error);
+    return {
+      message: "Error al validar la cuenta.",
+      confirm: false,
+    };
   }
 };

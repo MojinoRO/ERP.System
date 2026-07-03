@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ERP.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14096eedc090a5a90ecc72f950ee492a38688b20")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d8d70e0bf2e21f383606c200c1539306fea6d33")]
 [assembly: System.Reflection.AssemblyProductAttribute("ERP.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ERP.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
