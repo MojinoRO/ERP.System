@@ -71,6 +71,8 @@ export const createCuentaPuc = async (
   data: ConfCuentasPucResponse,
 ): Promise<boolean> => {
   try {
+    console.log(data);
+    console.log(JSON.stringify(data));
     const create = await api.post(`/ConfCuentasPuc`, data);
     return create.status == 200 || create.status < 300;
   } catch (error: any) {

@@ -14,7 +14,7 @@ namespace ERP.Infrastructure.Repositories
         public async Task<IEnumerable<ConfCuentasPuc>> GetAllAsync()
         {
             return await _context.ConfCuentasPuc.AsNoTracking()
-                .OrderBy(x =>x.CuentasPucID).Take(100).ToListAsync();
+                .OrderBy(x =>x.CuentasPucCodigo).Take(100).ToListAsync();
         }
 
         public async Task<IEnumerable<ConfCuentasPuc?>>GetByCodigoAsync(string codigo)

@@ -21,6 +21,7 @@ import {
 import { type ConfCuentasPucResponse } from "../Types/ConfType";
 import { useDebounce } from "../Hook/UseDebounce";
 import { useValidateCodigo } from "../Hook/UseValidateCodigo";
+import { IsOnlyDigits } from "../Hook/ValidateNumber";
 import { ConfirmDialog } from "../Components/UI/ConfirmDialog";
 import { validateCuentaPucForDelete } from "../Helper/PucHelper";
 
@@ -129,6 +130,18 @@ export default function ConfCuentasPuc() {
       }));
       return setAlert({
         message: "El código no cumple con la longitud requerida",
+        type: "error",
+      });
+    }
+
+    if (!IsOnlyDigits(cuentaSelected.cuentasPucCodigo)) {
+      setCuentaSelected((prev) => ({
+        ...prev,
+        cuentasPucCodigo: "",
+      }));
+
+      return setAlert({
+        message: "Cuenta debe contener solo numeros",
         type: "error",
       });
     }
@@ -305,12 +318,30 @@ export default function ConfCuentasPuc() {
       });
   };
 
-  const deleteCuentaConfirm = () => {
-    setAlert({
-      message: "voy a eliminar",
-      type: "success",
-    });
+  const deleteCuentaConfirm = async () => {
+    try {
+      const eliminar = await deleteCuentasPuc(cuentaSelected.cuentasPucID);
+      if (!eliminar)
+        return setAlert({
+          message: "Error al eliminar cuenta ",
+          type: "error",
+        });
+      setAlert({
+        message: "Cuenta eliminada correctamente",
+        type: "success",
+      });
+      setConfirmDelete(false);
+      changedCuentasPuc();
+      setCuentaSelected(emptyCuentaPuc);
+    } catch (error: any) {
+      console.log(error.response?.message);
+      return setAlert({
+        message: "Error al eliminar cuenta PUC ",
+        type: "error",
+      });
+    }
   };
+
   return (
     <div className={s.container}>
       <h2 className={s.pageTitle}>Configuración Cuentas PUC</h2>
@@ -330,6 +361,7 @@ export default function ConfCuentasPuc() {
             <div className={s.formRow}>
               <label className={s.label}>Codigo Cuenta</label>
               <input
+                disabled={cuentaSelected.cuentasPucID != 0}
                 className={s.input}
                 value={cuentaSelected.cuentasPucCodigo}
                 onChange={HandleChanged}
