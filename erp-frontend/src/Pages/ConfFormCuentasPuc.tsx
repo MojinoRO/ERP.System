@@ -47,8 +47,8 @@ export default function ConfCuentasPuc() {
     cuentasPucCodigo: "",
     cuentaPucNombre: "",
     cuentaPucNaturaleza: "",
-    cuentaPucMovimiento: 0,
-    cuentaPucTercero: 0,
+    cuentaPucMovimiento: "0",
+    cuentaPucTercero: "0",
     cuentaPucTipo: 0,
   };
 
@@ -195,10 +195,7 @@ export default function ConfCuentasPuc() {
     setCuentaSelected((prev) => ({
       ...prev,
       [name]:
-        name === "cuentaPucMovimiento" ||
-        name === "cuentaPucTercero" ||
-        name === "cuentasPucID" ||
-        name === "cuentaPucTipo"
+        name === "cuentasPucID" || name === "cuentaPucTipo"
           ? Number(value)
           : value.toUpperCase(),
     }));
@@ -414,8 +411,8 @@ export default function ConfCuentasPuc() {
                 onChange={HandleChanged}
                 name="cuentaPucMovimiento"
               >
-                <option value={0}>NO</option>
-                <option value={1}>SI</option>
+                <option value={"0"}>NO</option>
+                <option value={"1"}>SI</option>
               </select>
 
               <label className={s.label}>¿Guarda Tercero?</label>
@@ -425,8 +422,8 @@ export default function ConfCuentasPuc() {
                 onChange={HandleChanged}
                 name="cuentaPucTercero"
               >
-                <option value={0}>NO</option>
-                <option value={1}>SI</option>
+                <option value={"0"}>NO</option>
+                <option value={"1"}>SI</option>
               </select>
             </div>
           </fieldset>

@@ -3,8 +3,8 @@ export interface ConfCuentasPucResponse {
   cuentasPucCodigo: string;
   cuentaPucNombre: string;
   cuentaPucNaturaleza: string;
-  cuentaPucMovimiento: number;
-  cuentaPucTercero: number;
+  cuentaPucMovimiento: string;
+  cuentaPucTercero: string;
   cuentaPucTipo: number;
 }
 
