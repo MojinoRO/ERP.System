@@ -3,12 +3,17 @@ import styles from "../Components/PublicStyle.module.css";
 import { getUsuarios, loginUser } from "../Api/LogginUser";
 import type { loginReponse } from "../Types/LoginApp";
 import { useNavigate } from "react-router-dom";
+import { ErrorAlert } from "../Components/UI/ErrorAlert";
 
 export const LoginPage = () => {
   const [usuarios, setUsuarios] = useState<loginReponse[]>([]);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState<string>("");
   const [viewUser, setViewUser] = useState(false);
   const [contraseña, setContraseña] = useState("");
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "error" | "success" | "warning";
+  } | null>(null);
 
   useEffect(() => {
     cargarUsuarios();
@@ -19,7 +24,10 @@ export const LoginPage = () => {
       const data = await getUsuarios();
       setUsuarios(data);
     } catch (error) {
-      alert("No se ha podido cargar Usuario: " + error);
+      return setAlert({
+        message: `No se ha podido cargar usuario ${error}`,
+        type: "error",
+      });
     }
   };
 
@@ -34,10 +42,13 @@ export const LoginPage = () => {
     e.preventDefault();
 
     if (!usuarioSeleccionado) {
-      alert("Debe Seleccionar Usuarios");
+      return setAlert({
+        message: "Debe Seleccionar Usuarios",
+        type: "error",
+      });
     }
     if (!contraseña) {
-      alert("Contraseña incorrecta");
+      return setAlert({ message: "Contraseña incorrecta", type: "error" });
     }
     try {
       const result = await loginUser({
@@ -48,7 +59,7 @@ export const LoginPage = () => {
       localStorage.setItem("token", result.token);
       navigate("/dashboard");
     } catch (error) {
-      alert("Credenciales Incorrecta");
+      return setAlert({ message: "Credenciales Incorrecta", type: "error" });
     }
   };
   return (
@@ -112,6 +123,14 @@ export const LoginPage = () => {
           <button type="submit" onClick={HandledLoggin}>
             Ingresar
           </button>
+          {alert && (
+            <ErrorAlert
+              message={alert.message}
+              type={alert.type}
+              autoClose={2500}
+              onClose={() => setAlert(null)}
+            />
+          )}
         </form>
       </div>
     </div>

@@ -47,7 +47,7 @@ namespace ERP.WEBAPI.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<ConfUsuariosDTO>>Login([FromBody] LoginDto dto)
+        public async Task<ActionResult<LoginResponseDto>>Login([FromBody] LoginDto dto)
         {
             try
             {

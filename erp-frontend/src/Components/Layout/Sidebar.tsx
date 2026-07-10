@@ -1,7 +1,6 @@
 import styles from "./Sidebar.module.css";
 import { useTabs } from "../../Context/TabContext";
 import Dashboard from "../../Pages/Dashboard";
-import Inventarios from "../../Pages/Inventarios";
 import ConfFormEmpresa from "../../Pages/ConfFormEmpresa";
 import { useState } from "react";
 import type React from "react";
@@ -13,6 +12,8 @@ import ConfFormMarcas from "../../Pages/ConfFormMarcas";
 import ConfAlmacenes from "../../Pages/ConfFormAlmacenes";
 import ConfCiudades from "../../Pages/ConfFormPaisDepCiu";
 import ConfCuentasPuc from "../../Pages/ConfFormCuentasPuc";
+import ConfFormRutas from "../../Pages/ConfFormRutas";
+import GenFormTerceros from "../../Pages/GenFormTerceros";
 
 interface NavChild {
   id: string;
@@ -50,7 +51,19 @@ const NAV_ITEMS: NavItems[] = [
     id: "Inventarios", // corregido typo
     label: "Inventarios",
     icon: "📦",
-    component: <Inventarios />,
+    children: [
+      {
+        id: "ConfiguracionGeneral",
+        label: "Configuración General",
+        children: [
+          {
+            id: "ListadoTerceros",
+            label: "ListadoTerceros",
+            component: <GenFormTerceros />,
+          },
+        ],
+      },
+    ],
   },
   {
     id: "Configuracion",
@@ -101,6 +114,11 @@ const NAV_ITEMS: NavItems[] = [
             id: "ConfMarcas",
             label: "Marcas",
             component: <ConfFormMarcas />,
+          },
+          {
+            id: "ConfRutas",
+            label: "Rutas",
+            component: <ConfFormRutas />,
           },
         ],
       },

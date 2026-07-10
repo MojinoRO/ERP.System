@@ -5,7 +5,14 @@ using ERP.Application.Interfaces;
 using ERP.Application.Services;
 using ERP.Infrastructure.Repositories;
 using ERP.Domain.Interfaces;
-using ERP.Application.Mapping;
+using ERP.Integrations.Data;
+using ERP.Integrations.Repositories;
+
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using ERP.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,17 +48,43 @@ builder.Services.AddScoped<IConfCiudadesRepository,ConfCiudadesRepository>();
 builder.Services.AddScoped<IConfCiudadesService,ConfCiudadesServices>();
 builder.Services.AddScoped<IConfCuentasPucRepository,ConfCuentasPucReposiroty>();
 builder.Services.AddScoped<IConfCuentasPucService,ConfCuentasPucService>();
+builder.Services.AddScoped<IExternalDbConnectionFactory, ExternalDbConnectionFactory>();
+builder.Services.AddScoped<IProveedorExternoRepository, ProveedorExternoRepository>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("http://localhost:5173",
+                            "http://192.168.20.35:5173")
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
 }
 );
+
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+    };
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -85,6 +118,8 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("AllowFrontend");
 //app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers(); 
 app.Run();

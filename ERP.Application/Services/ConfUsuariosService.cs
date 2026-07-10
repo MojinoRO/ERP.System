@@ -9,8 +9,13 @@ namespace ERP.Application.Services
     public class ConfUsuariosServices : IConfUsuariosService
     {
         private readonly  IConfUsuariosRepository _repository;
+        private readonly ITokenService _tokenser;
 
-        public ConfUsuariosServices(IConfUsuariosRepository repos)=>_repository=repos;
+        public ConfUsuariosServices(IConfUsuariosRepository repos , ITokenService tokenservice)
+        {
+            _repository=repos;
+            _tokenser = tokenservice;
+        }
 
         public async Task<IEnumerable<ConfUsuariosDTO>> GetAllAsync()
         {
@@ -19,7 +24,6 @@ namespace ERP.Application.Services
             {
                 UsuarioID = U.UsuarioID,
                 UsuarioNombre= U.NombreUsuario,
-                ContraseñaUsuario=U.ContraseñaUsuario,
                 UsuarioRol=U.RolUsuario,
             });
         }
@@ -32,7 +36,6 @@ namespace ERP.Application.Services
             {
                 UsuarioID = Usuario.UsuarioID,
                 UsuarioNombre= Usuario.NombreUsuario,
-                ContraseñaUsuario= Usuario.ContraseñaUsuario,
                 UsuarioRol=Usuario.RolUsuario,
             };
         }
@@ -50,7 +53,7 @@ namespace ERP.Application.Services
             var UserNew = new ConfUsuarios
             {
                 NombreUsuario=dto.UsuarioNombre,
-                ContraseñaUsuario =dto.ContraseñaUsuario,
+                ContraseñaUsuario =BCrypt.Net.BCrypt.HashPassword(dto.ContraseñaUsuario),
                 RolUsuario= dto.UsuarioRol
             };
 
@@ -60,7 +63,6 @@ namespace ERP.Application.Services
             {
                 UsuarioID=creado!.UsuarioID,
                 UsuarioNombre=creado.NombreUsuario,
-                ContraseñaUsuario =creado.ContraseñaUsuario,
                 UsuarioRol=creado.RolUsuario
             };
         }
@@ -79,7 +81,7 @@ namespace ERP.Application.Services
                 throw new ArgumentException("Usuario ID no Existe");
 
             Usuario!.NombreUsuario =dto.UsuarioNombre;
-            Usuario.ContraseñaUsuario=dto.ContraseñaUsuario;
+            Usuario.ContraseñaUsuario=BCrypt.Net.BCrypt.HashPassword(dto.ContraseñaUsuario);
             Usuario.RolUsuario=dto.UsuarioRol;
 
             var UpdateUser = await _repository.UpdateAsync(Usuario);
@@ -87,7 +89,6 @@ namespace ERP.Application.Services
             {
                 UsuarioID=UpdateUser.UsuarioID,
                 UsuarioNombre=UpdateUser.NombreUsuario,
-                ContraseñaUsuario=UpdateUser.ContraseñaUsuario,
                 UsuarioRol=UpdateUser.RolUsuario
             };
         }
@@ -100,18 +101,20 @@ namespace ERP.Application.Services
             await _repository.DeleteAsync(id);
         }
 
-        public async Task<ConfUsuariosDTO?>LoginRequest(LoginDto dto)
+        public async Task<LoginResponseDto?>LoginRequest(LoginDto dto)
         {
             var usuario = await _repository.GetByName(dto.UsuarioNombre);
             if(usuario == null)return null;
-            if(usuario.ContraseñaUsuario != usuario.ContraseñaUsuario) return null;
+            if(!BCrypt.Net.BCrypt.Verify(dto.ContraseñaUsuario,usuario.ContraseñaUsuario)) return null;
 
-            return new ConfUsuariosDTO
+            var token = _tokenser.GeneratedToken(usuario.UsuarioID , usuario.NombreUsuario , usuario.RolUsuario);
+
+            return new LoginResponseDto
             {
-                UsuarioID=usuario.UsuarioID,
-                UsuarioNombre=usuario.NombreUsuario,
-                ContraseñaUsuario=usuario.ContraseñaUsuario,
-                UsuarioRol=usuario.RolUsuario,
+                UsuarioID = usuario.UsuarioID,
+                UsuarioNombre = usuario.NombreUsuario,
+                UsuarioRol = usuario.RolUsuario,
+                Token = token
             };
         }
     }
