@@ -8,14 +8,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path="/" element={<LoginPage />} />
-
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/users"     element={<Users />} />
+          <Route path="/users" element={<Users />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   );

@@ -49,7 +49,7 @@ builder.Services.AddScoped<IConfCiudadesService,ConfCiudadesServices>();
 builder.Services.AddScoped<IConfCuentasPucRepository,ConfCuentasPucReposiroty>();
 builder.Services.AddScoped<IConfCuentasPucService,ConfCuentasPucService>();
 builder.Services.AddScoped<IExternalDbConnectionFactory, ExternalDbConnectionFactory>();
-builder.Services.AddScoped<IProveedorExternoRepository, ProveedorExternoRepository>();
+builder.Services.AddScoped<IProveedoresExternosRepository, ProveedoresExternosRepository>();
 
 
 builder.Services.AddEndpointsApiExplorer();

@@ -1,9 +1,8 @@
 using System.Data;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace Erp.Integrations.Data;
+namespace ERP.Integrations.Data;
 
 public interface IExternalDbConnectionFactory
 {

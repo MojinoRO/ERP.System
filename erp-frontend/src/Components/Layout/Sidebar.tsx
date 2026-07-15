@@ -12,8 +12,9 @@ import ConfFormMarcas from "../../Pages/ConfFormMarcas";
 import ConfAlmacenes from "../../Pages/ConfFormAlmacenes";
 import ConfCiudades from "../../Pages/ConfFormPaisDepCiu";
 import ConfCuentasPuc from "../../Pages/ConfFormCuentasPuc";
-import ConfFormRutas from "../../Pages/ConfFormRutas";
-import GenFormTerceros from "../../Pages/GenFormTerceros";
+
+//integrations
+import InvFormCompraEnBloque from "../../Integrations/Pages/InvFormCompraEnBloque";
 
 interface NavChild {
   id: string;
@@ -55,11 +56,16 @@ const NAV_ITEMS: NavItems[] = [
       {
         id: "ConfiguracionGeneral",
         label: "Configuración General",
+        children: [],
+      },
+      {
+        id: "Movimientos",
+        label: "Movimientos",
         children: [
           {
-            id: "ListadoTerceros",
-            label: "ListadoTerceros",
-            component: <GenFormTerceros />,
+            id: "CompraEnBloque",
+            label: "Compra En Bloque",
+            component: <InvFormCompraEnBloque />,
           },
         ],
       },
@@ -114,11 +120,6 @@ const NAV_ITEMS: NavItems[] = [
             id: "ConfMarcas",
             label: "Marcas",
             component: <ConfFormMarcas />,
-          },
-          {
-            id: "ConfRutas",
-            label: "Rutas",
-            component: <ConfFormRutas />,
           },
         ],
       },

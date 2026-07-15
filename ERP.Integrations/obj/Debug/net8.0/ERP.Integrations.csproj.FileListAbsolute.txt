@@ -1,0 +1,13 @@
+C:\WorkSpace\ERP.System\ERP.Integrations\bin\Debug\net8.0\ERP.Integrations.deps.json
+C:\WorkSpace\ERP.System\ERP.Integrations\bin\Debug\net8.0\ERP.Integrations.dll
+C:\WorkSpace\ERP.System\ERP.Integrations\bin\Debug\net8.0\ERP.Integrations.pdb
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ERP.Integrations.csproj.AssemblyReference.cache
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ERP.Integrations.GeneratedMSBuildEditorConfig.editorconfig
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ERP.Integrations.AssemblyInfoInputs.cache
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ERP.Integrations.AssemblyInfo.cs
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ERP.Integrations.csproj.CoreCompileInputs.cache
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ERP.Integrations.sourcelink.json
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ERP.Integrations.dll
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\refint\ERP.Integrations.dll
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ERP.Integrations.pdb
+C:\WorkSpace\ERP.System\ERP.Integrations\obj\Debug\net8.0\ref\ERP.Integrations.dll

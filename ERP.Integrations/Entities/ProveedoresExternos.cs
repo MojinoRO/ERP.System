@@ -1,6 +1,4 @@
-using System.Data.Common;
-using Microsoft.Identity.Client;
-namespace Erp.Integrations.Entities;
+namespace ERP.Integrations.Entities;
 
 //UBICAICONES => RUTAS
 public class Ubicaciones
@@ -10,13 +8,11 @@ public class Ubicaciones
     public string UbicacionNombre{get;set;}=string.Empty;
 }
 
-//UBICAIONES SERIAS LOS TRANSPORTADORES 
-public class UbicacionesTerceros
+public class Zonas
 {
-    public int ID {get;set;}
-    public int TercerosID{get;set;}
-    public int UbicacionID {get;set;}
-    public string Cedula{get;set;}=string.Empty;
+    public int ZonasID {get;set;}
+    public string ZonasCodigo {get; set;} =string.Empty;
+    public string ZonasNombre{get;set;}=string.Empty;
 }
 
 public class Articulos
@@ -34,5 +30,12 @@ public class ProveedoresExternos
     public string TercerosNombres{get;set;}=string.Empty;
     public string TercerosCodigoAlterno{get;set;}=string.Empty;
     public int  ZonasID {get; set;}
+}
+
+public class Documentos
+{
+    public int DocumentosID{get;set;}
+    public string DocumentosCodigo{get;set;}=string.Empty;
+    public string DocumentosNombre{get;set;}=string.Empty;
 }
 
