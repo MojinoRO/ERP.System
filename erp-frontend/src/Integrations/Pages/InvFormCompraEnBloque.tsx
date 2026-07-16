@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { BtnChange } from "../../Components/component";
+import React, { useEffect, useState } from "react";
+import { BtnChange, BtnEliminar, BtnSave } from "../../Components/component";
 import { ErrorAlert } from "../../Components/UI/ErrorAlert";
 import {
   type UbicacionesResponse,
@@ -7,47 +7,64 @@ import {
   type ArticulosResponse,
   type ProveedoresXRuta,
   type Proveedores,
+  type ZonasResponse,
 } from "../Types/Types";
-import s from "../../Pages/shared.module.css";
+import f from "../Pages/InvFormCompraEnBloque.module.css";
 import {
+  getZonas,
   getUbicaciones,
   getArticulos,
   getDocumentos,
   getProveedoresXRuta,
   getproveedores,
 } from "../Api/CompraEnBloque";
-
 import { AutoComplete } from "../../Components/UI/AutoComplete";
 
 export default function ConfFormCompraBloque() {
+  interface FilaCompra extends ProveedoresXRuta {
+    Cantidad: number;
+    Costo: number;
+    Fecha: string;
+    ArticuloID: number;
+    TransportadorID: number;
+    UbicacionID: number;
+    DocumentosID: Number;
+    Automatica: string;
+    Numero: number;
+    CompraID: string;
+    Porcentaje: number;
+  }
+  const [filasCompras, SetFilasCompras] = useState<FilaCompra[]>([]);
   const [alert, SetALert] = useState<{
     message: string;
     type: "error" | "success" | "warning";
   } | null>(null);
+  const [zonas, setZonas] = useState<ZonasResponse[]>([]);
   const [ubicaciones, setUbicaciones] = useState<UbicacionesResponse[]>([]);
   const [documentoCompra, setDocumentoCompra] =
     useState<DocumentoResponse | null>(null);
   const [articulo, setArticulo] = useState<ArticulosResponse | null>(null);
+  const Porcentajefng = 0.75;
   const [fechaSelected, setFechaSelected] = useState("");
+  const [ubicacioneSelected, setUbicacionesSelected] = useState(0);
   const [rutaSelected, setRutaSelected] = useState(0);
-  const [proveedoresXRuta, setProveedoresXRuta] = useState<
-    ProveedoresXRuta[] | null
-  >([]);
   const [transportadorSelected, setTransportadorSelected] =
     useState<Proveedores | null>(null);
 
   useEffect(() => {
     const CargarDatos = async () => {
       try {
-        const [ubicaciones, articuloCompra, documentoCompra] =
+        const [zonas, articuloCompra, documentoCompra, ubicaciones] =
           await Promise.all([
-            getUbicaciones(),
+            getZonas(),
             getArticulos(),
             getDocumentos(),
+            getUbicaciones(),
           ]);
-        setUbicaciones(ubicaciones);
+        setZonas(zonas);
         setArticulo(articuloCompra);
         setDocumentoCompra(documentoCompra);
+        setUbicaciones(ubicaciones);
       } catch (error) {
         console.error(error);
       }
@@ -56,7 +73,20 @@ export default function ConfFormCompraBloque() {
   }, []);
 
   const HandleSearch = () => {
-    console.log(articulo);
+    if (documentoCompra == null) {
+      return SetALert({
+        message: "Documento vacio",
+        type: "error",
+      });
+    }
+
+    if (articulo == null) {
+      return SetALert({
+        message: "Articulo vacio",
+        type: "error",
+      });
+    }
+
     if (fechaSelected == "") {
       return SetALert({
         message: "Fecha vacia",
@@ -75,6 +105,12 @@ export default function ConfFormCompraBloque() {
         type: "error",
       });
     }
+    if (ubicacioneSelected == 0) {
+      return SetALert({
+        message: "Ubicación vacia",
+        type: "error",
+      });
+    }
     ChangedProveedoresXRuta();
   };
 
@@ -87,15 +123,74 @@ export default function ConfFormCompraBloque() {
           type: "warning",
         });
       }
-      setProveedoresXRuta(data);
-      console.log(data);
+      SetFilasCompras(
+        data.map((p) => ({
+          ...p,
+          Cantidad: 0,
+          Costo: articulo?.articulosCosto ?? 0,
+          Fecha: fechaSelected,
+          ArticuloID: Number(articulo?.articulosID),
+          TransportadorID: Number(transportadorSelected?.tercerosID),
+          UbicacionID: ubicacioneSelected,
+          DocumentosID: Number(documentoCompra?.documentosID),
+          Automatica: "Automatica",
+          Numero: 0,
+          CompraID: "NULL",
+          Porcentaje: Porcentajefng,
+        })),
+      );
+      console.log(filasCompras);
     } catch (error: any) {
       console.log(error.response?.data);
     }
   };
+
+  const handleCantidadChanged = (terceroID: number, cantidad: number) => {
+    SetFilasCompras((prev) =>
+      prev.map((f) => (f.tercerosID === terceroID ? { ...f, cantidad } : f)),
+    );
+  };
+
+  const handleQuitarFila = (terceroid: number) => {
+    const nuevasfilas = filasCompras.filter((f) => f.tercerosID !== terceroid);
+    SetFilasCompras(nuevasfilas);
+    console.log(nuevasfilas);
+  };
+
+  const TotalGeneral = filasCompras.reduce(
+    (acc, f) => acc + f.Cantidad * f.Costo,
+    0,
+  );
+
+  const TotalCantidades = filasCompras.reduce((acc, f) => acc + f.Cantidad, 0);
+
+  const handleSave = () => {
+    const FilasVacias = filasCompras.filter((f) => f.Cantidad === 0);
+    if (FilasVacias.length > 0) {
+      return SetALert({
+        message: "Hay proveedores sin cantidad en el registro de entrada ",
+        type: "error",
+      });
+    }
+  };
+
+  const handleChangedValues = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setArticulo((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        [name]: name === "articulosCosto" ? Number(value) : "",
+      };
+    });
+  };
   return (
-    <div className={s.container}>
-      <label className={s.pageTitle}>Registro de compra temporal</label>
+    <div className={f.page}>
+      <div className={f.header}>
+        <h1 className={f.title}>Registro de compra temporal</h1>
+        <p className={f.subtitle}>Compra en bloque por ruta y transportador</p>
+      </div>
+
       {alert && (
         <ErrorAlert
           message={alert.message}
@@ -104,112 +199,198 @@ export default function ConfFormCompraBloque() {
           onClose={() => SetALert(null)}
         />
       )}
-      <div className={s.encabezadoForm}>
-        <div className={s.formGroupHorizontal}>
-          <label className={s.label}>Docto:</label>
-          {documentoCompra && (
-            <select className={s.select}>
-              <option value={documentoCompra.documentosID}>
-                {documentoCompra.documentosNombre}
-              </option>
-            </select>
-          )}
-        </div>
-        <div className={s.formGroupHorizontal}>
-          <label className={s.label}>Articulo:</label>
-          {articulo && (
-            <select className={s.select}>
-              <option value={articulo.articulosID}>
-                {articulo.articulosNombre}
-              </option>
-            </select>
-          )}
-        </div>
-        <div className={s.formGroupHorizontal}>
-          <label className={s.label}>Costo</label>
-          <input
-            className={s.input}
-            value={articulo?.articulosCosto ?? ""}
-            readOnly
-          ></input>
-        </div>
-        <div className={s.formGroupHorizontal}>
-          <label className={s.label}>Fecha:</label>
-          <input
-            type="date"
-            className={s.inputDate}
-            onChange={(e) => setFechaSelected(e.target.value)}
-          ></input>
-        </div>
-        <div className={s.formGroupHorizontal}>
-          <label>Ruta:</label>
-          {ubicaciones && (
-            <select
-              className={s.select}
-              onChange={(e) => setRutaSelected(Number(e.target.value))}
-            >
-              <option value={0}>Seleccione Rutas</option>
-              {ubicaciones.map((e) => (
-                <option key={e.ubicacionID} value={e.ubicacionID}>
-                  {e.ubicacionNombre}
+
+      <div className={f.filterCard}>
+        <div className={f.filterGrid}>
+          <div className={f.field}>
+            <label className={f.fieldLabel}>Documento</label>
+            {documentoCompra && (
+              <select className={f.select}>
+                <option value={documentoCompra.documentosID}>
+                  {documentoCompra.documentosNombre}
                 </option>
-              ))}
-            </select>
-          )}
+              </select>
+            )}
+          </div>
+
+          <div className={f.field}>
+            <label className={f.fieldLabel}>Artículo</label>
+            {articulo && (
+              <select className={f.select}>
+                <option value={articulo.articulosID}>
+                  {articulo.articulosNombre}
+                </option>
+              </select>
+            )}
+          </div>
+
+          <div className={f.field}>
+            <label className={f.fieldLabel}>Costo:</label>
+            <input
+              className={f.control}
+              value={articulo?.articulosCosto ?? ""}
+              onChange={handleChangedValues}
+              name="articulosCosto"
+            ></input>
+          </div>
+
+          <div className={f.field}>
+            <label className={f.fieldLabel}>Fecha</label>
+            <input
+              type="date"
+              className={f.control}
+              onChange={(e) => setFechaSelected(e.target.value)}
+            ></input>
+          </div>
+
+          <div className={f.field}>
+            <label className={f.fieldLabel}>FNG</label>
+            <input value={Porcentajefng} className={f.control} readOnly></input>
+          </div>
+
+          <div className={f.field}>
+            <label className={f.fieldLabel}>Ruta</label>
+            {zonas && (
+              <select
+                className={f.select}
+                onChange={(e) => setRutaSelected(Number(e.target.value))}
+              >
+                <option value={0}>Seleccione Rutas</option>
+                {zonas.map((e) => (
+                  <option key={e.zonasID} value={e.zonasID}>
+                    {e.zonasNombre}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <div className={`${f.field} ${f.fieldWide}`}>
+            <AutoComplete
+              label="Transportador"
+              placeHolder="Buscar cliente por nombre..."
+              onSearch={getproveedores}
+              getLabel={(t) =>
+                `${t.tercerosIdentificacion} — ${t.tercerosNombres}`
+              }
+              getKey={(t) => t.tercerosID}
+              onSelect={(t) => setTransportadorSelected(t)}
+            />
+          </div>
+
+          <div className={f.field}>
+            <label className={f.fieldLabel}>Ubicación</label>
+            {ubicaciones && (
+              <select
+                className={f.select}
+                onChange={(e) => setUbicacionesSelected(Number(e.target.value))}
+              >
+                <option value={0}>Seleccione Ubicación</option>
+                {ubicaciones.map((e) => (
+                  <option key={e.ubicacionID} value={e.ubicacionID}>
+                    {e.ubicacionNombre}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <div className={f.actions}>
+            <button className={f.searchBtn} onClick={HandleSearch}>
+              <BtnChange />
+              Buscar
+            </button>
+          </div>
         </div>
-        <div className={s.formGroupHorizontal}>
-          <AutoComplete
-            label="Transportador:"
-            placeHolder="Buscar cliente por nombre..."
-            onSearch={getproveedores}
-            getLabel={(t) =>
-              `${t.tercerosNombres} — ${t.tercerosIdentificacion}`
-            }
-            getKey={(t) => t.tercerosID}
-            onSelect={(t) => setTransportadorSelected(t)}
-          />
-        </div>
-        <button
-          className={`${s.button} ${s.btnSuccess}`}
-          onClick={HandleSearch}
-        >
-          <BtnChange />
-        </button>
       </div>
 
-      {/* --- TABLA DE DIGITACIÓN  --- */}
-      <div className={s.tableContainer}>
-        <table className={s.table}>
-          <thead>
-            <tr>
-              <th style={{ width: "20px" }}>Ítem</th>
-              <th>Docto</th>
-              <th>Numero</th>
-              <th>Fecha</th>
-              <th>Cc / Nit </th>
-              <th>Proveedor</th>
-              <th>Transportador</th>
-              <th style={{ width: "100px" }}>Cantidad</th>
-              <th style={{ width: "150px" }}>Precio Unit.</th>
-              <th>Fng</th>
-              <th style={{ width: "150px" }}>Total</th>
-              <th style={{ width: "80px", textAlign: "center" }}>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {proveedoresXRuta?.map((d, i) => (
-              <tr key={d.tercerosID}>
-                <td>{i + 1}</td>
-                <td>{documentoCompra?.documentosCodigo}</td>
-                <td>{0}</td>
-                <td>{fechaSelected?.toString()}</td>
-                <td>{d.tercerosIdentificacion}</td>
-                <td>{d.tercerosNombres}</td>
-                <td>{transportadorSelected?.tercerosNombres}</td>
+      {/* --- sTABLA DE DIGITACIÓN  --- */}
+      <div className={f.tableCard}>
+        <div className={f.tableCardHeader}>
+          <span className={f.tableCardTitle}>Detalle de proveedores</span>
+          <span className={f.tableCardCount}>
+            {filasCompras?.length ?? 0} registro(s)
+          </span>
+        </div>
+        <div className={f.tableWrap}>
+          <table className={f.table}>
+            <thead>
+              <tr>
+                <th style={{ width: "20px" }}>Ítem</th>
+                <th>Docto</th>
+                <th>Numero</th>
+                <th>Fecha</th>
+                <th>Cc / Nit </th>
+                <th>Proveedor</th>
+                <th>Transportador</th>
+                <th style={{ width: "100px" }}>Cantidad</th>
+                <th style={{ width: "150px" }}>Precio Unit.</th>
+                <th>Fng</th>
+                <th style={{ width: "150px" }}>Total</th>
+                <th style={{ width: "80px", textAlign: "center" }}>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filasCompras?.map((d, i) => (
+                <tr key={d.tercerosID}>
+                  <td>{i + 1}</td>
+                  <td>{documentoCompra?.documentosCodigo}</td>
+                  <td>{0}</td>
+                  <td>{fechaSelected?.toString()}</td>
+                  <td>{d.tercerosIdentificacion}</td>
+                  <td>{d.tercerosNombres}</td>
+                  <td>{transportadorSelected?.tercerosNombres}</td>
+                  <td>
+                    <input
+                      type="number"
+                      className={f.control}
+                      value={d.Cantidad}
+                      onChange={(e) =>
+                        handleCantidadChanged(
+                          d.tercerosID,
+                          Number(e.target.value),
+                        )
+                      }
+                    ></input>
+                  </td>
+                  <td>{d.Costo}</td>
+                  <td>{Porcentajefng}</td>
+                  <td>{(d.Cantidad * d.Costo).toFixed(2)}</td>
+                  <td style={{ textAlign: "center" }}>
+                    <button
+                      type="button"
+                      onClick={() => handleQuitarFila(d.tercerosID)}
+                    >
+                      <BtnEliminar />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td
+                  colSpan={7}
+                  style={{ textAlign: "right", fontWeight: "bold" }}
+                >
+                  Total Cantidad
+                </td>
+                <td style={{ fontWeight: "bold" }}>
+                  {TotalCantidades.toFixed(2)}
+                </td>
+                <td
+                  colSpan={2}
+                  style={{ textAlign: "right", fontWeight: "bold" }}
+                >
+                  Total general
+                </td>
+                <td style={{ fontWeight: "bold" }}>
+                  {TotalGeneral.toFixed(2)}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
     </div>
   );

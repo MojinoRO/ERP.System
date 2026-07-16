@@ -5,7 +5,18 @@ import {
   type DocumentoResponse,
   type ProveedoresXRuta,
   type Proveedores,
+  type ZonasResponse,
 } from "../Types/Types";
+
+export const getZonas = async (): Promise<ZonasResponse[]> => {
+  try {
+    const { data } = await api.get<ZonasResponse[]>("/Integrations/Zonas");
+    return data;
+  } catch (error: any) {
+    console.error(error.response?.data ?? error);
+    return [];
+  }
+};
 
 export const getUbicaciones = async (): Promise<UbicacionesResponse[]> => {
   try {
@@ -60,7 +71,6 @@ export const getProveedoresXRuta = async (
     const data = await api.get(
       `/Integrations/ProveeedoresXRuta/${UbicacionID}`,
     );
-    console.log("entre a la api" + data);
     return data.data;
   } catch (error: any) {
     console.log(error.response?.data ?? error);

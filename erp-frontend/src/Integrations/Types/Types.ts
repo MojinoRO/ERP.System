@@ -1,3 +1,9 @@
+export interface ZonasResponse {
+  zonasID: number;
+  zonasCodigo: string;
+  zonasNombre: string;
+}
+
 export interface UbicacionesResponse {
   ubicacionID: number;
   ubicacionCodigo: string;
