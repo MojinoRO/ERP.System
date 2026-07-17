@@ -1,3 +1,4 @@
+using ERP.Integrations.Entities;
 using ERP.Integrations.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,4 +55,11 @@ public class IntegrationsController : ControllerBase
         var prorveedores = await _repo.ObtenerProveedoresXUbicacion(ubicacionID);
         return Ok(prorveedores);
     } 
+
+    [HttpPost("GuardarCompraBloque")]
+    public async Task<ActionResult>GuardarCompraBloque([FromBody]IEnumerable<InvCompraBloque> detalle)
+    {
+        var filas = await _repo.GuardarCompraEnBloque(detalle);
+        return Ok(new  {insetados = filas});
+    }
 }

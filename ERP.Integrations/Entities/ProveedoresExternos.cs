@@ -39,3 +39,19 @@ public class Documentos
     public string DocumentosNombre{get;set;}=string.Empty;
 }
 
+public class InvCompraBloque
+{
+    public DateTime Fecha {get;set;}
+    public int ArticulosID {get;set;}
+    public decimal Costo {get;set;}
+    public decimal Cantidad {get;set;}
+    public int ProveedorID {get;set;}
+    public int TransportadorID {get;set;}
+    public int UbicacionID {get;set;}
+    public int ZonasID{get;set;}
+    public int DocumentosID {get;set;}
+    public string Automatica{get;set;}=string.Empty;
+    public decimal Numero{get;set;}
+    public int? CompraID{get;set;}
+    public decimal Porcentaje {get;set;}
+}

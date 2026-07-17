@@ -10,6 +10,7 @@ public interface IProveedoresExternosRepository
     Task<IEnumerable<Ubicaciones>>ObtenerUbicaciones();
     Task<Articulos?>ObtenerArticulos();
     Task<Documentos?>ObtenerDocumentoCompra();
+    Task<int>GuardarCompraEnBloque(IEnumerable<InvCompraBloque>detalle);
 }
 
 public class ProveedoresExternosRepository : IProveedoresExternosRepository
@@ -74,5 +75,27 @@ public class ProveedoresExternosRepository : IProveedoresExternosRepository
         return await conection.QueryAsync<ProveedoresExternos>(Query, new {Zona = zona});
     }
 
+    public async Task<int> GuardarCompraEnBloque(IEnumerable<InvCompraBloque> detalle)
+    {
+        using var conection = _factory.CreateConection();
+        conection.Open();
+        using var transaction = conection.BeginTransaction();
+        try
+        {
+            const string query = @"INSERT INTO InvComprasBloque
+            (Fecha, ArticulosID, Costo, Cantidad, ProveedorID, TransportadorID,
+             UbicacionID, ZonasID, DocumentosID, Automatica, Numero, CompraID, Porcentaje)
+            VALUES
+            (@Fecha, @ArticulosID, @Costo, @Cantidad, @ProveedorID, @TransportadorID,
+             @UbicacionID, @ZonasID, @DocumentosID, @Automatica, @Numero, @CompraID, @Porcentaje)";
 
+        var filas = await conection.ExecuteAsync(query, detalle, transaction);
+        transaction.Commit();
+        return filas;
+        }catch
+        {
+            transaction.Rollback();
+            throw;
+        }
+    }
 }

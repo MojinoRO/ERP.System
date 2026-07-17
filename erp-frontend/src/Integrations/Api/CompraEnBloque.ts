@@ -77,3 +77,15 @@ export const getProveedoresXRuta = async (
     return [];
   }
 };
+
+export const guardarCompraBloque = async (
+  data: unknown[],
+): Promise<boolean> => {
+  try {
+    await api.post("Integrations/GuardarCompraBloque", data);
+    return true;
+  } catch (error: any) {
+    console.log(error.response?.data ?? error);
+    return false;
+  }
+};

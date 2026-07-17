@@ -76,7 +76,9 @@ namespace ERP.Application.Services
             dpto.CodigoISO = string.IsNullOrWhiteSpace(dpto.CodigoISO) ? null : dpto.CodigoISO;
             var entity = await _repo.GetByIDAsync(dpto.DepartamentoID);
             if(entity  == null) return ServiceResponse<ConfDepartamentosDTO>.Error("ID No Encontrado");
-            _mapper.Map(dpto,entity); await _repo.UpdateAsync(entity); var dto = _mapper.Map<ConfDepartamentosDTO>(entity);
+            _mapper.Map(dpto,entity);
+            await _repo.UpdateAsync(entity); 
+            var dto = _mapper.Map<ConfDepartamentosDTO>(entity);
             return ServiceResponse<ConfDepartamentosDTO>.Ok(dto,"Departamento Actualizado Correctamente");
         }
 

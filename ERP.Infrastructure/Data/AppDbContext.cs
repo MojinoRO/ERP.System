@@ -24,6 +24,7 @@ public class AppDbContext : DbContext
     public DbSet<ConfDepartamentos>ConfDepartamentos{get;set;}
     public DbSet<ConfCiudades>ConfCiudades{get;set;}
     public DbSet<ConfCuentasPuc>ConfCuentasPuc{get;set;}
+    public DbSet<IntLegalizacionTransportadores>IntLegalizacionTransportadores{get;set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

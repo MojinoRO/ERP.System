@@ -59,8 +59,8 @@ const NAV_ITEMS: NavItems[] = [
         children: [],
       },
       {
-        id: "Movimientos",
-        label: "Movimientos",
+        id: "Integraciones",
+        label: "Integraciones",
         children: [
           {
             id: "CompraEnBloque",

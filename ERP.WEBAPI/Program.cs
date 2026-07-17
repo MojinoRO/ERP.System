@@ -50,6 +50,8 @@ builder.Services.AddScoped<IConfCuentasPucRepository,ConfCuentasPucReposiroty>()
 builder.Services.AddScoped<IConfCuentasPucService,ConfCuentasPucService>();
 builder.Services.AddScoped<IExternalDbConnectionFactory, ExternalDbConnectionFactory>();
 builder.Services.AddScoped<IProveedoresExternosRepository, ProveedoresExternosRepository>();
+builder.Services.AddScoped<IIntLegalizacionTransportadoresRepository, IntLegalizacionTransportadoresRepository>();
+builder.Services.AddScoped<IIntLegalizacionTransportadoresService, IntLegalizacionTransportadoresService>();
 
 
 builder.Services.AddEndpointsApiExplorer();
