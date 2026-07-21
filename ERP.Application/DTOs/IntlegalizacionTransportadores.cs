@@ -5,9 +5,8 @@ namespace ERP.Application.DTOs
     public class IntLegalizacionTransportadoresDTO
     {
         public int LegalizacionID {get;set;}
-        public DateTime FechaLegalizacion{get;set;}
+        public DateOnly FechaLegalizacion{get;set;}
         public int TerceroID{get;set;}
-
         public decimal CantidadTotal {get;set;}
         public decimal ValorUnitario {get;set;}
         public decimal ValorTotal{get;set;}
@@ -16,7 +15,7 @@ namespace ERP.Application.DTOs
     public class CreateIntLegalizacionTransportadoresDTO
     {
         [Required]
-        public DateTime FechaLegalizacion{get;set;}
+        public DateOnly FechaLegalizacion{get;set;}
 
         [Required]
         public int TerceroID{get;set;}
@@ -37,7 +36,7 @@ namespace ERP.Application.DTOs
         public int LegalizacionID {get;set;}
         
         [Required]
-        public DateTime FechaLegalizacion{get;set;}
+        public DateOnly FechaLegalizacion{get;set;}
 
         [Required]
         public int TerceroID{get;set;}

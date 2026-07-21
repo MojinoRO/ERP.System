@@ -1,0 +1,130 @@
+/* ReportDocument.module.css
+   Plantilla visual compartida para TODOS los reportes impresos del ERP.
+   Colores fijos en negro/blanco: el documento no debe heredar el tema
+   claro/oscuro de la app, un papel impreso siempre se ve igual. */
+
+.document {
+  display: none; /* oculto en pantalla siempre */
+  font-family: Arial, "Segoe UI", sans-serif;
+  color: #000;
+  background: #fff;
+  padding: 24px;
+}
+
+@media print {
+  .document {
+    display: block; /* solo aparece cuando el navegador está imprimiendo */
+  }
+
+  @page {
+    size: letter portrait;
+    margin: 15mm 12mm;
+  }
+}
+
+/* ── ENCABEZADO / MEMBRETE ── */
+.letterhead {
+  text-align: center;
+  border-bottom: 2px solid #000;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.letterhead h1 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: #333;
+  margin: 2px 0 0;
+}
+
+/* ── DATOS DEL REPORTE (transportador, fechas, etc.) ── */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.meta strong {
+  font-weight: 600;
+}
+
+/* ── TABLA DE DETALLE ── */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin-bottom: 16px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #000;
+  padding: 4px 8px;
+}
+
+.table th {
+  background: #eee;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.table thead {
+  display: table-header-group; /* repite el encabezado si la tabla pasa a la página 2 */
+}
+
+.table tbody tr {
+  break-inside: avoid; /* evita partir una fila entre dos páginas */
+}
+
+/* ── TOTALES ── */
+.totals {
+  width: 260px;
+  margin-left: auto;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.totals td {
+  padding: 4px 8px;
+  border: 1px solid #000;
+}
+
+.totals td:first-child {
+  font-weight: 600;
+}
+
+.totals td:last-child {
+  text-align: right;
+}
+
+.emphasis td {
+  font-weight: 700;
+  background: #eee;
+  font-size: 13px;
+}
+
+/* ── FIRMAS ── */
+.signatures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  break-inside: avoid; /* que no quede la línea de firma sola al inicio de una página */
+}
+
+.signLine {
+  width: 40%;
+  text-align: center;
+  border-top: 1px solid #000;
+  padding-top: 4px;
+  font-size: 11px;
+}

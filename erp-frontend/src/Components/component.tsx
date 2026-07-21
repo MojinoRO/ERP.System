@@ -7,6 +7,7 @@ import {
   Eye,
   Check,
   NotepadText,
+  SearchCheck,
 } from "lucide-react";
 export const BtonCrear = () => <Plus size={18} />;
 export const BtnEdit = () => <Pencil size={18} />;
@@ -16,3 +17,4 @@ export const BtnCancel = () => <Undo2 size={18} />;
 export const BtnChange = () => <Check size={18} />;
 export const BtnEye = () => <Eye size={18} />;
 export const BtnNotepad = () => <NotepadText />;
+export const BtnSearch = () => <SearchCheck />;

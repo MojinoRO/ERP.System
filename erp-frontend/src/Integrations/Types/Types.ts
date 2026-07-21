@@ -34,4 +34,15 @@ export interface Proveedores {
   tercerosID: number;
   tercerosIdentificacion: string;
   tercerosNombres: string;
+  tercerosCelular: string;
+  tercerosObservaciones: string;
+}
+
+export interface ListadoLegalizaciones {
+  legalizacionID: number;
+  fechaLegalizacion: string;
+  terceroID: number;
+  cantidadTotal: number;
+  valorUnitario: number;
+  valorTotal: number;
 }

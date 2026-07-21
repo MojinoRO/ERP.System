@@ -15,6 +15,8 @@ import ConfCuentasPuc from "../../Pages/ConfFormCuentasPuc";
 
 //integrations
 import InvFormCompraEnBloque from "../../Integrations/Pages/InvFormCompraEnBloque";
+import IntLegalizacionTransportadores from "../../Integrations/Pages/IntLegalizacionTransportadores";
+import IntAnticipos from "../../Integrations/Pages/IntAnticipos";
 
 interface NavChild {
   id: string;
@@ -66,6 +68,16 @@ const NAV_ITEMS: NavItems[] = [
             id: "CompraEnBloque",
             label: "Compra En Bloque",
             component: <InvFormCompraEnBloque />,
+          },
+          {
+            id: "anticipos",
+            label: "Anticipos Proveedores / Transportadores",
+            component: <IntAnticipos />,
+          },
+          {
+            id: "Legalizacion",
+            label: "Legalizacion Transportador",
+            component: <IntLegalizacionTransportadores />,
           },
         ],
       },

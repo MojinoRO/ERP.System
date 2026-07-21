@@ -22,5 +22,16 @@ namespace ERP.Application.common
             }
             return true;
         }
+
+       public static string? ValidateRangoFechas(DateOnly desde, DateOnly hasta)
+        {
+            if (desde == default)
+                return "Fecha desde";
+            if (hasta == default)
+                return "Fecha hasta";
+            if (desde > hasta)
+                return "La fecha desde no puede ser mayor que la fecha hasta.";
+            return null;
+        }
     }
 }

@@ -26,6 +26,7 @@ import {
   getproveedores,
   guardarCompraBloque,
 } from "../Api/CompraEnBloque";
+import { CreatelegalizacionTransportadores } from "../../Api/IntLegalizacionProveedor";
 import { AutoComplete } from "../../Components/UI/AutoComplete";
 import { ConfirmDialog } from "../../Components/UI/ConfirmDialog";
 
@@ -62,6 +63,7 @@ export default function ConfFormCompraBloque() {
     useState<Proveedores | null>(null);
   const [liquidacionRuta, setLiquidacionRuta] = useState(0);
   const [confirmLegalizacion, setconfirmLegalizacion] = useState(false);
+  const [ValidateLegalizacion, setValidateLegalizacion] = useState(false);
 
   useEffect(() => {
     const CargarDatos = async () => {
@@ -187,6 +189,12 @@ export default function ConfFormCompraBloque() {
   const TotalCantidades = filasCompras.reduce((acc, f) => acc + f.Cantidad, 0);
 
   const handleSave = async () => {
+    if (!ValidateLegalizacion) {
+      return SetALert({
+        message: "No se puede guardar ruta sin legalizar proveedor",
+        type: "error",
+      });
+    }
     const FilasVacias = filasCompras.filter((f) => f.Cantidad === 0);
     if (FilasVacias.length > 0) {
       return SetALert({
@@ -231,11 +239,31 @@ export default function ConfFormCompraBloque() {
     setconfirmLegalizacion(true);
   };
   const ConfirmGuardarLiquidacionTrasnportador = async () => {
-    SetALert({
-      message: "mañana guardo , hoy ya tengo sueño :(",
-      type: "success",
-    });
-    setconfirmLegalizacion(false);
+    try {
+      const payLoad = {
+        fechaLegalizacion: fechaSelected,
+        terceroID: transportadorSelected?.tercerosID,
+        cantidadtotal: filasCompras.reduce((act, f) => act + f.Cantidad, 0),
+        valorUnitario: liquidacionRuta,
+        valorTotal: filasCompras.reduce(
+          (act, f) => act + f.Cantidad * liquidacionRuta,
+          0,
+        ),
+      };
+      const post = await CreatelegalizacionTransportadores(payLoad);
+      if (post) {
+        SetALert({
+          message: "Legalización registrada correctamente",
+          type: "success",
+        });
+        setValidateLegalizacion(true);
+      } else {
+        SetALert({ message: "Ocurrió un error al guardar", type: "error" });
+      }
+      setconfirmLegalizacion(false);
+    } catch (error: any) {
+      console.log(error.response?.data);
+    }
   };
 
   return (
@@ -341,7 +369,7 @@ export default function ConfFormCompraBloque() {
           <div className={`${f.field} ${f.fieldWide}`}>
             <AutoComplete
               label="Transportador"
-              placeHolder="Buscar cliente por nombre..."
+              placeHolder="Buscar Transportador por nombre..."
               onSearch={getproveedores}
               getLabel={(t) =>
                 `${t.tercerosIdentificacion} — ${t.tercerosNombres}`
@@ -371,7 +399,9 @@ export default function ConfFormCompraBloque() {
           <div>
             <button
               className={f.searchBtn}
-              disabled={filasCompras.length === 0}
+              disabled={
+                filasCompras.length === 0 || ValidateLegalizacion === true
+              }
               onClick={handleLegalizar}
             >
               <BtnNotepad />
@@ -400,7 +430,7 @@ export default function ConfFormCompraBloque() {
         </div>
       </div>
 
-      {/* --- sTABLA DE DIGITACIÓN  --- */}
+      {/* --- TABLA DE DIGITACIÓN  --- */}
       <div className={f.tableCard}>
         <div className={f.tableCardHeader}>
           <span className={f.tableCardTitle}>Detalle de proveedores</span>
@@ -491,7 +521,7 @@ export default function ConfFormCompraBloque() {
       <ConfirmDialog
         open={confirmLegalizacion}
         title="Legalizar Ruta"
-        message={`¿Estas seguro de guardar este registro?`}
+        message={`¿Estas seguro de guardar Ruta para ${transportadorSelected?.tercerosNombres}?`}
         confirmText="Aceptar"
         cancelText="Cancelar"
         onCancel={() => setconfirmLegalizacion(false)}

@@ -52,6 +52,8 @@ builder.Services.AddScoped<IExternalDbConnectionFactory, ExternalDbConnectionFac
 builder.Services.AddScoped<IProveedoresExternosRepository, ProveedoresExternosRepository>();
 builder.Services.AddScoped<IIntLegalizacionTransportadoresRepository, IntLegalizacionTransportadoresRepository>();
 builder.Services.AddScoped<IIntLegalizacionTransportadoresService, IntLegalizacionTransportadoresService>();
+builder.Services.AddScoped<IIntAnticiposRepository, IntAnticiposRepository>();
+builder.Services.AddScoped<IIntAnticiposServices, IntAnticiposService>();
 
 
 builder.Services.AddEndpointsApiExplorer();

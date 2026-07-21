@@ -3,7 +3,7 @@ namespace ERP.Domain.Interfaces
 {
     public interface IIntLegalizacionTransportadoresRepository
     {
-        Task<IEnumerable<IntLegalizacionTransportadores>>GetByFecha(DateTime fechadesde,DateTime fechahasta);
+        Task<IEnumerable<IntLegalizacionTransportadores>>GetByFecha(DateOnly fechadesde,DateOnly fechahasta , int tercerosID);
         Task<IntLegalizacionTransportadores?>GetById(int id);
         Task<IntLegalizacionTransportadores>CreateLegalizacion(IntLegalizacionTransportadores data);
         Task<IntLegalizacionTransportadores>UpdateLegalizacion(IntLegalizacionTransportadores data);

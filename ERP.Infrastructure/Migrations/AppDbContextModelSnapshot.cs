@@ -381,6 +381,35 @@ namespace ERP.Infrastructure.Migrations
                     b.ToTable("ConfVendedores");
                 });
 
+            modelBuilder.Entity("ERP.Domain.Entities.IntAnticipos", b =>
+                {
+                    b.Property<int>("AnticipoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AnticipoID"));
+
+                    b.Property<string>("AnticipoDetalle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("AnticipoFecha")
+                        .HasColumnType("date");
+
+                    b.Property<int>("AnticipoTipo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TerceroID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ValorAnticipo")
+                        .HasColumnType("decimal");
+
+                    b.HasKey("AnticipoID");
+
+                    b.ToTable("IntAnticipos");
+                });
+
             modelBuilder.Entity("ERP.Domain.Entities.IntLegalizacionTransportadores", b =>
                 {
                     b.Property<int>("LegalizacionID")
@@ -392,7 +421,7 @@ namespace ERP.Infrastructure.Migrations
                     b.Property<decimal>("CantidadTotal")
                         .HasColumnType("Decimal");
 
-                    b.Property<DateTime>("FechaLegalizacion")
+                    b.Property<DateOnly>("FechaLegalizacion")
                         .HasColumnType("date");
 
                     b.Property<decimal>("TerceroID")

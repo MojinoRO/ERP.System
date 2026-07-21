@@ -6,6 +6,7 @@ import {
   type ProveedoresXRuta,
   type Proveedores,
   type ZonasResponse,
+  type ListadoLegalizaciones,
 } from "../Types/Types";
 
 export const getZonas = async (): Promise<ZonasResponse[]> => {
@@ -37,6 +38,16 @@ export const getproveedores = async (text: string): Promise<Proveedores[]> => {
   } catch (error: any) {
     console.error(error.response?.data ?? error);
     return [];
+  }
+};
+
+export const getProveedoresByID = async (id: number): Promise<Proveedores> => {
+  try {
+    const data = await api.get(`/Integrations/id/${id}`);
+    return data.data;
+  } catch (error: any) {
+    console.error(error.response?.data ?? error);
+    throw error;
   }
 };
 
@@ -87,5 +98,21 @@ export const guardarCompraBloque = async (
   } catch (error: any) {
     console.log(error.response?.data ?? error);
     return false;
+  }
+};
+
+export const ListarLegalizaciones = async (
+  fechadesde: string,
+  fechahasta: string,
+  terceroid: number,
+): Promise<ListadoLegalizaciones[]> => {
+  try {
+    const data = await api.get(
+      `/IntLegalizacionTransportadores/legalizaciones/${fechadesde}/${fechahasta}/${terceroid}`,
+    );
+    return data.data.data;
+  } catch (error: any) {
+    console.log(error.response?.data ?? error);
+    return [];
   }
 };

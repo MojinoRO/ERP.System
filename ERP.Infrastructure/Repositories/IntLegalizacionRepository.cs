@@ -10,12 +10,10 @@ namespace ERP.Infrastructure.Repositories
         private readonly AppDbContext _context;
         public IntLegalizacionTransportadoresRepository(AppDbContext context) => _context=context;
 
-        public async Task<IEnumerable<IntLegalizacionTransportadores>>GetByFecha(DateTime fechadesde, DateTime fechahasta)
+        public async Task<IEnumerable<IntLegalizacionTransportadores>>GetByFecha(DateOnly fechadesde, DateOnly fechahasta, int TercerosID)
         {
-            var desde = fechadesde.Date;
-            var hasta = fechahasta.Date.AddDays(1);
             return await _context.IntLegalizacionTransportadores.AsNoTracking()
-            .Where(x=> x.FechaLegalizacion>=desde && x.FechaLegalizacion <=hasta).ToListAsync();
+            .Where(x=> x.FechaLegalizacion>=fechadesde && x.FechaLegalizacion <=fechahasta && x.TerceroID ==TercerosID).ToListAsync();
         }
 
         public async Task<IntLegalizacionTransportadores?>GetById(int id)

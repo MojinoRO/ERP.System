@@ -39,6 +39,7 @@ namespace ERP.Application.Mapping
             CreateMap<ConfPais,ConfPaisDto>();
             CreateMap<ConfCuentasPuc,ConfCuentasPucDto>();
             CreateMap<IntLegalizacionTransportadores,IntLegalizacionTransportadoresDTO>();
+            CreateMap<IntAnticipos, IntAnticiposDto>();
 
             
             //DTO to entity
@@ -59,6 +60,8 @@ namespace ERP.Application.Mapping
             CreateMap<UpdateMovTerceroCuentaPuc,ConfCuentasPuc>();
             CreateMap<CreateIntLegalizacionTransportadoresDTO, IntLegalizacionTransportadores>();
             CreateMap<UpdateIntLegalizacionTransportadoresDTO,UpdateIntLegalizacionTransportadoresDTO>();
+            CreateMap<CreateIntAnticiposDto,IntAnticipos>();
+            CreateMap<UpdateIntAnticiposDto, IntAnticipos>();
         }
     }
 }

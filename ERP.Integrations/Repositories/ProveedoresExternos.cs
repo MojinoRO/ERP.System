@@ -5,6 +5,7 @@ namespace ERP.Integrations.Repositories;
 public interface IProveedoresExternosRepository
 {
     Task<IEnumerable<ProveedoresExternos>>ObtenerProveedores(string texts);
+    Task<ProveedoresExternos>GetByID(int id );
     Task<IEnumerable<Zonas>>ObtenerZonas();
     Task<IEnumerable<ProveedoresExternos>>ObtenerProveedoresXUbicacion(int Ubicacion);
     Task<IEnumerable<Ubicaciones>>ObtenerUbicaciones();
@@ -22,10 +23,22 @@ public class ProveedoresExternosRepository : IProveedoresExternosRepository
     {
         using var conection = _factory.CreateConection();
         const string query = 
-        @"SELECT  TercerosID, TercerosIdentificacion, TercerosNombres ,TercerosCodigoAlterno , ZonasID 
+        @"SELECT  TercerosID, TercerosIdentificacion, TercerosNombres ,TercerosCodigoAlterno ,
+         ZonasID ,TercerosCelular ,TercerosObservaciones
         FROM AdmTerceros
         WHERE TercerosProveedor=1 And  TercerosNombres like @parametro";
         return await conection.QueryAsync<ProveedoresExternos>(query, new {parametro = $"%{text}%"});
+    }
+
+    public async Task<ProveedoresExternos>GetByID(int id)
+    {
+        using var conection = _factory.CreateConection();
+        const string query =
+        @"SELECT  TercerosID, TercerosIdentificacion, TercerosNombres ,TercerosCodigoAlterno ,
+         ZonasID ,TercerosCelular ,TercerosObservaciones
+        FROM AdmTerceros
+        WHERE TercerosID = @parametro";
+        return await conection.QueryFirstAsync<ProveedoresExternos>(query, new {parametro = id});
     }
 
     public async Task<IEnumerable<Ubicaciones>> ObtenerUbicaciones()

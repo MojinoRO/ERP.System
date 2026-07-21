@@ -29,6 +29,8 @@ public class ProveedoresExternos
     public string TercerosIdentificacion{get;set;}=string.Empty;
     public string TercerosNombres{get;set;}=string.Empty;
     public string TercerosCodigoAlterno{get;set;}=string.Empty;
+    public string TercerosCelular{get;set;}=string.Empty;
+    public string TercerosObservaciones{get;set;}=string.Empty;
     public int  ZonasID {get; set;}
 }
 

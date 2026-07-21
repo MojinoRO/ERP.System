@@ -19,7 +19,13 @@ public class IntegrationsController : ControllerBase
         var proveedores = await _repo.ObtenerProveedores(text);
         return Ok(proveedores);
     }
-    
+
+    [HttpGet("id")]
+    public async Task<ActionResult>GetProveedorByID(int id)
+    {
+        var proveedores = await _repo.GetByID(id);
+        return Ok(proveedores);
+    }
 
     [HttpGet("Ubicaciones")]
     public async Task<ActionResult> GetUbicaciones()

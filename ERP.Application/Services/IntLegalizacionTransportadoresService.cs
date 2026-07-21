@@ -18,12 +18,13 @@ namespace ERP.Application.Services
             _maper=mapper;
         }
 
-        public async Task<ServiceResponse<IEnumerable<IntLegalizacionTransportadoresDTO>>> getByFechaAsync(DateTime desde, DateTime hasta)
+        public async Task<ServiceResponse<IEnumerable<IntLegalizacionTransportadoresDTO>>> getByFechaAsync(DateOnly desde, DateOnly hasta , int id)
         {
             if(desde == default)return ServiceResponse<IEnumerable<IntLegalizacionTransportadoresDTO>>.Error(Messages.InvalidParameter + "Fecha desde");
             if(hasta ==default )return ServiceResponse<IEnumerable<IntLegalizacionTransportadoresDTO>>.Error(Messages.InvalidParameter + "Fecha hasta");
-            if(desde> hasta) return ServiceResponse<IEnumerable<IntLegalizacionTransportadoresDTO>>.Error(Messages.InvalidParameter + "La fecha desde no puede ser mayor que la fecha hasta.");
-            var lista = await _repo.GetByFecha(desde, hasta);
+            if(desde> hasta) return ServiceResponse<IEnumerable<IntLegalizacionTransportadoresDTO>>
+            .Error(Messages.InvalidParameter + "La fecha desde no puede ser mayor que la fecha hasta.");
+            var lista = await _repo.GetByFecha(desde, hasta,id);
             if(!lista.Any()){
                 return ServiceResponse<IEnumerable<IntLegalizacionTransportadoresDTO>>.Error(Messages.NotFound);
             }

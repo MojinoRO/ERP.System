@@ -11,7 +11,7 @@ namespace ERP.Domain.Entities
         
         [Column(TypeName ="date")]
         [Required]
-        public DateTime FechaLegalizacion{get;set;}
+        public DateOnly FechaLegalizacion{get;set;}
 
         [Column(TypeName ="decimal")]
         [Required]

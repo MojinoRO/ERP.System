@@ -13,10 +13,10 @@ namespace ERP.WEBAPI.Controllers
         public IntLegalizacionTransportadoresController(IIntLegalizacionTransportadoresService service )=>_service=service;
 
         
-        [HttpGet("legalizaciones")]
-        public async Task<ActionResult<IEnumerable<IntLegalizacionTransportadoresDTO>>>ListarLegalizaciones(DateTime desde , DateTime hasta)
+        [HttpGet("legalizaciones/{desde}/{hasta}/{id}")]
+        public async Task<ActionResult<IEnumerable<IntLegalizacionTransportadoresDTO>>>ListarLegalizaciones(DateOnly desde , DateOnly hasta , int id)
         {
-            var listado = await _service.getByFechaAsync(desde, hasta);
+            var listado = await _service.getByFechaAsync(desde, hasta, id);
             if(!listado.Success)return BadRequest(listado.Message);
             return Ok(listado);
         }
