@@ -25,5 +25,8 @@ namespace ERP.Domain.Entities
 
         [Required]
         public string AnticipoDetalle{get;set;}=string.Empty;
+
+        [Column(TypeName ="int")]
+        public int CuotasAnticipo{get;set;}
     }
 }

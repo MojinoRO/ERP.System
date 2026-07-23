@@ -24,12 +24,14 @@ namespace ERP.Application.Services
                 return ServiceResponse<IEnumerable<IntAnticiposDto>>.Error(Messages.NotFound);
             return ServiceResponse<IEnumerable<IntAnticiposDto>>.Ok(_mapper.Map<IEnumerable<IntAnticiposDto>>(lista), Messages.SuccessfulChanged);
         }
-        public async Task<ServiceResponse<IEnumerable<IntAnticiposDto>>>GetByFechaTerceroAsync(DateOnly desde , DateOnly hasta , int id)
+        public async Task<ServiceResponse<IEnumerable<IntAnticiposDto>>>GetByFechaTerceroAsync(DateOnly desde , DateOnly hasta , int id , int tipoAnticipo)
         {
             var error = ServiceValidate.ValidateRangoFechas(desde, hasta);
             if (error != null)
                 return ServiceResponse<IEnumerable<IntAnticiposDto>>.Error(error);
-            var lista = await _Repo.GetByFechaTerceroAsync(desde, hasta, id);
+            if(id<=0)
+                return ServiceResponse<IEnumerable<IntAnticiposDto>>.Error(Messages.InvalidParameter);
+            var lista = await _Repo.GetByFechaTerceroAsync(desde, hasta, id ,tipoAnticipo);
             if (!lista.Any())
                 return ServiceResponse<IEnumerable<IntAnticiposDto>>.Error(Messages.NotFound);
             return ServiceResponse<IEnumerable<IntAnticiposDto>>

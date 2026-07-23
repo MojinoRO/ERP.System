@@ -46,3 +46,13 @@ export interface ListadoLegalizaciones {
   valorUnitario: number;
   valorTotal: number;
 }
+
+export interface AnticiposResponse {
+  anticipoID: number;
+  terceroID: number;
+  anticipoTipo: number;
+  anticipoFecha: string;
+  anticipoDetalle: string;
+  valorAnticipo: number;
+  numeroCuotas: number;
+}

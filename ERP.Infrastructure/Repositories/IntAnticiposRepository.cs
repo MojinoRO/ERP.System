@@ -16,10 +16,10 @@ namespace ERP.Infrastructure.Repositories
             .Where(x=>x.AnticipoFecha>=desde && x.AnticipoFecha<=hasta).ToListAsync();
         }
 
-        public async Task<IEnumerable<IntAnticipos>>GetByFechaTerceroAsync(DateOnly desde , DateOnly hasta , int id)
+        public async Task<IEnumerable<IntAnticipos>>GetByFechaTerceroAsync(DateOnly desde , DateOnly hasta , int id , int tipo)
         {
             return await _context.IntAnticipos.AsNoTracking().Where(
-                x=>x.AnticipoFecha>=desde && x.AnticipoFecha<=hasta && x.TerceroID== id
+                x=>x.AnticipoFecha>=desde && x.AnticipoFecha<=hasta && x.TerceroID== id && x.AnticipoTipo ==tipo
             ).ToListAsync();
         }
     }

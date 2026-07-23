@@ -6,7 +6,7 @@ import {
   BtnNotepad,
 } from "../../Components/component";
 import { ErrorAlert } from "../../Components/UI/ErrorAlert";
-import { formatCurrency, parseCurrency } from "../../Helper/CurrencyHelper";
+import { formatCurrency } from "../../Helper/CurrencyHelper";
 import { CurrencyInput } from "../../Components/UI/CurrencyInput ";
 import {
   type UbicacionesResponse,

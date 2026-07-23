@@ -11,6 +11,7 @@ interface AutoCompleteProps<T> {
   placeHolder?: string;
   minChars?: number;
   debounceMs?: number;
+  onClean?: () => void;
 }
 
 export function AutoComplete<T>(props: AutoCompleteProps<T>) {

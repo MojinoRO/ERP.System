@@ -285,6 +285,32 @@
   box-shadow: 0 4px 12px rgba(160, 174, 192, 0.3);
   transform: translateY(-2px);
 }
+
+.btnSearch {
+  background: #0891b2;
+  color: #fff;
+}
+
+.btnSearch:hover:not(:disabled) {
+  background: #0e7490;
+}
+.btnSearch:hover:not(:disabled) {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+  transform: translateY(-2px);
+}
+
+.btnPrint {
+  background: #475569;
+  color: white;
+}
+
+.btnPrint:hover:not(:disabled) {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+  transform: translateY(-2px);
+}
+
 .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -582,4 +608,22 @@
 .tableInput:focus {
   border-color: #3182ce;
   box-shadow: 0 0 0 1px #3182ce;
+}
+
+.formGroupHorizontal4 {
+  display: grid;
+  grid-template-columns:
+    max-content minmax(150px, 200px)
+    max-content minmax(150px, 200px);
+
+  align-items: center;
+  column-gap: 16px;
+  row-gap: 8px;
+  justify-content: start;
+}
+
+@media (max-width: 900px) {
+  .formGroupHorizontal4 {
+    grid-template-columns: max-content minmax(150px, 1fr);
+  }
 }

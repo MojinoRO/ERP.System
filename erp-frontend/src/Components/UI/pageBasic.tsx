@@ -36,7 +36,7 @@ interface FieldProps {
 }
 export const Field = ({ children, label }: FieldProps) => {
   return (
-    <div className={f.fieldLabel}>
+    <div className={f.field}>
       {label && <label className={f.label}>{label}</label>}
       {children}
     </div>

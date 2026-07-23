@@ -123,7 +123,6 @@ export default function ConfDepartamentos() {
           });
         }
       }
-      console.log(departamentoSelected);
       console.log(IsNew ? "crea" : "actualiza");
 
       const ok = IsNew

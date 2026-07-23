@@ -8,13 +8,15 @@ import {
   Check,
   NotepadText,
   SearchCheck,
+  Printer,
 } from "lucide-react";
-export const BtonCrear = () => <Plus size={18} />;
-export const BtnEdit = () => <Pencil size={18} />;
-export const BtnSave = () => <Save size={18} />;
-export const BtnEliminar = () => <Trash2 size={18} />;
-export const BtnCancel = () => <Undo2 size={18} />;
-export const BtnChange = () => <Check size={18} />;
-export const BtnEye = () => <Eye size={18} />;
+export const BtonCrear = () => <Plus />;
+export const BtnEdit = () => <Pencil />;
+export const BtnSave = () => <Save />;
+export const BtnEliminar = () => <Trash2 />;
+export const BtnCancel = () => <Undo2 />;
+export const BtnChange = () => <Check />;
+export const BtnEye = () => <Eye />;
 export const BtnNotepad = () => <NotepadText />;
 export const BtnSearch = () => <SearchCheck />;
+export const BtnPrint = () => <Printer />;

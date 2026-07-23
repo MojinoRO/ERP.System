@@ -20,10 +20,10 @@ namespace ERP.WEBAPI.Controllers
             return Ok(list);
         }
 
-        [HttpGet("fechas/{desde}/{hasta}")]
-        public async Task<ActionResult<IEnumerable<IntAnticiposDto>>> ListarPorFechasTercero( DateOnly desde  , DateOnly hasta , int id )
+        [HttpGet("fechas/")]
+        public async Task<ActionResult<IEnumerable<IntAnticiposDto>>> ListarPorFechasTercero( DateOnly fechaDesde  , DateOnly fechaHasta , int proveedorID ,int tipoAnticipo)
         {
-            var list = await _service.GetByFechaTerceroAsync(desde, hasta, id);
+            var list = await _service.GetByFechaTerceroAsync(fechaDesde, fechaHasta, proveedorID ,tipoAnticipo);
             if(!list.Success) return BadRequest(list.Message);
             return Ok(list);
         }

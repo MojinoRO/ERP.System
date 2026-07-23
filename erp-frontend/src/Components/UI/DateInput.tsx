@@ -9,6 +9,7 @@ interface Props {
   min?: string;
   max?: string;
   disabled?: boolean;
+  width?: string;
 }
 
 export function DateInput({
@@ -18,6 +19,7 @@ export function DateInput({
   min,
   max,
   disabled,
+  width,
 }: Props) {
   const [error, setError] = useState("");
 
@@ -35,9 +37,10 @@ export function DateInput({
     setError("");
   };
   return (
-    <div className={f.container}>
+    <div className={f.inputWrapper}>
       <input
         className={`${f.input} ${error ? f.errorInput : ""}`}
+        style={{ "--input-width": width } as React.CSSProperties}
         type="date"
         value={value}
         min={min}
@@ -45,7 +48,6 @@ export function DateInput({
         disabled={disabled}
         onChange={handleChange}
       />
-
       {error && <span className={f.error}>{error}</span>}
     </div>
   );
