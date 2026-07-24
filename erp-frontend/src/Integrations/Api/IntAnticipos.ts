@@ -49,3 +49,13 @@ export const GetListAnticiposProveedores = async (
     return [];
   }
 };
+
+export const deleteAnticipos = async (anticipoID: number): Promise<boolean> => {
+  try {
+    const deleted = await api.delete(`/IntAnticipos/id/${anticipoID}`);
+    return deleted.status === 200 || deleted.status < 300;
+  } catch (error: any) {
+    console.log(error.response?.data);
+    return false;
+  }
+};

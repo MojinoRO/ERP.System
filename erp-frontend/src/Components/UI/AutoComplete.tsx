@@ -3,6 +3,7 @@ import { useDebounce } from "../../Hook/UseDebounce";
 import styles from "./AutoComplete.module.css";
 
 interface AutoCompleteProps<T> {
+  value?: string;
   onSearch: (query: string) => Promise<T[]>;
   getLabel: (item: T) => string;
   getKey: (item: T) => number;
@@ -16,6 +17,7 @@ interface AutoCompleteProps<T> {
 
 export function AutoComplete<T>(props: AutoCompleteProps<T>) {
   const {
+    value,
     onSearch,
     getLabel,
     getKey,
@@ -26,7 +28,7 @@ export function AutoComplete<T>(props: AutoCompleteProps<T>) {
     debounceMs = 400,
   } = props;
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(value ?? "");
   const [result, setResult] = useState<T[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +38,9 @@ export function AutoComplete<T>(props: AutoCompleteProps<T>) {
   const debouncedQuery = useDebounce(query, debounceMs);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    setQuery(value ?? "");
+  }, [value]);
   useEffect(() => {
     const handleClickOutSide = (e: MouseEvent) => {
       if (
@@ -87,6 +92,9 @@ export function AutoComplete<T>(props: AutoCompleteProps<T>) {
   const handledInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
     if (selectedItem) setSelectedItem(null);
+    if (value === "") {
+      props?.onClean?.();
+    }
   };
 
   const handledSelect = (item: T) => {

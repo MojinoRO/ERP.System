@@ -19,12 +19,15 @@ import { ErrorAlert } from "../../Components/UI/ErrorAlert";
 import {
   CreateAnticipos,
   GetListAnticiposProveedores,
+  UpdateAnticipos,
+  deleteAnticipos,
 } from "../Api/IntAnticipos";
 import type { ReportColumn } from "../../Components/Print/types";
 import { ReportDocument } from "../../Components/Print/ReportDocument";
 import { useReportPrint } from "../../Components/Print/UseReportPrint";
 import { ConfirmDialog } from "../../Components/UI/ConfirmDialog";
 import type { AnticiposResponse } from "../Types/Types";
+
 export default function IntAnticipos() {
   const emptyAnticipos = {
     anticipoID: 0,
@@ -32,7 +35,7 @@ export default function IntAnticipos() {
     anticipoTipo: 0,
     anticipoFecha: "",
     anticipoDetalle: "",
-    CoutasAnticipo: 0,
+    numeroCuotas: 0,
     valorAnticipo: 0,
   };
   const dateSearch = {
@@ -54,6 +57,7 @@ export default function IntAnticipos() {
   const [confirmPrint, setConfirmPrint] = useState(false);
   const [search, setSearch] = useState(false);
   const [busqueda, setBusqueda] = useState(dateSearch);
+  const [openDelete, setOpenDelete] = useState(false);
   const [ListadoAnticipos, SetListadoAnticipos] = useState<AnticiposResponse[]>(
     [],
   );
@@ -77,6 +81,27 @@ export default function IntAnticipos() {
     if (form.valorAnticipo === 0) {
       setAlert({ message: "Agregue Valor Anticipo", type: "error" });
       return false;
+    }
+    if (anticipos.length > 0) {
+      const TotalCoutas = anticipos.reduce(
+        (act, i) => act + i.valorAnticipo,
+        0,
+      );
+      const valorAnticipo = form.valorAnticipo;
+
+      if (TotalCoutas < valorAnticipo) {
+        setAlert({
+          message: "El valor de las cuotas es Menor al valor del anticipo",
+          type: "error",
+        });
+        return false;
+      } else if (TotalCoutas > valorAnticipo) {
+        setAlert({
+          message: "El valor de las cuotas es mayor al valor del anticipo",
+          type: "error",
+        });
+        return false;
+      }
     }
     return true;
   };
@@ -118,6 +143,15 @@ export default function IntAnticipos() {
 
   const handleCreate = () => {
     if (formState === "lectura") setFormState("edicion");
+    setSearch(false);
+    setProveedorSelected("");
+  };
+
+  const handleEdit = () => {
+    if (form.anticipoID === 0) return;
+    SetListadoAnticipos([]);
+    setSearch(false);
+    setFormState("edicion");
   };
 
   const handleCancel = () => {
@@ -126,6 +160,7 @@ export default function IntAnticipos() {
     setCuotas(false);
     setProveedorSelected("");
     setFormState("lectura");
+    setConfirmPrint(false);
   };
 
   const handleSave = async () => {
@@ -164,6 +199,17 @@ export default function IntAnticipos() {
           });
         }
       } else {
+        const updated = await UpdateAnticipos(form);
+        if (!updated) {
+          return setAlert({
+            message: "Ha ocurrido un error al actualizar anticipo",
+            type: "error",
+          });
+        }
+        setAlert({
+          message: "Anticipo Actualizado correctamente",
+          type: "success",
+        });
       }
       setConfirmPrint(true);
     } catch (error: any) {
@@ -205,7 +251,8 @@ export default function IntAnticipos() {
 
   const handleActiveSearch = () => {
     if (anticipos.length > 0 || form.terceroID !== 0) return;
-    setSearch(true);
+    if (search) setSearch(false);
+    else setSearch(true);
   };
 
   const handleSearch = async () => {
@@ -227,38 +274,67 @@ export default function IntAnticipos() {
     }
   };
 
+  const ValidateForDelete = () => {
+    if (form.anticipoID === 0) {
+      return setAlert({
+        message: "Debe seleccionar anticipo a eliminar",
+        type: "error",
+      });
+    }
+    setOpenDelete(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      const deleted = await deleteAnticipos(form.anticipoID);
+      if (!deleted) {
+        return setAlert({
+          message: "Ha ocurrido un error al eliminar anticipo",
+          type: "error",
+        });
+      }
+      setAlert({
+        message: "Anticipo eliminado correctamente",
+        type: "success",
+      });
+      setOpenDelete(false);
+      setForm(emptyAnticipos);
+      SetListadoAnticipos([]);
+    } catch (error: any) {
+      console.log(error.response?.message);
+    }
+  };
   return (
     <PageBasic
       title="REGISTRO DE ANTICIPOS"
       subtitle="Formulario de generación y consulta de anticipos"
     >
-      {alert && (
-        <ErrorAlert
-          message={alert.message}
-          type={alert.type}
-          autoClose={3000}
-          onClose={() => setAlert(null)}
-        />
-      )}
       <div className={f.filterCard}>
         <div className={s.filterGrid}>
           <h3 className={s.sectionTitle}>Información General</h3>
           <fieldset className={s.fieldset} disabled={formState === "lectura"}>
             <Field label="Proveedor :">
               <AutoComplete
+                value={provedorSelected}
                 placeHolder="Buscar proveedor por nombre..."
                 onSelect={(p) => {
                   setForm((prev) => ({
                     ...prev,
                     terceroID: p.tercerosID,
                   }));
-                  setProveedorSelected(p.tercerosNombres);
                 }}
                 onSearch={getproveedores}
                 getKey={(p) => p.tercerosID}
                 getLabel={(p) =>
                   `${p.tercerosIdentificacion} — ${p.tercerosNombres}`
                 }
+                onClean={() => {
+                  (setProveedorSelected(""),
+                    setForm((prev) => ({
+                      ...prev,
+                      terceroID: 0,
+                    })));
+                }}
               ></AutoComplete>
             </Field>
 
@@ -379,6 +455,7 @@ export default function IntAnticipos() {
             <button
               className={`${s.btn} ${s.btnEdit}`}
               disabled={formState === "edicion"}
+              onClick={handleEdit}
             >
               <BtnEdit />
             </button>
@@ -399,6 +476,7 @@ export default function IntAnticipos() {
             <button
               className={`${s.btn} ${s.btnDanger}`}
               disabled={formState === "edicion"}
+              onClick={ValidateForDelete}
             >
               <BtnEliminar />
             </button>
@@ -416,6 +494,14 @@ export default function IntAnticipos() {
               <BtnSearch />
             </button>
           </div>
+          {alert && (
+            <ErrorAlert
+              message={alert.message}
+              type={alert.type}
+              autoClose={3000}
+              onClose={() => setAlert(null)}
+            />
+          )}
         </div>
       </div>
       <div ref={contentRef}>
@@ -454,12 +540,15 @@ export default function IntAnticipos() {
             <Field label="Proveedor">
               <AutoComplete
                 placeHolder="Buscar proveedor por nombre..."
-                onSelect={(e) =>
+                onSelect={(e) => {
                   setBusqueda((prev) => ({
                     ...prev,
                     proveedorID: Number(e.tercerosID),
-                  }))
-                }
+                  }));
+                  setProveedorSelected(
+                    `${e.tercerosIdentificacion} — ${e.tercerosNombres}`,
+                  );
+                }}
                 onSearch={getproveedores}
                 getKey={(p) => p.tercerosID}
                 getLabel={(p) =>
@@ -531,7 +620,13 @@ export default function IntAnticipos() {
                 </thead>
                 <tbody>
                   {ListadoAnticipos.map((d) => (
-                    <tr key={d.anticipoID}>
+                    <tr
+                      key={d.anticipoID}
+                      onDoubleClick={() => setForm(d)}
+                      className={
+                        form.anticipoID === d.anticipoID ? s.selectedRow : ""
+                      }
+                    >
                       <td>{d.anticipoFecha}</td>
                       <td>{d.anticipoDetalle}</td>
                       <td>{d.valorAnticipo}</td>
@@ -543,6 +638,16 @@ export default function IntAnticipos() {
           </div>
         </div>
       )}
+      <ConfirmDialog
+        open={openDelete}
+        title="Eliminar Anticipos"
+        message="¿Estas segura de eliminar anticipo?"
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        type="danger"
+        onCancel={() => setOpenDelete(false)}
+        onConfirm={confirmDelete}
+      />
     </PageBasic>
   );
 }
